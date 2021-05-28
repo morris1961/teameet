@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test</title>
+</head>
+
+<body>
+  <ul>
+    <li>
+      <div>
+        <input id="emailR" placeholder="email" value="aaa@bbb.ccc" />
+        <input id="UNameR" placeholder="UName" value="abc" />
+        <input id="passwordR" placeholder="password" value="abc" />
+        <button onclick="sendMessage('regester')">regester</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="emailL" placeholder="email" value="aaa@bbb.ccc" />
+        <input id="passwordL" placeholder="password" value="abc" />
+        <button onclick="sendMessage('login')">login</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDI" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <button onclick="sendMessage('index')">index</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDC" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="GName" placeholder="GName" value="gname" />
+        <input id="file" placeholder="file" value="file" />
+        <button onclick="sendMessage('createGroup')">createGroup</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDJ" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="code" placeholder="code" value="#01a852" />
+        <button onclick="sendMessage('joinGroup')">joinGroup</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDRE" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="UNameRE" placeholder="UName" value="newName" />
+        <input id="passwordRE" placeholder="password" value="newpassword" />
+        <button onclick="sendMessage('renewProfile')">renewProfile</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDG" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="GIDG" placeholder="GID" value="60af1e7eee0d0006dc01a852" />
+        <button onclick="sendMessage('group')">group</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="GIDRE" placeholder="GID" value="60af1e7eee0d0006dc01a852" />
+        <input id="fileRE" placeholder="file" value="newfile" />
+        <button onclick="sendMessage('renewFile')">renewFile</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDD" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="GIDD" placeholder="GID" value="60af1e7eee0d0006dc01a852" />
+        <input id="subjectD" placeholder="subject" value="subject" />
+        <input id="contentD" placeholder="content" value="content" />
+        <input type="datetime-local" id="time_startD">
+        <input type="datetime-local" id="time_endD">
+        <input type="datetime-local" id="deadlineD">
+        <select id="time_spanD">
+          <option value=30>30</option>
+          <option value=60>60</option>
+          <option value=120>120</option>
+        </select>
+        <button onclick="sendMessage('createDiscussion')">createDiscussion</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDDD" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDDD" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <button onclick="sendMessage('discussion')">discussion</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDT" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDT" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <button onclick="sendMessage('time')">time</button>
+      </div>
+    </li>
+  </ul>
+  <script>
+    const server = new WebSocket('ws://localhost:4000');
+    server.onopen = () => console.log('Server connected.');
+    server.onmessage = (m) => {
+      console.log(JSON.parse(m.data));
+    };
+    server.sendEvent = (e) => server.send(JSON.stringify(e));
+
+    const sendMessage = (api) => {
+      switch (api) {
+        case 'regester':
+          const UNameDOMR = document.getElementById('UNameR');
+          const emailDOMR = document.getElementById('emailR');
+          const passwordDOMR = document.getElementById('passwordR');
+          if (!emailDOMR.value || !UNameDOMR.value || !passwordDOMR.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { email: emailDOMR.value, UName: UNameDOMR.value, password: passwordDOMR.value },
+          });
+          break;
+        case 'login':
+          const emailDOML = document.getElementById('emailL');
+          const passwordDOML = document.getElementById('passwordL');
+          if (!emailDOML.value || !passwordDOML.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { email: emailDOML.value, password: passwordDOML.value },
+          });
+          break;
+        case 'index':
+          const UIDIDOML = document.getElementById('UIDI');
+          if (!UIDIDOML.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDIDOML.value },
+          });
+          break;
+        case 'createGroup':
+          const UIDCDOM = document.getElementById('UIDC');
+          const GNameDOM = document.getElementById('GName');
+          const fileDOM = document.getElementById('file');
+          if (!UIDCDOM.value || !GNameDOM.value || !fileDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { admin: UIDCDOM.value, GName: GNameDOM.value, file: fileDOM.value },
+          });
+          break;
+        case 'joinGroup':
+          const UIDJCDOM = document.getElementById('UIDJ');
+          const codeDOM = document.getElementById('code');
+          if (!UIDJCDOM.value || !codeDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDJCDOM.value, code: codeDOM.value },
+          });
+          break;
+        case 'renewProfile':
+          const UIDREDOM = document.getElementById('UIDRE');
+          const UNameREDOM = document.getElementById('UNameRE');
+          const passwordREDOM = document.getElementById('passwordRE');
+          if (!UIDREDOM.value || !UNameREDOM.value || !passwordREDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDREDOM.value, UName: UNameREDOM.value, password: passwordREDOM.value },
+          });
+          break;
+        case 'group':
+          const UIDGDOM = document.getElementById('UIDG');
+          const GIDGDOM = document.getElementById('GIDG');
+          if (!UIDGDOM.value || !GIDG.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDGDOM.value, GID: GIDGDOM.value },
+          });
+          break;
+        case 'renewFile':
+          const GIDREDOM = document.getElementById('GIDRE');
+          const fileREDOM = document.getElementById('fileRE');
+          if (!GIDREDOM.value || !fileREDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { file: fileREDOM.value, GID: GIDREDOM.value },
+          });
+          break;
+        case 'createDiscussion':
+          const UIDDDOM = document.getElementById('UIDD');
+          const GIDDDOM = document.getElementById('GIDD');
+          const subjectDDOM = document.getElementById('subjectD');
+          const contentDDOM = document.getElementById('contentD');
+          const time_startDDOM = document.getElementById('time_startD');
+          const time_endDDOM = document.getElementById('time_endD');
+          const deadlineDDOM = document.getElementById('deadlineD');
+          const time_spanDDOM = document.getElementById('time_spanD');
+          if (!UIDDDOM.value || !GIDDDOM.value || !subjectDDOM.value || !contentDDOM.value ||
+            !time_startDDOM.value || !time_endDDOM.value || !deadlineDDOM.value || !time_spanDDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: {
+              UID: UIDDDOM.value, GID: GIDDDOM.value, subject: subjectDDOM.value, content: contentDDOM.value,
+              time_start: time_startDDOM.value, time_end: time_endDDOM.value, deadline: deadlineDDOM.value, time_span: time_spanDDOM.value
+            },
+          });
+          break;
+        case 'discussion':
+          const UIDDDDOM = document.getElementById('UIDDD');
+          const DIDDDDOM = document.getElementById('DIDDD');
+          if (!DIDDDDOM.value || !UIDDDDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDDDDOM.value, DID: DIDDDDOM.value },
+          });
+          break;
+        case 'time':
+          const UIDTDOM = document.getElementById('UIDT');
+          const DIDTDOM = document.getElementById('DIDT');
+          if (!DIDTDOM.value || !UIDTDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDTDOM.value, DID: DIDTDOM.value },
+          });
+          break;
+        default:
+          console.log("QQ")
+          break;
+      }
+    };
+
+  </script>
+</body>
+
+</html>
