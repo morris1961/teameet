@@ -1,0 +1,14 @@
+.beforelogin_account-welcome{
+    font-size: 4vw;
+    text-align: center;
+    margin-top: 3vw;
+}
+.beforelogin_login{
+    width: 100%;
+    margin-top: 7vw;
+    text-align: center;
+}
+.beforelogin_login-button{
+    height: 3.3vw;
+    font-Size: 1.5vw;
+}

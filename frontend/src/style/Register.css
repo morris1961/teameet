@@ -1,0 +1,109 @@
+.ant-checkbox-inner{
+    border-width: 0.15vw;
+    width: 1.8vw;
+    height: 1.8vw;
+}
+.register_searchbox{
+    width: 25vw;
+    outline: none;
+    padding: 14px 20px;
+    background: none;
+    border: 2px solid gray;
+    border-radius:25px;
+    font-size: large; 
+    text-align: left;
+}
+.register_account{
+    margin-top: 5vw;
+    /* margin-bottom: -0.7vw; */
+    height: 5vw;
+    width: 100%;
+}
+
+.register_account-title{
+    height: 4.2vw;
+    margin-left: 35.5vw;
+    float: left;
+    font-size: 2vw;
+}
+.register_account-input{
+    width: 40vw;
+    height: 4.2vw;
+    margin-left: 0.5vw;
+    float: left;
+}
+.register_mid{
+    margin-top: 5vw;
+    height: 5vw;
+    width: 100%;
+}
+
+.register_mid-title{
+    height: 4.2vw;
+    margin-left: 35.5vw;
+    float: left;
+    text-align: left;
+    font-size: 2vw;
+}
+.register_mid-input{
+    text-align: left;
+    width: 40vw;
+    height: 4.2vw;
+    margin-left: 0.5vw;
+    float: left;
+}
+
+.register_pass{
+    margin-top: 0.2vw;
+    height: 5vw;
+    width: 100%;
+}
+
+.register_pass-title{
+    height: 4.2vw;
+    margin-left: 27.4vw;
+    float: left;
+    text-align: left;
+    font-size: 2vw;
+}
+.register_pass-input{
+    width: 40vw;
+    height: 4.2vw;
+    margin-left: 0.5vw;
+    float: left;
+    text-align: left;
+}
+.register_check{
+    margin-top: 0.2vw;
+    height: 5vw;
+    width: 100%;
+}
+
+.register_check-checkbox{
+    width: 3vw;
+    height: 3vw;
+    margin-left: 38vw;
+    margin-top: 0.9vw;
+    float: left;
+    /* border: solid; */
+}
+
+.register_check-txt{
+    height: 4.2vw;
+    margin-top: 0.5vw;
+    float: left;
+    text-align: left;
+    font-size: 2vw;
+    text-decoration: underline;
+    color: rgb(39, 39, 161);
+}
+
+.register_button{
+    width: 100%;
+    margin-top: 2vw;
+    text-align: center;
+}
+.register_button-button{
+    height: 3.3vw;
+    font-Size: 1.5vw;
+}
