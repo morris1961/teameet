@@ -1,16 +1,17 @@
 import {useState} from 'react'
-import {
-    Form,
-    Input,
-    Radio,
-    RangePicker,
-    rangeConfig,
-    DatePicker,
-  } from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Radio, DatePicker, Button, Row, Col } from 'antd';
 
+const { RangePicker, rangeConfig } = DatePicker
 const DiscussionSet = () =>{
     const [componentSize, setComponentSize] = useState('default');
-
+    const config = {
+        rules: [{ type: 'object', required: true, message: 'Please select time!' }],
+    };
+    const rangeConfig = {
+        rules: [{ type: 'array', required: true, message: 'Please select time!' }],
+    };
     return(
         <>
             <Form
@@ -28,8 +29,8 @@ const DiscussionSet = () =>{
             <Form.Item name="range-time-picker" label="討論時間範圍" {...rangeConfig}>
                 <RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
             </Form.Item>
-            <Form.Item label="截止時間">
-            <DatePicker />
+            <Form.Item name="date-time-picker" label="截止時間" {...config}>
+                <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
             </Form.Item>
             <Form.Item label="時間間隔" name="size">
                 <Radio.Group>
@@ -38,6 +39,14 @@ const DiscussionSet = () =>{
                     <Radio.Button value="large">2 小時</Radio.Button>
                 </Radio.Group>
             </Form.Item>
+            <Row>
+                <Col span={4}></Col> 
+                <Button type="primary" htmlType="submit">
+                    創建討論
+                </Button>
+                
+            </Row>
+            
 
         </Form>
         </>

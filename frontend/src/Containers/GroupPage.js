@@ -1,23 +1,31 @@
 import {useEffect, useState} from 'react'
-import logo from '../logo.svg';
 import ChatModal from '../Components/ChatModal'
 import DiscussionSet from './DiscussionSet'
+import DiscussionPage from './DiscussionPage'
+///// antd /////
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
-  DesktopOutlined,
-  PieChartOutlined,
   FileOutlined,
   TeamOutlined,
   UserOutlined,
   WechatOutlined,
   SmileOutlined,
 } from '@ant-design/icons';
+///// react-router-dom /////
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+} from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const GroupPage = ({user}) =>{
+const GroupPage = () =>{
+    const { user,GID } = useParams();
     const [URL, setURL] = useState('https://tw.yahoo.com')
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('ChatRoom')
@@ -28,16 +36,22 @@ const GroupPage = ({user}) =>{
     };
     const handleNewURL = (e) =>{
         setActiveKey("renewURL")
-
     }
 
     useEffect(()=>{
         if(activeKey === 'renewURL'){
             setModalVisible(true)
         }
+        else if(activeKey.search("Discussions_") !== -1){
+          let id = activeKey.indexOf('_') + 1
+          let DID = activeKey.slice(id)
+          window.location.href = `/${user}/${GID}/${DID}`
+        }
+          
     })
 
     return(
+      <>
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo" />
@@ -69,8 +83,8 @@ const GroupPage = ({user}) =>{
                 來約討論
               </Menu.Item>
               <SubMenu key="Discussions" icon={<TeamOutlined />} title="討論">
-                <Menu.Item key="Discussions_1">討論 1</Menu.Item>
-                <Menu.Item key="Discussions_2">討論 2</Menu.Item>
+                <Menu.Item key="Discussions_1" onClick={(e)=>{setActiveKey(e.key)}}>討論 1</Menu.Item>
+                <Menu.Item key="Discussions_2" onClick={(e)=>{setActiveKey(e.key)}}>討論 2</Menu.Item>
               </SubMenu>
             </Menu>
           </Sider>
@@ -82,12 +96,13 @@ const GroupPage = ({user}) =>{
                 <Breadcrumb.Item>{user}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "Discussion"?(<DiscussionSet />):null}
+                {activeKey === "Discussion"?(<DiscussionSet />):(null)}
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
           </Layout>
         </Layout>
+      </>
     )
 }
 export default GroupPage;

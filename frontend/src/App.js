@@ -1,18 +1,26 @@
-import {useState} from 'react'
 import HomePage from "./Containers/HomePage"
 import GroupPage from "./Containers/GroupPage"
+import DiscussionPage from "./Containers/DiscussionPage"
 import 'antd/dist/antd.css';
-// import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
 
 function App() {
   
   return (
-    <div className="App">
-      <header className="App-header">
-        <GroupPage user={"morris"}/>
-        {/* <homePage user={"alice"}/> */}
-      </header>
-    </div>
+    <>
+      <Router>
+          <Switch>
+            <Route exact path="/:user" component={HomePage} />
+            <Route exact path="/:user/:GID" component={GroupPage} />
+            <Route exact path="/:user/:GID/:DID" component={DiscussionPage} />
+          </Switch>
+      </Router>
+    </>
   );
 }
 export default App;

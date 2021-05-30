@@ -1,4 +1,6 @@
-import {Modal, Form, Input} from "antd"
+// import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Form, Modal, Input } from "antd";
 
 const ChatModal = ({visible, onCreate, onCancel}) =>{
     const [form] = Form.useForm()
