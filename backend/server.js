@@ -3,7 +3,6 @@ import http from 'http';
 import express from 'express';
 import dotenv from 'dotenv-defaults';
 import WebSocket from 'ws';
-import path from "path";
 
 // connect mongo
 import mongo from './functions/mongo.js';
@@ -11,7 +10,7 @@ dotenv.config();
 mongo.connect();
 
 // import functions
-import regester from './functions/regester.js';
+import register from './functions/register.js';
 import login from './functions/login.js';
 import createGroup from './functions/createGroup.js';
 import joinGroup from './functions/joinGroup.js';
@@ -26,7 +25,7 @@ import time from './functions/time.js';
 // init server
 const app = express();
 const server = http.createServer(app);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static("./public"));
 const wss = new WebSocket.Server({
   server,
 });
@@ -42,59 +41,92 @@ wss.on('connection', async function connection(ws) {
     message = JSON.parse(message);
     const { api, data } = message;
     switch (api) {
-      case "regester":
-        regester(data).then(
-          (ret) => { ws.sendEvent(ret); }
+      case "register":
+        register(data).then(
+          (ret) => {
+            ret.api = api;
+            ws.sendEvent(ret);
+          }
         );
         break;
       case "login":
         login(data).then(
-          (ret) => { ws.sendEvent(ret); }
+          (ret) => {
+            ret.api = api;
+            ws.sendEvent(ret);
+          }
         );
         break;
       case "index":
         index(data).then(
-          (ret) => { ws.sendEvent(ret); }
+          (ret) => {
+            ret.api = api;
+            ws.sendEvent(ret);
+          }
         );
         break;
       case "createGroup":
         createGroup(data).then(
-          (ret) => { ws.sendEvent(ret); }
+          (ret) => {
+            ret.api = api;
+            ws.sendEvent(ret);
+          }
         );
         break;
       case "joinGroup":
         joinGroup(data).then(
-          (ret) => { ws.sendEvent(ret); }
+          (ret) => {
+            ret.api = api;
+            ws.sendEvent(ret);
+          }
         );
         break;
       case "renewProfile":
         renewProfile(data).then(
-          (ret) => { ws.sendEvent(ret); }
+          (ret) => {
+            ret.api = api;
+            ws.sendEvent(ret);
+          }
         );
         break;
       case "group":
         group(data).then(
-          (ret) => { ws.sendEvent(ret); }
+          (ret) => {
+            ret.api = api;
+            ws.sendEvent(ret);
+          }
         );
         break;
       case "renewFile":
         renewFile(data).then(
-          (ret) => { ws.sendEvent(ret); }
+          (ret) => {
+            ret.api = api;
+            ws.sendEvent(ret);
+          }
         );
         break;
       case "createDiscussion":
         createDiscussion(data).then(
-          (ret) => { ws.sendEvent(ret); }
+          (ret) => {
+            ret.api = api;
+            ws.sendEvent(ret);
+          }
         );
         break;
       case "discussion":
         discussion(data).then(
-          (ret) => { ws.sendEvent(ret); }
+          (ret) => {
+            ret.api = api;
+            ws.sendEvent(ret);
+          }
         );
         break;
       case "time":
         time(data).then(
-          (ret) => { ws.sendEvent(ret); }
+          (ret) => {
+            ret.api = api;
+            ws.sendEvent(ret);
+          }
         );
         break;
       default:

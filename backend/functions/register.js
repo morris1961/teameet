@@ -2,7 +2,7 @@
 import User from '../models/user.js';
 
 // function for every cases
-async function regester({ email, UName, password }) {
+async function register({ email, UName, password }) {
   var status = false;
   var error_msg = "Something wrong...";
   try {
@@ -25,4 +25,4 @@ async function regester({ email, UName, password }) {
   return { status, error_msg };
 }
 
-export default regester;
+export default register;
