@@ -6,22 +6,22 @@ import WebSocket from 'ws';
 import path from "path";
 
 // connect mongo
-import mongo from './functions/mongo';
+import mongo from './functions/mongo.js';
 dotenv.config();
 mongo.connect();
 
 // import functions
-import regester from './functions/regester';
-import login from './functions/login';
-import createGroup from './functions/createGroup';
-import joinGroup from './functions/joinGroup';
-import index from './functions/index';
-import renewProfile from './functions/renewProfile';
-import group from './functions/group';
-import renewFile from './functions/renewFile';
-import createDiscussion from './functions/createDisscussion';
-import discussion from './functions/discussion';
-import time from './functions/time';
+import regester from './functions/regester.js';
+import login from './functions/login.js';
+import createGroup from './functions/createGroup.js';
+import joinGroup from './functions/joinGroup.js';
+import index from './functions/index.js';
+import renewProfile from './functions/renewProfile.js';
+import group from './functions/group.js';
+import renewFile from './functions/renewFile.js';
+import createDiscussion from './functions/createDisscussion.js';
+import discussion from './functions/discussion.js';
+import time from './functions/time.js';
 
 // init server
 const app = express();

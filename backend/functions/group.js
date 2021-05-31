@@ -1,6 +1,6 @@
 // import models
-import Group from '../models/group';
-import User from '../models/user';
+import Group from '../models/group.js';
+import User from '../models/user.js';
 
 // function for every cases
 async function group({ UID, GID }) {

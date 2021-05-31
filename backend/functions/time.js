@@ -1,5 +1,5 @@
 // import models
-import Discussion from '../models/discussion'
+import Discussion from '../models/discussion.js'
 
 // function for every cases
 async function time({ UID, DID }) {

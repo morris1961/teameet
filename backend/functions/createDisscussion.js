@@ -1,6 +1,6 @@
 // import models
-import Group from '../models/group'
-import Discussion from '../models/discussion'
+import Group from '../models/group.js'
+import Discussion from '../models/discussion.js'
 
 // function for every cases
 async function createDiscussion({ GID, UID, subject, content, time_start, time_span, time_end, deadline }) {

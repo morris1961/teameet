@@ -1,5 +1,5 @@
 // import models
-import Group from '../models/group';
+import Group from '../models/group.js';
 
 // function for every cases
 async function createGroup({ GID, file }) {
