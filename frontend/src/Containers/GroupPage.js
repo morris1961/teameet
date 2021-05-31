@@ -12,13 +12,7 @@ import {
   SmileOutlined,
 } from '@ant-design/icons';
 ///// react-router-dom /////
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -30,6 +24,7 @@ const GroupPage = () =>{
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('ChatRoom')
     const [modalVisible, setModalVisible] = useState(false)
+    const [discussions, setDiscussions] = useState([{name:"經原"},{name:"統計"},{name: "web"}])
     const onCollapse = collapsed => {
         console.log(collapsed);
         setCollapsed(collapsed);
@@ -83,8 +78,11 @@ const GroupPage = () =>{
                 來約討論
               </Menu.Item>
               <SubMenu key="Discussions" icon={<TeamOutlined />} title="討論">
-                <Menu.Item key="Discussions_1" onClick={(e)=>{setActiveKey(e.key)}}>討論 1</Menu.Item>
-                <Menu.Item key="Discussions_2" onClick={(e)=>{setActiveKey(e.key)}}>討論 2</Menu.Item>
+                {discussions.map((d, index)=>{
+                  return(
+                    <Menu.Item key={`Discussions_${index}`} onClick={(e)=>{setActiveKey(e.key)}}>{d.name}</Menu.Item>
+                  )
+                })}
               </SubMenu>
             </Menu>
           </Sider>
