@@ -40,92 +40,94 @@ wss.on('connection', async function connection(ws) {
   ws.on('message', function incoming(message) {
     message = JSON.parse(message);
     const { api, data } = message;
+    var msg = {};
+    msg.api = api;
     switch (api) {
       case "register":
         register(data).then(
           (ret) => {
-            ret.api = api;
-            ws.sendEvent(ret);
+            msg.data = ret;
+            ws.sendEvent(msg);
           }
         );
         break;
       case "login":
         login(data).then(
           (ret) => {
-            ret.api = api;
-            ws.sendEvent(ret);
+            msg.data = ret;
+            ws.sendEvent(msg);
           }
         );
         break;
       case "index":
         index(data).then(
           (ret) => {
-            ret.api = api;
-            ws.sendEvent(ret);
+            msg.data = ret;
+            ws.sendEvent(msg);
           }
         );
         break;
       case "createGroup":
         createGroup(data).then(
           (ret) => {
-            ret.api = api;
-            ws.sendEvent(ret);
+            msg.data = ret;
+            ws.sendEvent(msg);
           }
         );
         break;
       case "joinGroup":
         joinGroup(data).then(
           (ret) => {
-            ret.api = api;
-            ws.sendEvent(ret);
+            msg.data = ret;
+            ws.sendEvent(msg);
           }
         );
         break;
       case "renewProfile":
         renewProfile(data).then(
           (ret) => {
-            ret.api = api;
-            ws.sendEvent(ret);
+            msg.data = ret;
+            ws.sendEvent(msg);
           }
         );
         break;
       case "group":
         group(data).then(
           (ret) => {
-            ret.api = api;
-            ws.sendEvent(ret);
+            msg.data = ret;
+            ws.sendEvent(msg);
           }
         );
         break;
       case "renewFile":
         renewFile(data).then(
           (ret) => {
-            ret.api = api;
-            ws.sendEvent(ret);
+            msg.data = ret;
+            ws.sendEvent(msg);
           }
         );
         break;
       case "createDiscussion":
         createDiscussion(data).then(
           (ret) => {
-            ret.api = api;
-            ws.sendEvent(ret);
+            msg.data = ret;
+            ws.sendEvent(msg);
           }
         );
         break;
       case "discussion":
         discussion(data).then(
           (ret) => {
-            ret.api = api;
-            ws.sendEvent(ret);
+            msg.data = ret;
+            ws.sendEvent(msg);
           }
         );
         break;
       case "time":
         time(data).then(
           (ret) => {
-            ret.api = api;
-            ws.sendEvent(ret);
+            msg.data = ret;
+            ws.sendEvent(msg);
           }
         );
         break;
