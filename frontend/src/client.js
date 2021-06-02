@@ -1,56 +1,72 @@
 import {useState} from "react";
 
 const useData = () =>{
-    const [messages, setMessages]  = useState([])
-    const [status, setStatus] = useState({})
+    const [file, setFile] = useState("")
+    const [code, setCode] = useState("")
+    const [group, setGroup] = useState("")
+    const [UName, setUName] = useState("")
+    const [isAdmin, setIsAdmin] = useState("")
+    const [content, setContent] = useState("")
+    const [discussion, setDiscussion] = useState([])
     const client = new WebSocket('ws://localhost:4000')
+    console.log("hello")
+    client.onopen = () =>{
+        console.log("client connected")
+    }
+    
+    client.onmessage = (byteString) =>{
+        const message = JSON.parse(byteString.data);
+        const { api, data } = message
 
-    client.onmessage = (message) =>{
-        message = JSON.parse(message);
-        const { api } = message;
         switch(api){
             case "register":{
-                setMessages([...messages, payload]) // 把 payload 接在原本的 messages 後面
                 break
             }
             case "login":{
-                setStatus(payload)
                 break
             }
             case "index":{
-                setMessages(payload)
+                const { status } = data;
+                if(status === true){
+                    let un = data.UName
+                    let g = data.group
+                    setUName(un)
+                    setGroup(g)
+                }
                 break
             }
             case "createGroup":{
-                setMessages([])
                 break
             }
             case "joinGroup":{
-                setMessages([])
                 break
             }
             case "renewProfile":{
-                setMessages([])
                 break
             }
             case "group":{
-                setMessages([])
+                const { status } = data;
+                if(status === "true"){
+                    setCode(data.code)
+                    // setG(message.GName)
+                    setContent(data.content)
+                    setDiscussion(data.discussion)
+                    setIsAdmin(data.isAdmin)
+                    setFile(data.file)
+                }
+                
                 break
             }
             case "renewFile":{
-                setMessages([])
                 break
             }
             case "createDiscussion":{
-                setMessages([])
                 break
             }
             case "discussion":{
-                setMessages([])
                 break
             }
             case "time":{
-                setMessages([])
                 break
             }
             default: 
@@ -58,19 +74,23 @@ const useData = () =>{
         }
     }
 
-    const sendData = async (data)=>{
-        await client.send(
-            JSON.stringify(data)
-        )
+    
+    const sendData = (api, data)=>{
+        const message = {api, data}
+        client.send(JSON.stringify(message))
+        // client.onopen = async () =>{
+        // }
     }
-    const sendMessage = (payload) =>{
-        sendData(["input", payload])
-    }
-
+    
     return{
-        status,
-        messages,
-        sendMessage,
+        sendData,
+        code, 
+        group, 
+        isAdmin, 
+        content,
+        discussion,
+        file,
+        UName,
     }
 }
 export default useData;

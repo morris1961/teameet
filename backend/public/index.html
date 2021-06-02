@@ -15,7 +15,7 @@
         <input id="emailR" placeholder="email" value="aaa@bbb.ccc" />
         <input id="UNameR" placeholder="UName" value="abc" />
         <input id="passwordR" placeholder="password" value="abc" />
-        <button onclick="sendMessage('regester')">regester</button>
+        <button onclick="sendMessage('register')">register</button>
       </div>
     </li>
     <li>
@@ -110,7 +110,7 @@
 
     const sendMessage = (api) => {
       switch (api) {
-        case 'regester':
+        case 'register':
           const UNameDOMR = document.getElementById('UNameR');
           const emailDOMR = document.getElementById('emailR');
           const passwordDOMR = document.getElementById('passwordR');

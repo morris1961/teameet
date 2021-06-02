@@ -3,6 +3,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import DiscussionContent from '../Components/DiscussionContent'
 import DiscussionTime from '../Components/DiscussionTime'
 import DiscussionPlace from '../Components/DiscussionPlace'
+import useData from '../client'
 import {
   UserOutlined,
   WechatOutlined,
@@ -19,6 +20,7 @@ const { SubMenu } = Menu;
 
 const DiscussionPage = () =>{
     const { user, DID } = useParams();
+    const { sendData, messages } = useData();
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('content')
     const [modalVisible, setModalVisible] = useState(false)

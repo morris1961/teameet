@@ -8,7 +8,7 @@ async function index({ UID }) {
   var UName = "";
   var voting = []; // todo
   var recent = []; // todo
-  var GName = [];
+  var group = [];
   var error_msg = "Something wrong...";
   try {
     const user = await User.findById(UID);
@@ -21,7 +21,7 @@ async function index({ UID }) {
     var groups = user.groups;
     for (let i = 0; i < groups.length; i++) {
       const aGroup = await Group.findById(groups[i]);
-      GName.push(aGroup.GName);
+      group.push({GID: aGroup._id, GName: aGroup.GName});
     }
     status = true
     error_msg = "Successed!";
@@ -30,7 +30,7 @@ async function index({ UID }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, UName, recent, voting, GName, error_msg };
+  return { status, UName, recent, voting, group, error_msg };
 }
 
 export default index;
