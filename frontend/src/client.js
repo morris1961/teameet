@@ -1,6 +1,7 @@
-import {useState} from "react";
+import { useState } from "react";
+const client = new WebSocket('ws://localhost:4000')
 
-const useData = () =>{
+const useData = () => {
     const [file, setFile] = useState("")
     const [code, setCode] = useState("")
     const [group, setGroup] = useState("")
@@ -8,26 +9,25 @@ const useData = () =>{
     const [isAdmin, setIsAdmin] = useState("")
     const [content, setContent] = useState("")
     const [discussion, setDiscussion] = useState([])
-    const client = new WebSocket('ws://localhost:4000')
-    console.log("hello")
-    client.onopen = () =>{
+
+    client.onopen = () => {
         console.log("client connected")
     }
-    
-    client.onmessage = (byteString) =>{
+
+    client.onmessage = (byteString) => {
         const message = JSON.parse(byteString.data);
         const { api, data } = message
 
-        switch(api){
-            case "register":{
+        switch (api) {
+            case "register": {
                 break
             }
-            case "login":{
+            case "login": {
                 break
             }
-            case "index":{
+            case "index": {
                 const { status } = data;
-                if(status === true){
+                if (status === true) {
                     let un = data.UName
                     let g = data.group
                     setUName(un)
@@ -35,18 +35,18 @@ const useData = () =>{
                 }
                 break
             }
-            case "createGroup":{
+            case "createGroup": {
                 break
             }
-            case "joinGroup":{
+            case "joinGroup": {
                 break
             }
-            case "renewProfile":{
+            case "renewProfile": {
                 break
             }
-            case "group":{
+            case "group": {
                 const { status } = data;
-                if(status === "true"){
+                if (status === "true") {
                     setCode(data.code)
                     // setG(message.GName)
                     setContent(data.content)
@@ -54,39 +54,58 @@ const useData = () =>{
                     setIsAdmin(data.isAdmin)
                     setFile(data.file)
                 }
-                
+
                 break
             }
-            case "renewFile":{
+            case "renewFile": {
                 break
             }
-            case "createDiscussion":{
+            case "createDiscussion": {
                 break
             }
-            case "discussion":{
+            case "discussion": {
                 break
             }
-            case "time":{
+            case "time": {
                 break
             }
-            default: 
+            default:
                 break
         }
     }
 
-    
-    const sendData = (api, data)=>{
-        const message = {api, data}
+
+    const sendData = async (api, data) => {
+        await waitForOpenSocket()
+        const message = { api, data }
         client.send(JSON.stringify(message))
-        // client.onopen = async () =>{
-        // }
     }
+
+    const waitForOpenSocket = () => {
+        return new Promise((resolve, reject) => {
+            const maxNumberOfAttempts = 10
+            const intervalTime = 200 //ms
     
-    return{
+            let currentAttempt = 0
+            const interval = setInterval(() => {
+                if (currentAttempt > maxNumberOfAttempts - 1) {
+                    clearInterval(interval)
+                    reject(new Error('Maximum number of attempts exceeded'))
+                } else if (client.readyState === client.OPEN) {
+                    clearInterval(interval)
+                    resolve()
+                }
+                currentAttempt++
+            }, intervalTime)
+        })
+    }
+
+
+    return {
         sendData,
-        code, 
-        group, 
-        isAdmin, 
+        code,
+        group,
+        isAdmin,
         content,
         discussion,
         file,

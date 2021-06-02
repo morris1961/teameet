@@ -23,11 +23,11 @@ const HomePage = () =>{
         setCollapsed(collapsed);
     };
 
-    //initialize
+    // initialize
     useEffect(()=>{
       let data = {UID}
       sendData("index", data)
-      console.log(UName, group)
+      // console.log(UName, group)
     }, [])
 
     useEffect(()=>{

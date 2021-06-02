@@ -7,18 +7,9 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import WebSocket from 'ws'
-
-
-const client = new WebSocket('ws://localhost:4000')
-console.log("hello")
-client.onopen = () =>{
-    console.log("client connected")
-}
 
 
 function App() {
-  
   return (
     <>
       <Router>
