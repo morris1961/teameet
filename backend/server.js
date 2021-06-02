@@ -21,6 +21,7 @@ import renewFile from './functions/renewFile.js';
 import createDiscussion from './functions/createDisscussion.js';
 import discussion from './functions/discussion.js';
 import time from './functions/time.js';
+import place from './functions/place.js';
 
 // init server
 const app = express();
@@ -131,8 +132,16 @@ wss.on('connection', async function connection(ws) {
           }
         );
         break;
+      case "place":
+        place(data).then(
+          (ret) => {
+            msg.data = ret;
+            ws.sendEvent(msg);
+          }
+        );
+        break;
       default:
-        console.log("QQ");
+        console.log(message);
         break;
     }
   });

@@ -99,6 +99,13 @@
         <button onclick="sendMessage('time')">time</button>
       </div>
     </li>
+    <li>
+      <div>
+        <input id="UIDP" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDP" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <button onclick="sendMessage('place')">place</button>
+      </div>
+    </li>
   </ul>
   <script>
     const server = new WebSocket('ws://localhost:4000');
@@ -241,6 +248,17 @@
           server.sendEvent({
             api: api,
             data: { UID: UIDTDOM.value, DID: DIDTDOM.value },
+          });
+          break;
+        case 'place':
+          const UIDPDOM = document.getElementById('UIDP');
+          const DIDPDOM = document.getElementById('DIDP');
+          if (!DIDPDOM.value || !UIDPDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDPDOM.value, DID: DIDPDOM.value },
           });
           break;
         default:
