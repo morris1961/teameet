@@ -122,6 +122,14 @@
         <button onclick="sendMessage('addPlace')">addPlace</button>
       </div>
     </li>
+    <li>
+      <div>
+        <input id="UIDVP" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDVP" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <input id="placeVP" placeholder="place" value="台大" />
+        <button onclick="sendMessage('votePlace')">votePlace</button>
+      </div>
+    </li>
   </ul>
   <script>
     const server = new WebSocket('ws://localhost:4000');
@@ -293,12 +301,24 @@
           const UIDAPDOM = document.getElementById('UIDAP');
           const DIDAPDOM = document.getElementById('DIDAP');
           const placeAPDOM = document.getElementById('placeAP');
-          if (!UIDAPDOM.value || !DIDAPDOM.value || !placeAPDOM.value ) {
+          if (!UIDAPDOM.value || !DIDAPDOM.value || !placeAPDOM.value) {
             throw new Error('Empty input!');
           }
           server.sendEvent({
             api: api,
-            data: { UID: UIDAPDOM.value, DID: DIDAPDOM.value, place: placeAPDOM.value},
+            data: { UID: UIDAPDOM.value, DID: DIDAPDOM.value, place: placeAPDOM.value },
+          });
+          break;
+        case 'votePlace':
+          const UIDVPDOM = document.getElementById('UIDVP');
+          const DIDVPDOM = document.getElementById('DIDVP');
+          const placeVPDOM = document.getElementById('placeVP');
+          if (!UIDVPDOM.value || !DIDVPDOM.value || !placeVPDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDVPDOM.value, DID: DIDVPDOM.value, places: [placeVPDOM.value] },
           });
           break;
 

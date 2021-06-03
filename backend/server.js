@@ -24,6 +24,7 @@ import time from './functions/time.js';
 import place from './functions/place.js';
 import voteTime from './functions/voteTime.js';
 import addPlace from './functions/addPlace.js';
+import votePlace from './functions/votePlace.js';
 
 // init server
 const app = express();
@@ -152,6 +153,14 @@ wss.on('connection', async function connection(ws) {
         break;
       case "addPlace":
         addPlace(data).then(
+          (ret) => {
+            msg.data = ret;
+            ws.sendEvent(msg);
+          }
+        );
+        break;
+      case "votePlace":
+        votePlace(data).then(
           (ret) => {
             msg.data = ret;
             ws.sendEvent(msg);

@@ -2,7 +2,7 @@
 import Discussion from '../models/discussion.js'
 
 // function for every cases
-async function time({ UID, DID, places }) {
+async function votePlace({ UID, DID, places }) {
   var status = false;
   var error_msg = "Something wrong...";
   try {
@@ -12,19 +12,22 @@ async function time({ UID, DID, places }) {
       error_msg = "The discussion is not valid!"
       return { status, error_msg };
     }
-    // todo
     var place_options = discussion.place_options;
     for (let j = 0; j < places.length; j++) {
       for (var [key, value] of place_options) {
         if (key === places[j]) {
-          // console.log("?")
-          place_options[key].push(UID);
+          for (let i = 0; i < place_options.get(key).length; i++) {
+            if (UID.toString() === place_options.get(key)[i].toString()) {
+              status = false;
+              error_msg = "The place has been voted by this user!";
+              return { status, error_msg };
+            }
+          }
+          place_options.get(key).push(UID);
         }
       }
     }
-    // todo
-    console.log(place_options);
-    // await discussion.updateOne({ $set: { place_options } })
+    await discussion.updateOne({ $set: { place_options } })
     status = true;
     error_msg = "Successed!";
   } catch (e) {
@@ -35,4 +38,4 @@ async function time({ UID, DID, places }) {
   return { status, error_msg };
 }
 
-export default time;
+export default votePlace;
