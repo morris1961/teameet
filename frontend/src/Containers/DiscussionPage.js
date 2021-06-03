@@ -3,7 +3,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import DiscussionContent from '../Components/DiscussionContent'
 import DiscussionTime from '../Components/DiscussionTime'
 import DiscussionPlace from '../Components/DiscussionPlace'
-import useData from '../client'
+import useData from '../useData'
 import {
   UserOutlined,
   WechatOutlined,

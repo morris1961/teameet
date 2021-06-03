@@ -1,7 +1,7 @@
 import HomePage from "./Containers/HomePage"
 import GroupPage from "./Containers/GroupPage"
 import DiscussionPage from "./Containers/DiscussionPage"
-import useData from "./client"
+import useData from "./useData"
 import 'antd/dist/antd.css';
 import {
   BrowserRouter as Router,
