@@ -1,14 +1,22 @@
 import { useState } from "react";
 const client = new WebSocket('ws://localhost:4000')
 
+
 const useData = () => {
     const [file, setFile] = useState("")
     const [code, setCode] = useState("")
-    const [group, setGroup] = useState("")
+    const [group, setGroup] = useState([])
     const [UName, setUName] = useState("")
-    const [isAdmin, setIsAdmin] = useState("")
-    const [content, setContent] = useState("")
-    const [discussion, setDiscussion] = useState([])
+    const [isAdmin, setIsAdmin] = useState(false)
+    const [discuss_content, setDiscussContent] = useState("") 
+    const [discussions, setDiscussions] = useState([])
+    const [GName, setGName] = useState("")
+    const [subject, setSubject] = useState("")
+    const [time_options, setTimeOptions] = useState({})
+    const [place_options, setPlaceOptions] = useState({})
+    const [isDue, setIsDue] = useState(false)
+    const [voted, setVoted] = useState(false)
+
 
     client.onopen = () => {
         console.log("client connected")
@@ -17,7 +25,6 @@ const useData = () => {
     client.onmessage = (byteString) => {
         const message = JSON.parse(byteString.data);
         const { api, data } = message
-
         switch (api) {
             case "register": {
                 break
@@ -46,11 +53,11 @@ const useData = () => {
             }
             case "group": {
                 const { status } = data;
-                if (status === "true") {
+                if (status === true) {
                     setCode(data.code)
-                    // setG(message.GName)
-                    setContent(data.content)
-                    setDiscussion(data.discussion)
+                    setGName(data.GName)
+                    // setContent(data.content)
+                    setDiscussions(data.discussions)
                     setIsAdmin(data.isAdmin)
                     setFile(data.file)
                 }
@@ -64,10 +71,40 @@ const useData = () => {
                 break
             }
             case "discussion": {
+                const { status } = data;
+                if (status === true){
+                    setSubject(data.subject)
+                    setDiscussContent(data.content)
+                    setIsAdmin(data.isAdmin)
+                    setVoted(data.voted)
+                }
                 break
             }
             case "time": {
+                const { status } = data;
+                if (status === true){
+                    setTimeOptions(data.time_options)
+                    setIsDue(data.isDue)
+                    setIsAdmin(data.isAdmin)
+                }
                 break
+            }
+            case "place": {
+                const { status } = data;
+                if (status === true){
+                    setPlaceOptions(data.place_options)
+                    setIsDue(data.isDue)
+                    setIsAdmin(data.isAdmin)
+                }
+                break
+            }
+            case "addPlace":{
+                const { status } = data;
+                if (status === true){
+                    setPlaceOptions(data.place_options)
+                }
+                break
+
             }
             default:
                 break
@@ -106,10 +143,16 @@ const useData = () => {
         code,
         group,
         isAdmin,
-        content,
-        discussion,
+        discussions,
         file,
         UName,
+        GName,
+        discuss_content,
+        subject,
+        time_options,
+        isDue,
+        voted,
+        place_options,
     }
 }
 export default useData;

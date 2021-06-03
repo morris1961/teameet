@@ -18,12 +18,10 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const DiscussionPage = () =>{
-    const { user, DID } = useParams();
-    const { sendData, messages } = useData();
+const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendData, time_options, isDue, voted, place_options}) =>{
+    const { UID, GID, DID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('content')
-    const [modalVisible, setModalVisible] = useState(false)
     const onCollapse = collapsed => {
         console.log(collapsed);
         setCollapsed(collapsed);
@@ -32,6 +30,11 @@ const DiscussionPage = () =>{
     //     setActiveKey("")
     // }
 
+    useEffect(()=>{
+      let data = {UID, DID}  
+      sendData("discussion", data)
+    }, [])
+
     // useEffect(()=>{
     //     if(activeKey === ''){
     //         setModalVisible(true)
@@ -39,12 +42,13 @@ const DiscussionPage = () =>{
     // })
 
     return(
+        
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}}>
-                {user}
+                {UName}
               </Menu.Item>
               <Menu.Item key="content" icon={<BookOutlined />} title="內容" onClick={(e)=>{setActiveKey(e.key)}}>
                 討論內容
@@ -58,14 +62,14 @@ const DiscussionPage = () =>{
             </Menu>
           </Sider>
           <Layout className="site-layout">
-            <Header className="site-layout-background" style={{ padding: 0 }} />
+            {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>討論</Breadcrumb.Item>
                 <Breadcrumb.Item>{DID}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "content"?(<DiscussionContent />):(activeKey === "time"?(<DiscussionTime />):(<DiscussionPlace />))}
+                {activeKey === "content"?(<DiscussionContent subject={subject} content={content}/>):(activeKey === "time"?(<DiscussionTime time_options={time_options} voted={voted} isDue={isDue} isAdmin={isAdmin} sendData={sendData}/>):(<DiscussionPlace place_options={place_options} voted={voted} isDue={isDue} isAdmin={isAdmin} sendData={sendData}  />))}
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

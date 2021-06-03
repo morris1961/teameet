@@ -1,4 +1,6 @@
 import { Checkbox, Row, Col, Button } from 'antd';
+import { useEffect } from 'react'
+import { useParams } from 'react-router';
 
 function onChange(checkedValues) {
   console.log('checked = ', checkedValues);
@@ -6,12 +8,15 @@ function onChange(checkedValues) {
 
 
 
-const DiscussionTime = () =>{
-    const options = [
-      { label: 'Apple', value: 'Apple' },
-      { label: 'Pear', value: 'Pear' },
-      { label: 'Orange', value: 'Orange' },
-    ];
+const DiscussionTime = ({time_options, voted, isDue, sendData}) =>{
+    const { UID, GID, DID } = useParams()
+    const options = Object.keys(time_options)
+    useEffect(()=>{
+      let data = {UID, DID}  
+      sendData("time", data)
+    }, [])
+
+
     return(
       <>
         <Checkbox.Group style={{ width: '100%' }} onChange={onChange}>
@@ -21,7 +26,7 @@ const DiscussionTime = () =>{
               <>
                 <Col span={2}></Col>
                 <Col span={22}>
-                  <Checkbox value={option.value} style={{margin: "1%"}}>{option.label}</Checkbox>
+                  <Checkbox  style={{margin: "1%"}}>{option}</Checkbox>
                 </Col>
                 {index === options.length-1?(
                 <>
