@@ -13,7 +13,7 @@ async function addPlace({ UID, DID, place }) {
       error_msg = "The discussion is not valid!";
       return { status, error_msg };
     }
-    var place_options = discussion.place_options;
+    place_options = discussion.place_options;
     for (var [key, value] of place_options) {
       if (key === place) {
         status = false;
