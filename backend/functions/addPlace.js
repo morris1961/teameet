@@ -4,6 +4,7 @@ import Discussion from '../models/discussion.js'
 // function for every cases
 async function addPlace({ UID, DID, place }) {
   var status = false;
+  var place_options = [];
   var error_msg = "Something wrong...";
   try {
     const discussion = await Discussion.findById(DID);
@@ -29,7 +30,7 @@ async function addPlace({ UID, DID, place }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, error_msg };
+  return { status, place_options, error_msg };
 }
 
 export default addPlace;
