@@ -130,6 +130,22 @@
         <button onclick="sendMessage('votePlace')">votePlace</button>
       </div>
     </li>
+    <li>
+      <div>
+        <input id="UIDCP" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDCP" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <input id="place_resultCP" placeholder="place" value="台大" />
+        <button onclick="sendMessage('confirmPlace')">confirmPlace</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDCT" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDCT" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <input type="datetime-local" id="time_resultCT">
+        <button onclick="sendMessage('confirmTime')">confirmTime</button>
+      </div>
+    </li>
   </ul>
   <script>
     const server = new WebSocket('ws://localhost:4000');
@@ -319,6 +335,30 @@
           server.sendEvent({
             api: api,
             data: { UID: UIDVPDOM.value, DID: DIDVPDOM.value, places: [placeVPDOM.value] },
+          });
+          break;
+        case 'confirmPlace':
+          const UIDCPDOM = document.getElementById('UIDCP');
+          const DIDCPDOM = document.getElementById('DIDCP');
+          const place_resultCPDOM = document.getElementById('place_resultCP');
+          if (!UIDCPDOM.value || !DIDCPDOM.value || !place_resultCPDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDCPDOM.value, DID: DIDCPDOM.value, place_result: place_resultCPDOM.value },
+          });
+          break;
+        case 'confirmTime':
+          const UIDCTDOM = document.getElementById('UIDCT');
+          const DIDCTDOM = document.getElementById('DIDCT');
+          const time_resultCTDOM = document.getElementById('time_resultCT');
+          if (!DIDCTDOM.value || !UIDCTDOM.value || !time_resultCTDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDCTDOM.value, DID: DIDCTDOM.value, time_result: time_resultCTDOM.value },
           });
           break;
 
