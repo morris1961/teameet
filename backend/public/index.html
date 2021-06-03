@@ -106,6 +106,22 @@
         <button onclick="sendMessage('place')">place</button>
       </div>
     </li>
+    <li>
+      <div>
+        <input id="UIDVT" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDVT" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <input type="datetime-local" id="time_option">
+        <button onclick="sendMessage('voteTime')">voteTime</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDAP" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDAP" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <input id="placeAP" placeholder="place" value="台大" />
+        <button onclick="sendMessage('addPlace')">addPlace</button>
+      </div>
+    </li>
   </ul>
   <script>
     const server = new WebSocket('ws://localhost:4000');
@@ -261,6 +277,31 @@
             data: { UID: UIDPDOM.value, DID: DIDPDOM.value },
           });
           break;
+        case 'voteTime':
+          const UIDVTDOM = document.getElementById('UIDVT');
+          const DIDVTDOM = document.getElementById('DIDVT');
+          const time_optionDOM = document.getElementById('time_option');
+          if (!DIDVTDOM.value || !UIDVTDOM.value || !time_optionDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDVTDOM.value, DID: DIDVTDOM.value, times: [time_optionDOM.value] },
+          });
+          break;
+        case 'addPlace':
+          const UIDAPDOM = document.getElementById('UIDAP');
+          const DIDAPDOM = document.getElementById('DIDAP');
+          const placeAPDOM = document.getElementById('placeAP');
+          if (!UIDAPDOM.value || !DIDAPDOM.value || !placeAPDOM.value ) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDAPDOM.value, DID: DIDAPDOM.value, place: placeAPDOM.value},
+          });
+          break;
+
         default:
           console.log("QQ")
           break;
