@@ -18,7 +18,8 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendData, time_options, isDue, voted, place_options}) =>{
+const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendData, time_options, isDue, time_voted, place_voted, place_options}) =>{
+
     const { UID, GID, DID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('content')
@@ -26,20 +27,11 @@ const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendDat
         console.log(collapsed);
         setCollapsed(collapsed);
     };
-    // const handleNewURL = (e) =>{
-    //     setActiveKey("")
-    // }
-
+    
     useEffect(()=>{
       let data = {UID, DID}  
       sendData("discussion", data)
     }, [])
-
-    // useEffect(()=>{
-    //     if(activeKey === ''){
-    //         setModalVisible(true)
-    //     }
-    // })
 
     return(
         
@@ -66,10 +58,10 @@ const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendDat
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>討論</Breadcrumb.Item>
-                <Breadcrumb.Item>{DID}</Breadcrumb.Item>
+                <Breadcrumb.Item>{subject}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "content"?(<DiscussionContent subject={subject} content={content}/>):(activeKey === "time"?(<DiscussionTime time_options={time_options} voted={voted} isDue={isDue} isAdmin={isAdmin} sendData={sendData}/>):(<DiscussionPlace place_options={place_options} voted={voted} isDue={isDue} isAdmin={isAdmin} sendData={sendData}  />))}
+                {activeKey === "content"?(<DiscussionContent subject={subject} content={content}/>):(activeKey === "time"?(<DiscussionTime voted={time_voted} time_options={time_options} isDue={isDue} isAdmin={isAdmin} sendData={sendData}/>):(<DiscussionPlace voted={place_voted} place_options={place_options}isDue={isDue} isAdmin={isAdmin} sendData={sendData}  />))}
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

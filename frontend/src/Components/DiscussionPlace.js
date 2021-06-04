@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { useParams } from 'react-router';
+import VotedPlace from './VotedPlace'
 
 const formItemLayout = {
     labelCol: {
@@ -40,9 +41,7 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData}) =>{
         sendData("place", data)
     }, [])
 
-    const handleCheck = (e) =>{
-        
-        let id = e.target.value.key
+    const handleCheck = (e, id) =>{
         let newCheckList = checkList
         let n = `${options[id]}`
         if(e.target.checked){
@@ -54,17 +53,19 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData}) =>{
         setCheckList(newCheckList)
     }
 
-    const handleVote = (e) =>{
+    const handleVote = () =>{
         let data = {UID, DID, places:checkList}
+        console.log(data)
         sendData("votePlace", data)
     }
 
     
     return(
         <>
-
+            {voted?(<VotedPlace UID={UID} place_options={place_options} />):
+            (<>
             <Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish} autoComplete="off" initialValues={places}>
-                {/* {console.log(checkList)}  */}
+            {/* {console.log(checkList)}  */}
             <Form.List
                 name="places"
                 rules={[
@@ -86,7 +87,7 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData}) =>{
                         required={false}
                         key={field.key}
                     >
-                        <Checkbox onChange={handleCheck} value={field}>
+                        <Checkbox onChange={(e)=>{handleCheck(e, field.key)}}>
                             <Form.Item
                                 {...field}
                                 name={[field.name, 'name']} // 將 initialValue 顯示在畫面
@@ -132,6 +133,7 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData}) =>{
                 </Button>
             </Form.Item>
             </Form>
+            </>)}
         </>
     )
 }

@@ -14,7 +14,8 @@ const useData = () => {
     const [time_options, setTimeOptions] = useState({})
     const [place_options, setPlaceOptions] = useState({})
     const [isDue, setIsDue] = useState(false)
-    const [voted, setVoted] = useState(false)
+    const [time_voted, setTimeVoted] = useState(false)
+    const [place_voted, setPlaceVoted] = useState(false)
 
 
     client.onopen = () => {
@@ -64,6 +65,13 @@ const useData = () => {
                 break
             }
             case "renewFile": {
+                const { status } = data;
+                if(status === true){
+                    setFile(data.file)
+                }
+                else{
+                    console.log("DB error")
+                }
                 break
             }
             case "createDiscussion": {
@@ -75,7 +83,7 @@ const useData = () => {
                     setSubject(data.subject)
                     setDiscussContent(data.content)
                     setIsAdmin(data.isAdmin)
-                    setVoted(data.voted)
+                    
                 }
                 break
             }
@@ -85,6 +93,7 @@ const useData = () => {
                     setTimeOptions(data.time_options)
                     setIsDue(data.isDue)
                     setIsAdmin(data.isAdmin)
+                    setTimeVoted(data.voted)
                 }
                 break
             }
@@ -94,6 +103,7 @@ const useData = () => {
                     setPlaceOptions(data.place_options)
                     setIsDue(data.isDue)
                     setIsAdmin(data.isAdmin)
+                    setPlaceVoted(data.voted)
                 }
                 break
             }
@@ -150,8 +160,10 @@ const useData = () => {
         subject,
         time_options,
         isDue,
-        voted,
+        time_voted,
+        place_voted,
         place_options,
+
     }
 }
 export default useData;

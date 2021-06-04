@@ -19,21 +19,18 @@ const { SubMenu } = Menu;
 
 const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData}) =>{
     const { UID, GID } = useParams();
-    const [URL, setURL] = useState(file)
-    const [DName, setDName] = useState("")
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('ChatRoom')
     const [modalVisible, setModalVisible] = useState(false)
     const history = useHistory();
-
     const onCollapse = collapsed => {
         console.log(collapsed);
         setCollapsed(collapsed);
     };
-    const handleNewURL = (e) =>{
-        setActiveKey("renewURL")
-        let data = {GID, file: URL}
-        sendData("renewFile", data)
+
+    const renewURL = (url)=>{
+      let data = {GID, file:url}
+      sendData("renewFile", data)
     }
 
     useEffect(()=>{
@@ -43,13 +40,10 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData}) =
 
     useEffect(()=>{
 
-        if(activeKey === 'renewURL'){
-            setModalVisible(true)
-        }
-        else if(activeKey.search("Discussions_") !== -1){
+        if(activeKey.search("Discussions_") !== -1){
           let id = activeKey.indexOf('_') + 1
           let DID = activeKey.slice(id)
-          history.push({pathname:`/${UID}/${GID}/${DID}`, state:{UName, GName, DName}});
+          history.push({pathname:`/${UID}/${GID}/${DID}`, state:{UName, GName}});
           // window.location.href = `/${UID}/${GID}/${DID}`
         }
           
@@ -68,8 +62,8 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData}) =
                 聊天室
               </Menu.Item>
               <SubMenu key="File" icon={<FileOutlined />} title="資料集錦">
-                <Menu.Item key="gotoURL" onClick={(e)=>{window.open(URL)}}>前往連結</Menu.Item>
-                <Menu.Item key="renewURL" onClick={handleNewURL}>更新連結</Menu.Item>
+                <Menu.Item key="gotoURL" onClick={(e)=>{window.open(file)}}>前往連結</Menu.Item>
+                <Menu.Item key="renewURL" onClick={()=>{setModalVisible(true)}}>更新連結</Menu.Item>
               </SubMenu>
 
               <ChatModal 
@@ -77,7 +71,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData}) =
                 onCreate={({url})=>{
                     setActiveKey("")
                     setModalVisible(false) 
-                    setURL(url)
+                    renewURL(url)
                 }}
                 onCancel={()=>{
                     setActiveKey("")
@@ -90,7 +84,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData}) =
               <SubMenu key="Discussions" icon={<TeamOutlined />} title="討論">
                 {discussions.map((d, index)=>{
                   return(
-                    <Menu.Item key={`Discussions_${d.DID}`} onClick={(e)=>{setActiveKey(e.key);setDName(d.subject)}}>{d.subject}</Menu.Item>
+                    <Menu.Item key={`Discussions_${d.DID}`} onClick={(e)=>{setActiveKey(e.key);}}>{d.subject}</Menu.Item>
                   )
                 })}
               </SubMenu>
@@ -100,11 +94,11 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData}) =
             {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>User</Breadcrumb.Item>
-                <Breadcrumb.Item>{UName}</Breadcrumb.Item>
+                <Breadcrumb.Item>群組</Breadcrumb.Item>
+                <Breadcrumb.Item>{GName}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "Discussion"?(<DiscussionSet />):(null)}
+                {activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData}/>):(null)}
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

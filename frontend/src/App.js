@@ -23,10 +23,10 @@ function App() {
     GName,
     discuss_content,
     subject,
-    DName,
     time_options,
     isDue,
-    voted,
+    time_voted,
+    place_voted,
     place_options, }
   = useData()
 
@@ -42,7 +42,7 @@ function App() {
             code={code} 
             GName={GName} 
             isAdmin={isAdmin} 
-            file={file} 
+            file={file}
             discussions={discussions} 
             group={group} 
             sendData={sendData}/>)} />
@@ -52,14 +52,14 @@ function App() {
               (<DiscussionPage 
               UName={UName}
               GName={GName}
-              DName={DName} 
               isAdmin={isAdmin} 
               subject={subject}
               content={discuss_content}
               sendData={sendData}
               time_options={time_options}
               isDue={isDue}
-              voted={voted}
+              time_voted={time_voted}
+              place_voted={place_voted}
               place_options={place_options}
               />)} />
   
