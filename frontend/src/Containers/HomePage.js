@@ -4,19 +4,18 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { useParams } from "react-router-dom";
-import useData from "../client"
+import { useParams, useHistory } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const HomePage = () =>{
+const HomePage = ({UName, group, sendData}) =>{
     const { UID } = useParams();
-    const { UName, group, sendData } = useData();
+    // const { UName, group, sendData } = useData();
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState("")
-    const [init, setInit] = useState(false)
+    const history = useHistory();
 
     const onCollapse = collapsed => {
         console.log(collapsed);
@@ -27,7 +26,6 @@ const HomePage = () =>{
     useEffect(()=>{
       let data = {UID}
       sendData("index", data)
-      // console.log(UName, group)
     }, [])
 
     useEffect(()=>{
@@ -37,7 +35,8 @@ const HomePage = () =>{
         let GID = activeKey.slice(id) 
         let data = {UID:UID, GID:GID}
         sendData("group", data)
-        window.location.href = `/${UID}/${GID}`
+        history.push({pathname:`/${UID}/${GID}`, state:{UName}});
+        // window.location.href = `/${UID}/${GID}`
       }
     })
 
@@ -50,9 +49,10 @@ const HomePage = () =>{
                 {UName}
               </Menu.Item>
               <SubMenu key="sub2" icon={<TeamOutlined />} title="群組">
-                {/* {group.map((g, index)=>{
-                  <Menu.Item key={`group_${g.GID}`} onClick={(e)=>{setActiveKey(e.key)}}>{g.GName}</Menu.Item> 
-                })} */}
+                {group.map((g, index)=>{
+                  return(
+                  <Menu.Item key={`group_${g.GID}`} onClick={(e)=>{setActiveKey(e.key)}}>{g.GName}</Menu.Item>)
+                })}
               </SubMenu>
             </Menu>
           </Sider>

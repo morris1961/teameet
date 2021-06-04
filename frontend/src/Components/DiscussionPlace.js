@@ -1,6 +1,8 @@
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { useParams } from 'react-router';
+import VotedPlace from './VotedPlace'
 
 const formItemLayout = {
     labelCol: {
@@ -19,27 +21,57 @@ const formItemLayoutWithOutLabel = {
     },
 };
 
-const DiscussionTime = () =>{
-    const [places, setPlaces] = useState(['1F', '2F'])
+const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData}) =>{
+    const { UID, GID, DID } = useParams()
+    const options = Object.keys(place_options)
+    const places = {"places": options.map((e, index)=>({key: index, name: e}))}
+    const [checkList, setCheckList] = useState([])
+
     const onFinish = values => {
-        console.log('Received values of form:', values);
+        let newPlaces = values.places.map((e)=>(e.name)) // 取全部的 place
+        let newPlace = newPlaces.filter((e)=>{
+            return options.indexOf(e) === -1
+        })// 跟原本的比
+        let data = {UID, DID, place: newPlace[0]}
+        sendData("addPlace", data)
     };
+
+    useEffect(()=>{
+        let data = {UID, DID}  
+        sendData("place", data)
+    }, [])
+
+    const handleCheck = (e, id) =>{
+        let newCheckList = checkList
+        let n = `${options[id]}`
+        if(e.target.checked){
+            newCheckList.push(n)
+        }
+        else{
+            newCheckList = newCheckList.filter(item => (item !== n))
+        }
+        setCheckList(newCheckList)
+    }
+
+    const handleVote = () =>{
+        let data = {UID, DID, places:checkList}
+        console.log(data)
+        sendData("votePlace", data)
+    }
+
     
     return(
         <>
-            <Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish} autoComplete="off" initialValues={{"places": [{
-                key: 0,
-                name: "新體1F",
-            }, {
-                key: 1,
-                name: "新體2F",
-            }]}}>
+            {voted?(<VotedPlace UID={UID} place_options={place_options} />):
+            (<>
+            <Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish} autoComplete="off" initialValues={places}>
+            {/* {console.log(checkList)}  */}
             <Form.List
                 name="places"
                 rules={[
                 {
-                    validator: async (_, places) => {
-                    if (!places || places.length < 1) {
+                    validator: async (_, options) => {
+                    if (!options || options.length < 1) {
                         return Promise.reject(new Error('At least 1 place')); // 檢查至少有一個 place
                     }
                     },
@@ -55,7 +87,7 @@ const DiscussionTime = () =>{
                         required={false}
                         key={field.key}
                     >
-                        <Checkbox>
+                        <Checkbox onChange={(e)=>{handleCheck(e, field.key)}}>
                             <Form.Item
                                 {...field}
                                 name={[field.name, 'name']} // 將 initialValue 顯示在畫面
@@ -70,13 +102,13 @@ const DiscussionTime = () =>{
                             noStyle>
                                 <Input placeholder="請輸入地點名稱" style={{ width: '60%' }} />
                             </Form.Item>
-                            {fields.length > 1 ? (
+                            {/* {fields.length > 1 ? (
                             <MinusCircleOutlined
                                 className="dynamic-delete-button"
                                 style={{margin: "3%", color: "red"}}
                                 onClick={() => remove(field.name)}
                             />
-                            ) : null}
+                            ) : null} */}
                         </Checkbox>
                     </Form.Item>
                    
@@ -84,7 +116,7 @@ const DiscussionTime = () =>{
                     <Form.Item>
                     <Button
                         type="default"
-                        onClick={() => add()}
+                        onClick={() => {add()}}
                         style={{ width: '60%' }}
                         icon={<PlusOutlined />}
                     >
@@ -96,12 +128,13 @@ const DiscussionTime = () =>{
                 )}
             </Form.List>
             <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" onClick={handleVote}>
                     送出投票
                 </Button>
             </Form.Item>
             </Form>
+            </>)}
         </>
     )
 }
-export default DiscussionTime;
+export default DiscussionPlace;
