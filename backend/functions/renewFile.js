@@ -1,5 +1,5 @@
 // import models
-import Group from '../models/group';
+import Group from '../models/group.js';
 
 // function for every cases
 async function createGroup({ GID, file }) {
@@ -20,7 +20,7 @@ async function createGroup({ GID, file }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, error_msg };
+  return { status, file, error_msg };
 }
 
 export default createGroup;

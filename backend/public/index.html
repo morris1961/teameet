@@ -15,7 +15,7 @@
         <input id="emailR" placeholder="email" value="aaa@bbb.ccc" />
         <input id="UNameR" placeholder="UName" value="abc" />
         <input id="passwordR" placeholder="password" value="abc" />
-        <button onclick="sendMessage('regester')">regester</button>
+        <button onclick="sendMessage('register')">register</button>
       </div>
     </li>
     <li>
@@ -99,6 +99,53 @@
         <button onclick="sendMessage('time')">time</button>
       </div>
     </li>
+    <li>
+      <div>
+        <input id="UIDP" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDP" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <button onclick="sendMessage('place')">place</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDVT" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDVT" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <input type="datetime-local" id="time_option">
+        <button onclick="sendMessage('voteTime')">voteTime</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDAP" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDAP" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <input id="placeAP" placeholder="place" value="台大" />
+        <button onclick="sendMessage('addPlace')">addPlace</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDVP" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDVP" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <input id="placeVP" placeholder="place" value="台大" />
+        <button onclick="sendMessage('votePlace')">votePlace</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDCP" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDCP" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <input id="place_resultCP" placeholder="place" value="台大" />
+        <button onclick="sendMessage('confirmPlace')">confirmPlace</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDCT" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="DIDCT" placeholder="DID" value="60af6e8b6c694433b8bd7c00" />
+        <input type="datetime-local" id="time_resultCT">
+        <button onclick="sendMessage('confirmTime')">confirmTime</button>
+      </div>
+    </li>
   </ul>
   <script>
     const server = new WebSocket('ws://localhost:4000');
@@ -110,7 +157,7 @@
 
     const sendMessage = (api) => {
       switch (api) {
-        case 'regester':
+        case 'register':
           const UNameDOMR = document.getElementById('UNameR');
           const emailDOMR = document.getElementById('emailR');
           const passwordDOMR = document.getElementById('passwordR');
@@ -243,6 +290,78 @@
             data: { UID: UIDTDOM.value, DID: DIDTDOM.value },
           });
           break;
+        case 'place':
+          const UIDPDOM = document.getElementById('UIDP');
+          const DIDPDOM = document.getElementById('DIDP');
+          if (!DIDPDOM.value || !UIDPDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDPDOM.value, DID: DIDPDOM.value },
+          });
+          break;
+        case 'voteTime':
+          const UIDVTDOM = document.getElementById('UIDVT');
+          const DIDVTDOM = document.getElementById('DIDVT');
+          const time_optionDOM = document.getElementById('time_option');
+          if (!DIDVTDOM.value || !UIDVTDOM.value || !time_optionDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDVTDOM.value, DID: DIDVTDOM.value, times: [time_optionDOM.value] },
+          });
+          break;
+        case 'addPlace':
+          const UIDAPDOM = document.getElementById('UIDAP');
+          const DIDAPDOM = document.getElementById('DIDAP');
+          const placeAPDOM = document.getElementById('placeAP');
+          if (!UIDAPDOM.value || !DIDAPDOM.value || !placeAPDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDAPDOM.value, DID: DIDAPDOM.value, place: placeAPDOM.value },
+          });
+          break;
+        case 'votePlace':
+          const UIDVPDOM = document.getElementById('UIDVP');
+          const DIDVPDOM = document.getElementById('DIDVP');
+          const placeVPDOM = document.getElementById('placeVP');
+          if (!UIDVPDOM.value || !DIDVPDOM.value || !placeVPDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDVPDOM.value, DID: DIDVPDOM.value, places: [placeVPDOM.value] },
+          });
+          break;
+        case 'confirmPlace':
+          const UIDCPDOM = document.getElementById('UIDCP');
+          const DIDCPDOM = document.getElementById('DIDCP');
+          const place_resultCPDOM = document.getElementById('place_resultCP');
+          if (!UIDCPDOM.value || !DIDCPDOM.value || !place_resultCPDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDCPDOM.value, DID: DIDCPDOM.value, place_result: place_resultCPDOM.value },
+          });
+          break;
+        case 'confirmTime':
+          const UIDCTDOM = document.getElementById('UIDCT');
+          const DIDCTDOM = document.getElementById('DIDCT');
+          const time_resultCTDOM = document.getElementById('time_resultCT');
+          if (!DIDCTDOM.value || !UIDCTDOM.value || !time_resultCTDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDCTDOM.value, DID: DIDCTDOM.value, time_result: time_resultCTDOM.value },
+          });
+          break;
+
         default:
           console.log("QQ")
           break;

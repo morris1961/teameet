@@ -21,4 +21,4 @@ const mongo = {
   connect: connectMongo,
 };
 
-module.exports = mongo;
+export default mongo;

@@ -2,11 +2,8 @@
 import Discussion from '../models/discussion.js'
 
 // function for every cases
-async function discussion({ UID, DID }) {
+async function confirmPlace({ UID, DID, place_result }) {
   var status = false;
-  var subject = "";
-  var content = "";
-  var isAdmin = false;
   var error_msg = "Something wrong...";
   try {
     const discussion = await Discussion.findById(DID);
@@ -15,9 +12,13 @@ async function discussion({ UID, DID }) {
       error_msg = "The discussion is not valid!"
       return { status, error_msg };
     }
-    subject = discussion.subject;
-    content = discussion.content;
-    isAdmin = UID.toString() === discussion.admin.toString();
+    if (discussion.admin.toString() !== UID.toString()) {
+      status = false;
+      error_msg = "The user is not admin!"
+      return { status, error_msg };
+    }
+    // todo check if result is in options
+    await discussion.updateOne({ $set: { place_result } })
     status = true;
     error_msg = "Successed!";
   } catch (e) {
@@ -25,7 +26,7 @@ async function discussion({ UID, DID }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, subject, content, isAdmin, error_msg };
+  return { status, error_msg };
 }
 
-export default discussion;
+export default confirmPlace;

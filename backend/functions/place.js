@@ -4,7 +4,7 @@ import Discussion from '../models/discussion.js'
 // function for every cases
 async function time({ UID, DID }) {
   var status = false;
-  var time_options = [];
+  var place_options = [];
   var isDue = false;
   var isAdmin = false;
   var voted = false;
@@ -16,8 +16,8 @@ async function time({ UID, DID }) {
       error_msg = "The discussion is not valid!"
       return { status, error_msg };
     }
-    time_options = discussion.time_options;
-    for (var [key, value] of time_options) {
+    place_options = discussion.place_options;
+    for (var [key, value] of place_options) {
       for (let i = 0; i < value.length; i++) {
         if (value[i].toString() === UID.toString()) {
           voted = true;
@@ -35,9 +35,9 @@ async function time({ UID, DID }) {
   } catch (e) {
     console.log(e)
     status = false;
-    error_msg = "Something wrong...";;
+    error_msg = "Something wrong...";
   }
-  return { status, time_options, isDue, isAdmin, voted, error_msg };
+  return { status, place_options, isDue, isAdmin, voted, error_msg };
 }
 
 export default time;

@@ -1,6 +1,7 @@
 // import models
-import Group from '../models/group';
-import User from '../models/user';
+import Group from '../models/group.js';
+import User from '../models/user.js';
+import Discussion from '../models/discussion.js';
 
 // function for every cases
 async function group({ UID, GID }) {
@@ -10,7 +11,7 @@ async function group({ UID, GID }) {
   var isAdmin = false;
   var content = []; // (sort by time)  // todo
   var file = "";
-  var discussion = []; // [{DID: id1, subject: subject1}, ...] // todo
+  var discussions = [];
   var error_msg = "Something wrong...";
   try {
     const group = await Group.findById(GID);
@@ -30,7 +31,10 @@ async function group({ UID, GID }) {
     isAdmin = group.admin.toString() === UID.toString();
     content = group.content;
     file = group.file;
-    discussion = group.discussion;
+    for (let i = 0; i < group.discussions.length; i++) {
+      const aDisscussion = await Discussion.findById(group.discussions[i]);
+      discussions.push({ DID: aDisscussion._id, subject: aDisscussion.subject });
+    }
     status = true;
     error_msg = "Successed!";
   } catch (e) {
@@ -38,7 +42,7 @@ async function group({ UID, GID }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, code, GName, isAdmin, content, file, discussion, error_msg };
+  return { status, code, GName, isAdmin, content, file, discussions, error_msg };
 }
 
 export default group;
