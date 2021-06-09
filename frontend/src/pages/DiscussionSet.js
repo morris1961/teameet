@@ -2,7 +2,6 @@ import {useState} from 'react'
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { Input, Radio, DatePicker, Button, Row, Col } from 'antd';
-import { set } from 'mongoose';
 
 const formItemLayoutWithOutLabel = {
     wrapperCol: {

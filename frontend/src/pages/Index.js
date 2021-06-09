@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import 'antd/dist/antd.css';
 import '../style/Index.css';
-import VotingGroups from "../components/VotingGroups";
-import RecentGroups from "../components/RecentGroups";
+import VotingGroups from "../Components/VotingGroups";
+import RecentGroups from "../Components/RecentGroups";
 import {Button, Input, Layout, notification} from 'antd';
 import {useHistory, useLocation} from "react-router-dom";
 import { If, Then, ElseIf, Else } from 'react-if-elseif-else-render';
