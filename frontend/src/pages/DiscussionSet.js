@@ -2,6 +2,7 @@ import {useState} from 'react'
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { Input, Radio, DatePicker, Button, Row, Col } from 'antd';
+import { set } from 'mongoose';
 
 const formItemLayoutWithOutLabel = {
     wrapperCol: {
@@ -12,6 +13,8 @@ const formItemLayoutWithOutLabel = {
 
 const { RangePicker, rangeConfig } = DatePicker
 const DiscussionSet = ({UID, GID, sendData}) =>{
+    const [sendCreate, setSendCreate] = useState(false)
+    const [title, setTitle] = useState('')
     const [componentSize, setComponentSize] = useState('default');
     const config = {
         rules: [{ type: 'object', required: true, message: 'Please select time!' }],
@@ -20,33 +23,32 @@ const DiscussionSet = ({UID, GID, sendData}) =>{
         rules: [{ type: 'array', required: true, message: 'Please select time!' }],
     };
 
-    const handleCreate = () =>{
+    const handleCreate = () => {
+        // console.log('Received values of form: ', values.target);
 
-    }
 
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
+        // if(sendCreate === true){
+        //     let data = { UID, GID, subject, content, time_start, time_end, time_span, deadline } 
+        //     sendData("createDiscussion", data)
+        // }
     };
 
-
-    // const createDiscussion = () =>{
-    //     let data = { UID, GID, subject, content, time_start, time_end, time_span, deadline } 
-    //     sendData("createDiscussion", data)
-    // }
 
     return(
         <>
             <Form
             {...formItemLayoutWithOutLabel}
-            name="create_discussion"
-            onFinish={onFinish}
+            name="dynamic_form_item"
+            // rules={[{ required: true }]}
+            // onFinish={onFinish} // 通過驗證時觸發 (rules)
+            autoComplete="off"
             labelCol={{ span: 4 }}
             wrapperCol={{ span: 14 }}
             layout="horizontal"
             initialValues={{ size: componentSize }}
             >
                 <Form.Item label="主題">
-                <Input />
+                <Input onChange={(e)=>{console.log(e.target.value)}} />
                 </Form.Item>
                 <Form.Item label="內容">
                 <Input.TextArea />
@@ -64,13 +66,17 @@ const DiscussionSet = ({UID, GID, sendData}) =>{
                 <Form.Item name="date-time-picker" label="投票截止時間" {...config}>
                     <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
                 </Form.Item>
-                
-                <Row>
-                    <Col span={4}></Col> 
+                <Form.Item>
                     <Button type="primary" htmlType="submit" onClick={handleCreate}>
                         創建討論
                     </Button>
-                </Row>
+                </Form.Item>
+                
+                
+                {/* <Row>
+                    <Col span={4}></Col> 
+                    
+                </Row> */}
             </Form>
         </>
 

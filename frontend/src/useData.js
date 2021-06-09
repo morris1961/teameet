@@ -115,6 +115,22 @@ const useData = () => {
                 break
 
             }
+            case "votePlace":{
+                const { status } = data;
+                if (status === true){
+                    setPlaceVoted(data.status)
+                }
+                break
+
+            }
+            case "voteTime":{
+                const { status } = data;
+                if (status === true){
+                    setTimeVoted(data.status)
+                }
+                break
+
+            }
             default:
                 break
         }

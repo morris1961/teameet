@@ -26,14 +26,23 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData}) =>{
     const options = Object.keys(place_options)
     const places = {"places": options.map((e, index)=>({key: index, name: e}))}
     const [checkList, setCheckList] = useState([])
+    const [sendVote, setSendVote] = useState(false)
 
     const onFinish = values => {
-        let newPlaces = values.places.map((e)=>(e.name)) // 取全部的 place
-        let newPlace = newPlaces.filter((e)=>{
-            return options.indexOf(e) === -1
-        })// 跟原本的比
-        let data = {UID, DID, place: newPlace[0]}
-        sendData("addPlace", data)
+        if(sendVote === false){
+            let newPlaces = values.places.map((e)=>(e.name)) // 取全部的 place
+            let newPlace = newPlaces.filter((e)=>{
+                return options.indexOf(e) === -1
+            })// 跟原本的比
+            let data = {UID, DID, place: newPlace[0]}
+            sendData("addPlace", data)
+        }
+        else{
+            let data = {UID, DID, places:checkList}
+            sendData("votePlace", data)
+            setSendVote(false)
+            
+        }
     };
 
     useEffect(()=>{
@@ -53,11 +62,6 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData}) =>{
         setCheckList(newCheckList)
     }
 
-    const handleVote = () =>{
-        let data = {UID, DID, places:checkList}
-        console.log(data)
-        sendData("votePlace", data)
-    }
 
     
     return(
@@ -127,11 +131,9 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData}) =>{
                 </>
                 )}
             </Form.List>
-            <Form.Item>
-                <Button type="primary" htmlType="submit" onClick={handleVote}>
-                    送出投票
-                </Button>
-            </Form.Item>
+            <Button type="primary" htmlType="submit" onFocus={()=>{setSendVote(true)}}>
+                送出投票
+            </Button>
             </Form>
             </>)}
         </>

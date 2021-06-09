@@ -46,6 +46,7 @@ wss.on('connection', async function connection(ws) {
   ws.on('message', function incoming(message) {
     message = JSON.parse(message);
     const { api, data } = message;
+    console.log(api, data)
     var msg = {};
     msg.api = api;
     switch (api) {
