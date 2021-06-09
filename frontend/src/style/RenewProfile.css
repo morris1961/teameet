@@ -1,0 +1,62 @@
+
+.renew_searchbox{
+    width: 25vw;
+    outline: none;
+    padding: 14px 20px;
+    background: none;
+    border: 2px solid gray;
+    border-radius:25px;
+    font-size: large; 
+    text-align: left;
+}
+.renew_account{
+    margin-top: 5vw;
+    /* margin-bottom: -0.7vw; */
+    height: 5vw;
+    width: 100%;
+}
+
+.renew_account-title{
+    height: 4.2vw;
+    margin-left: 35.5vw;
+    float: left;
+    font-size: 2vw;
+}
+.renew_account-txt{
+    font-size: 2vw;
+    width: 40vw;
+    height: 4.2vw;
+    margin-left: 1vw;
+    float: left;
+}
+.renew_mid{
+    margin-top: 5vw;
+    height: 5vw;
+    width: 100%;
+}
+
+.renew_mid-title{
+    height: 4.2vw;
+    margin-left: 35.5vw;
+    float: left;
+    text-align: left;
+    font-size: 2vw;
+}
+.renew_mid-input{
+    text-align: left;
+    width: 40vw;
+    height: 4.2vw;
+    margin-left: 0.5vw;
+    float: left;
+}
+
+
+.renew_button{
+    width: 100%;
+    margin-top: 2vw;
+    text-align: center;
+}
+.renew_button-button{
+    height: 3.3vw;
+    font-Size: 1.5vw;
+}

@@ -107,3 +107,29 @@
     height: 3.3vw;
     font-Size: 1.5vw;
 }
+.registersuccess_txt{
+    font-size: 2vw;
+    margin-left: 35.5vw;
+    margin-top: 4vw;
+}
+.registersuccess_midtxt{
+    font-size: 2vw;
+    text-align: center;
+    margin-top: 0.1vw;
+}
+.registersuccess_nametxt{
+    font-size: 2vw;
+    text-align: center;
+    margin-top: 1vw;
+    margin-left: 35vw;
+}
+
+.registersuccess_login{
+    width: 100%;
+    margin-top: 7vw;
+    text-align: center;
+}
+.registersuccess_login-button{
+    height: 3.3vw;
+    font-Size: 1.5vw;
+}

@@ -1,15 +1,73 @@
-
-import React, { useEffect, useRef,useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import 'antd/dist/antd.css';
 import '../style/Login.css'
-import {Button, Input, Layout} from 'antd';
+import {Button, Input, Layout, notification} from 'antd';
 import {useHistory} from "react-router-dom";
+import useCallbackState from '../hooks/useCallbackState';
+import {login_req, client_ws } from "../Client"; 
 const { Header, Footer, Content } = Layout;
 const Login = () =>{
+  
   const history = useHistory();
-  const [account, setAccount] = useState("");
-  const [passward, setPassward] = useState("");
+  const [email, setEmail] = useState("winniew0824@gmail.com");
+  const [password, setPassword] = useState("12");
+  const [UID, setUID] = useCallbackState("");
 
+  const handlelogin = () =>{
+    if(email.length===0){
+        notification['error']({
+          message: '錯誤',
+          description:
+            '請輸入你的帳號(不可為空)',
+        });
+    }else if(password.length===0){
+      notification['error']({
+        message: '錯誤',
+        description:
+          '請輸入你的密碼(不可為空)',
+      });
+    }else if(email.search("@gmail.com")  === -1){
+      notification['error']({
+        message: '錯誤',
+        description:
+          '帳號須為合理mail(@gmail.com)',
+      });
+    }else
+    {
+      login_req({api:'login',
+                  data: {email:email, password:password}});
+
+      client_ws.onmessage = function(e){
+        var msg = JSON.parse(e.data);
+        console.log(msg);
+
+        if(msg.data.status === false){
+          notification['error']({
+              message: '錯誤',
+              description:
+              '使用者錯誤 或是 密碼錯誤，請確認是否已經註冊！'+msg.data.error_msg,
+            });
+        }else if(msg.data.status === true){
+          setUID(msg.data.UID);
+          console.log(msg.data.UID);
+          var data = {UID: msg.data.UID, password: password, email:email};
+          var path = {
+            pathname:"/index",
+            state:{data},
+          }
+          history.push(path);
+        }
+        console.log(UID);
+      }
+     
+    }
+    
+
+    // history.push(path);
+    
+
+  };
+  
   return( 
     <React.Fragment>
     
@@ -31,9 +89,8 @@ const Login = () =>{
               <Input 
               className="login_searchbox"
               placeholder="                                                @gmail.com"
-              onFocus="this.placeholder = ''"
-              onChange={(event)=>setAccount(()=>event.target.value)}
-              value={account}
+              onChange={(event)=>setEmail(()=>event.target.value)}
+              value={email}
             />
           </div>
       </div>
@@ -43,8 +100,8 @@ const Login = () =>{
         <div className="login_password-input" >
             <Input.Password 
                   className="login_searchbox"
-                  onChange={(event)=>setPassward(()=>event.target.value)} 
-                  value={passward} />
+                  onChange={(event)=>setPassword(()=>event.target.value)} 
+                  value={password} />
 
             {/* <Button
                 type="link"
@@ -58,11 +115,12 @@ const Login = () =>{
       <div className="login_login">
         <Button
             className="login_login-button"
-            onClick = {()=>{history.push("/index")}}>
+            onClick = {handlelogin}>
           登入
         </Button>
       </div>
       </Content>
+
       <Footer style={{backgroundColor:"white"}}>
       <div className="login_bottom-register">
         <Button
