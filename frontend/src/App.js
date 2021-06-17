@@ -31,7 +31,8 @@ const App = () =>{
     isDue,
     time_voted,
     place_voted,
-    place_options, }
+    place_options,
+    isAdmin }
   = useData()
 
   const displayStatus = (payload) =>{
@@ -90,7 +91,7 @@ const App = () =>{
               time_voted={time_voted}
               place_voted={place_voted}
               place_options={place_options}
-
+              isAdmin={isAdmin}
               />)} />
       </Switch>
     </BrowserRouter>
