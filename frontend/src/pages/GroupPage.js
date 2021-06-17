@@ -17,7 +17,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData}) =>{
+const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, displayStatus}) =>{
     const { UID, GID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('ChatRoom')
@@ -98,7 +98,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData}) =
                 <Breadcrumb.Item>{GName}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData}/>):(null)}
+                {activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null)}
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

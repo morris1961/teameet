@@ -11,6 +11,7 @@ import HomePage from "./pages/HomePage"
 import GroupPage from "./pages/GroupPage"
 import DiscussionPage from "./pages/DiscussionPage"
 import useData from "./useData"
+import { message } from 'antd'
 import 'antd/dist/antd.css';
 
 const App = () =>{
@@ -33,6 +34,24 @@ const App = () =>{
     place_options, }
   = useData()
 
+  const displayStatus = (payload) =>{
+    if(payload){
+      const {type, msg} = payload
+      const content = {
+        content: msg,
+        duration: 1.5,
+      }
+      switch(type){
+        case "success":
+          message.success(content)
+          break
+        case "error":
+          message.error(content)
+          break
+      }
+    }
+  }
+
   return( 
     
     <BrowserRouter>
@@ -53,7 +72,9 @@ const App = () =>{
             file={file}
             discussions={discussions} 
             group={group} 
-            sendData={sendData}/>)} />
+            sendData={sendData}
+            displayStatus={displayStatus}
+            />)} />
 
             <Route exact path="/:UID/:GID/:DID" 
             render={()=>
@@ -69,6 +90,7 @@ const App = () =>{
               time_voted={time_voted}
               place_voted={place_voted}
               place_options={place_options}
+
               />)} />
       </Switch>
     </BrowserRouter>

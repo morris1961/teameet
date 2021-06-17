@@ -27,11 +27,11 @@ const ChatModal = ({visible, onCreate, onCancel}) =>{
             >
                 <Form.Item
                 name="url" // name attr 後面取的名字是讓 onCreate 那邊可以取得使用者輸入的這格的值
-                label="New URL"
+                label="新連結"
                 rules={[
                     {
                       required: true,
-                      message: 'Error: Please enter the new URL first!',
+                      message: '錯誤：請輸入新的連結！',
                     },
                 ]}
                 >
