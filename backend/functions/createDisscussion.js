@@ -31,9 +31,9 @@ async function createDiscussion({ GID, UID, subject, content, time_start, time_s
     }
     await discussion.updateOne({ $set: { time_options } });
 
-    var discussions = group.discussions;
-    discussions.push(DID);
-    await group.updateOne({ discussions });
+    const newDiscussions = group.discussions;
+    newDiscussions.push(DID);
+    await group.updateOne({ discussions: newDiscussions});
 
     for (let i = 0; i < group.discussions.length; i++) {
       const aDisscussion = await Discussion.findById(group.discussions[i]);
