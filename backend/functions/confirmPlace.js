@@ -17,7 +17,7 @@ async function confirmPlace({ UID, DID, place_result }) {
       error_msg = "The user is not admin!"
       return { status, error_msg };
     }
-    if (!(new Date().getTime() - discussion.deadline.getTime()) >= 0){
+    if ((new Date().getTime() - discussion.deadline.getTime()) < 0){
       status = false;
       error_msg = "The deadline has not arrived!"
       return { status, error_msg };

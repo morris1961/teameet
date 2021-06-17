@@ -18,7 +18,7 @@ async function confirmTime({ UID, DID, time_result }) {
       error_msg = "The user is not admin!"
       return { status, error_msg };
     }
-    if (!(new Date().getTime() - discussion.deadline.getTime()) >= 0){
+    if ((new Date().getTime() - discussion.deadline.getTime()) < 0){
       status = false;
       error_msg = "The deadline has not arrived!"
       return { status, error_msg };
