@@ -17,7 +17,23 @@ async function confirmPlace({ UID, DID, place_result }) {
       error_msg = "The user is not admin!"
       return { status, error_msg };
     }
-    // todo check if result is in options
+    if (!(new Date().getTime() - discussion.deadline.getTime()) >= 0){
+      status = false;
+      error_msg = "The deadline has not arrived!"
+      return { status, error_msg };
+    }
+    let isIn = false;
+    for (var [key, value] of discussion.place_options) {
+      if (key === place_result) {
+        isIn = true;
+        break;
+      }
+    }
+    if(!isIn){
+      status = false;
+      error_msg = "The place is not in the options";
+      return { status, error_msg };
+    }
     await discussion.updateOne({ $set: { place_result } })
     status = true;
     error_msg = "Successed!";
