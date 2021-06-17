@@ -5,6 +5,7 @@ import Discussion from '../models/discussion.js'
 async function confirmTime({ UID, DID, time_result }) {
   var status = false;
   var error_msg = "Something wrong...";
+  time_result = new Date(time_result);
   try {
     const discussion = await Discussion.findById(DID);
     if (!discussion) {
@@ -17,9 +18,24 @@ async function confirmTime({ UID, DID, time_result }) {
       error_msg = "The user is not admin!"
       return { status, error_msg };
     }
-    // todo check if result is in options
-    // todo
-    // await discussion.updateOne({ $set: { time_result } })
+    if (!(new Date().getTime() - discussion.deadline.getTime()) >= 0){
+      status = false;
+      error_msg = "The deadline has not arrived!"
+      return { status, error_msg };
+    }
+    let isIn = false;
+    for (var [key, value] of discussion.time_options) {
+      if (key === time_result) {
+        isIn = true;
+        break;
+      }
+    }
+    if(!isIn){
+      status = false;
+      error_msg = "The time is not in the options";
+      return { status, error_msg };
+    }
+    await discussion.updateOne({ $set: { time_result } })
     status = true;
     error_msg = "Successed!";
   } catch (e) {
