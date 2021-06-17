@@ -31,8 +31,7 @@ const App = () =>{
     isDue,
     time_voted,
     place_voted,
-    place_options,
-    isAdmin }
+    place_options,}
   = useData()
 
   const displayStatus = (payload) =>{
