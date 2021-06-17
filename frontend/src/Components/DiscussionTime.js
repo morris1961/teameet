@@ -6,7 +6,7 @@ import VotedTime from './VotedTime';
 
 
 
-const DiscussionTime = ({time_options, voted, isDue, sendData}) =>{
+const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData}) =>{
     const { UID, GID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
     const options = Object.keys(time_options)
@@ -39,7 +39,7 @@ const DiscussionTime = ({time_options, voted, isDue, sendData}) =>{
 
     return(
       <>
-        {voted?
+        {isDue?(isAdmin?(null):(null)):(voted?
         (<VotedTime time_options={time_options} UID={UID} />)
         :(<Row>
           {console.log(checkList)}
@@ -59,7 +59,7 @@ const DiscussionTime = ({time_options, voted, isDue, sendData}) =>{
               </>):null}
             </>)
           })}
-        </Row>)}
+        </Row>))}
         
       </>
     )

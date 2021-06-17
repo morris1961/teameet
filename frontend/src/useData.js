@@ -16,7 +16,7 @@ const useData = () => {
     const [isDue, setIsDue] = useState(false)
     const [time_voted, setTimeVoted] = useState(false)
     const [place_voted, setPlaceVoted] = useState(false)
-
+    const [isSelect, setIsSelect] = useState(false)
 
     client.onopen = () => {
         console.log("client connected")
@@ -94,6 +94,7 @@ const useData = () => {
                     setIsDue(data.isDue)
                     setIsAdmin(data.isAdmin)
                     setTimeVoted(data.voted)
+                    setIsSelect(data.isSelect)
                 }
                 break
             }
@@ -104,6 +105,7 @@ const useData = () => {
                     setIsDue(data.isDue)
                     setIsAdmin(data.isAdmin)
                     setPlaceVoted(data.voted)
+                    setIsSelect(data.isSelect)
                 }
                 break
             }
@@ -179,7 +181,7 @@ const useData = () => {
         time_voted,
         place_voted,
         place_options,
-
+        isSelect,
     }
 }
 export default useData;
