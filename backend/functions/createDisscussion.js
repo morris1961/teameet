@@ -1,6 +1,7 @@
 // import models
 import Group from '../models/group.js'
 import Discussion from '../models/discussion.js'
+import moment from "moment";
 
 // function for every cases
 async function createDiscussion({ GID, UID, subject, content, time_start, time_span, time_end, deadline }) {
@@ -8,9 +9,9 @@ async function createDiscussion({ GID, UID, subject, content, time_start, time_s
   var DID = ""
   var error_msg = "Something wrong...";
   var discussions = [];
-  time_start = new Date(time_start); // 時間怪怪ㄉ
-  time_end = new Date(time_end);
-  deadline = new Date(deadline);
+  time_start = new Date(moment(time_start).toDate());
+  time_end = new Date(moment(time_end).toDate());
+  deadline = new Date(moment(deadline).toDate());
   time_span = parseInt(time_span);
   try {
     const group = await Group.findById(GID);
@@ -24,10 +25,10 @@ async function createDiscussion({ GID, UID, subject, content, time_start, time_s
     DID = discussion._id;
     var time_options = new Map();
     var time_option = time_start;
-    time_options.set(time_option.toString(), []);
+    time_options.set(time_option, []);
     while (time_option.getTime() <= time_end.getTime()) {
       time_option.setMinutes(time_option.getMinutes() + time_span);
-      time_options.set(time_option.toString(), []);
+      time_options.set(time_option, []);
     }
     await discussion.updateOne({ $set: { time_options } });
 

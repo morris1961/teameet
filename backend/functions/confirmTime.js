@@ -1,11 +1,12 @@
 // import models
 import Discussion from '../models/discussion.js'
+import moment from "moment";
 
 // function for every cases
 async function confirmTime({ UID, DID, time_result }) {
   var status = false;
   var error_msg = "Something wrong...";
-  time_result = new Date(time_result);
+  time_result = new Date(moment(time_result).toDate());
   try {
     const discussion = await Discussion.findById(DID);
     if (!discussion) {
