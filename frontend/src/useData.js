@@ -16,7 +16,10 @@ const useData = () => {
     const [isDue, setIsDue] = useState(false)
     const [time_voted, setTimeVoted] = useState(false)
     const [place_voted, setPlaceVoted] = useState(false)
-    const [isSelect, setIsSelect] = useState(false)
+    const [isSelectPlace, setIsSelectPlace] = useState(false)
+    const [isSelectTime, setIsSelectTime] = useState(false)
+    const [time_result, setTimeResult] = useState('')
+    const [place_result, setPlaceResult] = useState('')
 
     client.onopen = () => {
         console.log("client connected")
@@ -75,6 +78,7 @@ const useData = () => {
                 break
             }
             case "createDiscussion": {
+                setDiscussions(data.discussions)
                 break
             }
             case "discussion": {
@@ -94,7 +98,7 @@ const useData = () => {
                     setIsDue(data.isDue)
                     setIsAdmin(data.isAdmin)
                     setTimeVoted(data.voted)
-                    setIsSelect(data.isSelect)
+                    setIsSelectTime(data.isSelect)
                 }
                 break
             }
@@ -105,7 +109,7 @@ const useData = () => {
                     setIsDue(data.isDue)
                     setIsAdmin(data.isAdmin)
                     setPlaceVoted(data.voted)
-                    setIsSelect(data.isSelect)
+                    setIsSelectPlace(data.isSelect)
                 }
                 break
             }
@@ -132,6 +136,22 @@ const useData = () => {
                 }
                 break
 
+            }
+            case "confirmTime":{
+                const { status } = data;
+                if(status === true){
+                    setTimeResult(data.time_result)
+                    setIsSelectTime(data.isSelect)
+                }
+                break
+            }
+            case "confirmPlace":{
+                const { status } = data;
+                if(status === true){
+                    setPlaceResult(data.place_result)
+                    setIsSelectPlace(data.isSelect)
+                }
+                break
             }
             default:
                 break
@@ -181,7 +201,8 @@ const useData = () => {
         time_voted,
         place_voted,
         place_options,
-        isSelect,
+        isSelectTime,
+        isSelectPlace,
     }
 }
 export default useData;
