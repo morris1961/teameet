@@ -3,6 +3,7 @@ import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { Input, Radio, DatePicker, Button, Row, Col } from 'antd';
 import moment from 'moment';
+import 'moment-timezone';
 
 const formItemLayoutWithOutLabel = {
     wrapperCol: {
@@ -20,7 +21,6 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
     const [timeEnd, setTimeEnd] = useState('')
     const [timeSpan, setTimeSpan] = useState('')
     const [deadline, setDeadline] = useState('')
-    const [timeEnd2, setTimeEnd2] = useState('')
 
     const config = {
         rules: [{ type: 'object', required: true, message: 'Please select time!' }],
@@ -31,14 +31,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
 
     const disabledDate = (current) => {
         // Can not select days before today and today
-        return current && current < moment().endOf('day');
-    }
-
-    const disableDate2 = (current) =>{
-        if(timeEnd2 === ''){
-            return
-        }
-        return current && current < timeEnd2;
+        return current && current < moment().startOf('day');
     }
 
 
@@ -71,15 +64,12 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
 
     const onChangeRangePicker = (value, dateString) =>{
         // Formatted Selected Time: dateString
-        setTimeStart(dateString[0])
-        setTimeEnd(dateString[1])
-        // Origin: value(moment type)
-        setTimeEnd2(value[1])
+        setTimeStart(moment.tz(dateString[0], 'Asia/Taipei').format())
+        setTimeEnd(moment.tz(dateString[1], 'Asia/Taipei').format())
     }
 
     const onChangeDatePicker = (value, dateString) =>{
-        // Formatted Selected Time: dateString
-        setDeadline(dateString)
+        setDeadline( moment.tz(dateString, 'Asia/Taipei').format())
     }
 
 
@@ -112,7 +102,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
                     </Radio.Group>
                 </Form.Item>
                 <Form.Item name="date-time-picker" label="投票截止時間" {...config}>
-                    <DatePicker showTime format="YYYY-MM-DD HH"  disabledDate={disableDate2} onChange={onChangeDatePicker}/>
+                    <DatePicker showTime format="YYYY-MM-DD HH"  disabledDate={disabledDate} onChange={onChangeDatePicker}/>
                 </Form.Item>
                 {/* <Form.Item>
                     
