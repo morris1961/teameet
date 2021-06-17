@@ -43,7 +43,7 @@ async function confirmTime({ UID, DID, time_result }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, error_msg };
+  return { status, time_result, error_msg };
 }
 
 export default confirmTime;

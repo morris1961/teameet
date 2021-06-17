@@ -42,7 +42,7 @@ async function confirmPlace({ UID, DID, place_result }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, error_msg };
+  return { status, place_result, error_msg };
 }
 
 export default confirmPlace;
