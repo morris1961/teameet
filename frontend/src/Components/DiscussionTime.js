@@ -2,11 +2,13 @@ import { Checkbox, Row, Col, Button } from 'antd';
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import VotedTime from './VotedTime';
+import SelectedTime from './SelectedTime';
+import NotSelectedTime from './NotSelectedTime';
 
 
 
 
-const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData}) =>{
+const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData, isSelect, displayStatus, time_result}) =>{
     const { UID, GID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
     const options = Object.keys(time_options)
@@ -39,7 +41,14 @@ const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData}) =>{
 
     return(
       <>
-        {isDue?(isAdmin?(null):(null)):(voted?
+        {isDue?(isSelect?(<SelectedTime time_options={time_options} time_result={time_result}/>):(
+        <NotSelectedTime 
+        UID={UID} 
+        DID={DID} 
+        displayStatus={displayStatus} 
+        time_options={time_options} 
+        isAdim={isAdmin} 
+        sendData={sendData}/>)):(voted?
         (<VotedTime time_options={time_options} UID={UID} />)
         :(<Row>
           {console.log(checkList)}

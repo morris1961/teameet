@@ -21,7 +21,7 @@ const formItemLayoutWithOutLabel = {
     },
 };
 
-const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData}) =>{
+const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSelect}) =>{
     const { UID, GID, DID } = useParams()
     const options = Object.keys(place_options)
     const places = {"places": options.map((e, index)=>({key: index, name: e}))}

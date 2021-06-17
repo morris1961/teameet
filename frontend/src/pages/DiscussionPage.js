@@ -17,7 +17,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendData, time_options, isDue, time_voted, place_voted, place_options}) =>{
+const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendData, time_options, isDue, time_voted, place_voted, place_options, isSelectTime, isSelectPlace, displayStatus, time_result, place_result}) =>{
 
     const { UID, GID, DID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
@@ -60,7 +60,25 @@ const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendDat
                 <Breadcrumb.Item>{subject}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "content"?(<DiscussionContent subject={subject} content={content}/>):(activeKey === "time"?(<DiscussionTime voted={time_voted} time_options={time_options} isDue={isDue} isAdmin={isAdmin} sendData={sendData}/>):(<DiscussionPlace voted={place_voted} place_options={place_options}isDue={isDue} isAdmin={isAdmin} sendData={sendData}  />))}
+                {activeKey === "content"?(<DiscussionContent subject={subject} content={content}/>):
+                (activeKey === "time"?(
+                <DiscussionTime 
+                voted={time_voted} 
+                time_options={time_options} 
+                isDue={isDue} 
+                isAdmin={isAdmin} 
+                sendData={sendData} 
+                isSelect={isSelectTime} 
+                displayStatus={displayStatus}
+                time_result={time_result}/>):(
+                <DiscussionPlace 
+                voted={place_voted} 
+                place_options={place_options}
+                isDue={isDue} 
+                isAdmin={isAdmin} 
+                sendData={sendData} 
+                isSelect={isSelectPlace} 
+                displayStatus={displayStatus} />))}
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
