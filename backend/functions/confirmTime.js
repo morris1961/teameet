@@ -26,7 +26,7 @@ async function confirmTime({ UID, DID, time_result }) {
     }
     let isIn = false;
     for (var [key, value] of discussion.time_options) {
-      if (key === time_result) {
+      if (key === time_result.toISOString().replace(".", " ")) {
         isIn = true;
         break;
       }

@@ -1,5 +1,7 @@
 // import models
 import Discussion from '../models/discussion.js'
+import moment from 'moment';
+import 'moment-timezone';
 
 // function for every cases
 async function time({ UID, DID, times }) {
@@ -16,11 +18,14 @@ async function time({ UID, DID, times }) {
     for (let j = 0; j < times.length; j++) {
       const time = new Date(moment(times[j]).toDate());
       for (var [key, value] of time_options) {
-        if (key === time) {
-          time_options[key].push(UID);
+        if (key === time.toISOString().replace(".", " ")) {
+          var newArray = value.push(UID);
+          time_options.set(key, newArray);
+          break;
         }
       }
     }
+    console.log(time_options);
     await discussion.updateOne({ $set: { time_options } })
     status = true;
     error_msg = "Successed!";

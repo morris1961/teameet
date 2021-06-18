@@ -25,10 +25,10 @@ async function createDiscussion({ GID, UID, subject, content, time_start, time_s
     DID = discussion._id;
     var time_options = new Map();
     var time_option = time_start;
-    time_options.set(time_option, []);
-    while (time_option.getTime() <= time_end.getTime()) {
+    time_options.set(time_option.toISOString().replace(".", " "), []);
+    while (time_option.getTime() < time_end.getTime()) {
       time_option.setMinutes(time_option.getMinutes() + time_span);
-      time_options.set(time_option, []);
+      time_options.set(time_option.toISOString().replace(".", " "), []);
     }
     await discussion.updateOne({ $set: { time_options } });
 
