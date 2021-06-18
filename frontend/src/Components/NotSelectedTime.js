@@ -10,19 +10,22 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
     const [max, setMax] = useState(0)
 
     useEffect(()=>{
-        const options = Object.keys(time_options)
-        let newShowOptions = [] // 這裡改 show_options 就不行?
-        let newMax = 0
-        options.map((e)=>{
-            let cnt = time_options[e].length
-            if(cnt > newMax){
-                newMax = cnt
-            }
-            let formated = moment(e).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')
-            newShowOptions.push({option:formated, cnt})
-        }) 
-        setMax(newMax)
-        setShowOptions(newShowOptions)
+        if(time_options){
+            const options = Object.keys(time_options)
+            let newShowOptions = [] // 這裡改 show_options 就不行?
+            let newMax = 0
+            options.map((e)=>{
+                let cnt = time_options[e].length
+                if(cnt > newMax){
+                    newMax = cnt
+                }
+                let formated = moment(e).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')
+                newShowOptions.push({option:formated, cnt})
+            }) 
+            setMax(newMax)
+            setShowOptions(newShowOptions)
+        }
+        
         
     }, [])
 
@@ -41,7 +44,7 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
                 <Col span={2}></Col>
                 <Col span={18}>
                     <Divider orientation="center" plain>
-                        投票結果！
+                        投票結果！（創建討論者還未選擇最終結果）
                     </Divider>
                     <h2>如下：</h2>
                     {isAdmin?(
@@ -61,7 +64,7 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
                                 }
                             })}
                         </Radio.Group>
-                        <Button type="primary" htmlType="submit" onClick={handleSubmit}>
+                        <Button type="primary" htmlType="submit" style={{marginTop: "10px"}} onClick={handleSubmit}>
                             確認時間
                         </Button>
                         </>

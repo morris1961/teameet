@@ -5,25 +5,33 @@ import { Divider, Row, Col, Radio, Button, Tag } from 'antd';
 const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displayStatus}) =>{
     const [show_options, setShowOptions] = useState([])
     const [place_result, setPlaceResult] = useState('')
-    let max = 0
+    const [max, setMax] = useState(0)
+
+    console.log(place_options, show_options)
 
     useEffect(()=>{
-        const options = Object.keys(place_options)
-        let newShowOptions = [] // 這裡改 show_options 就不行?
-        options.map((e)=>{
-            let cnt = place_options[e].length
-            if(cnt > max){
-                max = cnt
-            }
-            newShowOptions.push({option:e, cnt})
-        }) 
-        setShowOptions(newShowOptions)
-    }, [])
+        if(place_options){
+            let options = []
+            options = Object.keys(place_options)
+            let newShowOptions = [] // 這裡改 show_options 就不行?
+            let newMax = 0
+            options.map((e)=>{
+                let cnt = place_options[e].length
+                if(cnt > newMax){
+                    newMax = cnt
+                }
+                newShowOptions.push({option:e, cnt})
+            }) 
+            setMax(newMax)
+            setShowOptions(newShowOptions)
+        }
+    }, [place_options])
 
     const handleSubmit = () =>{
         if(place_result === ''){
-            displayStatus({type: 'error', msg: '請選擇最終地點'})
+            displayStatus({type: 'error', msg: '請選擇最終時間'})
         }
+
         let data = {UID, DID, place_result}
         sendData("confirmPlace", data)
     }
@@ -34,12 +42,12 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
                 <Col span={2}></Col>
                 <Col span={18}>
                     <Divider orientation="center" plain>
-                        投票結果！
+                        投票結果！（創建討論者還未選擇最終結果）
                     </Divider>
                     <h2>如下：</h2>
                     {isAdmin?(
                         <>
-                        <Radio.Group name="radiogroup" onChange={(e)=>{setPlaceResult(e.target.value)}}>\
+                        <Radio.Group name="radiogroup" onChange={(e)=>{setPlaceResult(e.target.value)}}>
                             {show_options.map(({option, cnt}, index)=>{
                                 if(cnt === max){
                                     return(<Radio key={index} value={option} style={{margin:'3px'}}>{option}： 
@@ -53,17 +61,27 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
                                 }
                             })}
                         </Radio.Group>
-                        <Button type="primary" htmlType="submit" onClick={handleSubmit}>
-                            確認地點
+                        <Button type="primary" htmlType="submit"  style={{marginTop: "10px"}} onClick={handleSubmit}>
+                            確認時間
                         </Button>
                         </>
                     ):(
                     <div>
                         {show_options.map(({option, cnt}, index)=>{
-                            return (
-                            <p key={index}>{option}： 
-                                <Tag color="blue">{cnt} 票</Tag>
-                            </p>)
+                            if(cnt === max){
+                                return(
+                                    <p key={index} value={option} style={{margin:'3px'}}>{option}： 
+                                        <Tag color="cyan">{cnt} 票</Tag>
+                                    </p>
+                                )
+                            }
+                            else{
+                                return (
+                                    <p key={index} value={option} style={{margin:'3px'}}>{option}： 
+                                        <Tag color="blue">{cnt} 票</Tag>
+                                    </p>)
+                            }
+                            
                         })}
                     </div>
                     )}

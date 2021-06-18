@@ -25,6 +25,8 @@ const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendDat
     const history = useHistory()
     const location = useLocation()
 
+    console.log(place_result)
+
     const onCollapse = collapsed => {
         console.log(collapsed);
         setCollapsed(collapsed);

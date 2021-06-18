@@ -64,6 +64,8 @@ const App = () =>{
     }
   }
 
+  console.log(place_result)
+
   return( 
     
     <BrowserRouter>

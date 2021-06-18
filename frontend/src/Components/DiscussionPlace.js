@@ -11,16 +11,26 @@ import PlaceModal from './PlaceModal'
 
 const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSelect, displayStatus, place_result}) =>{
 
+    console.log(place_result)
+
+
     const { UID, GID, DID } = useParams()
-    // const [options, setOptions] = useState([])
     const [checkList, setCheckList] = useState([])
     const [modalVisible, setModalVisible] = useState(false)
-
+    const [options, setOptions] = useState([])
 
     useEffect(()=>{
         let data = {UID, DID}  
         sendData("place", data)
     }, [])
+
+    useEffect(()=>{
+        if(place_options){
+            let newOptions = []
+            newOptions = Object.keys(place_options)
+            setOptions(newOptions)
+        }
+    }, [place_options])
 
 
     const addPlace = (place) =>{
@@ -46,14 +56,14 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSele
                 UID={UID} 
                 DID={DID} 
                 displayStatus={displayStatus} 
-                time_options={place_options} 
+                place_options={place_options} 
                 isAdmin={isAdmin} 
                 sendData={sendData}/>)):
             voted?(<VotedPlace UID={UID} place_options={place_options} />):
             (<>
             <Checkbox.Group style={{ width: '100%' }} onChange={(list)=>{setCheckList(list)}}>
                 <Row>
-                    {Object.keys(place_options).map((option, index)=>{
+                    {options.map((option, index)=>{
                         return(
                         <>
                         <Col span={8}>

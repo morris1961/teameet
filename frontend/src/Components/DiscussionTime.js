@@ -9,15 +9,23 @@ import 'moment-timezone';
 
 
 const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData, isSelect, displayStatus, time_result}) =>{
-  
+
     const { UID, GID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
-    const options = Object.keys(time_options)
+    const [options, setOptions] = useState([])
     
     useEffect(()=>{
       let data = {UID, DID}  
-      sendData("time", data)
+      sendData("time", data)      
     }, [])
+
+    useEffect(()=>{
+      if(time_options){
+        let newOptions = []
+        newOptions = Object.keys(time_options)
+        setOptions(newOptions)
+      }
+    }, [time_options])
 
     const handleCheck = (e, option)=>{
 

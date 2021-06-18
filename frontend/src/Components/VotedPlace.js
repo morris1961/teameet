@@ -3,9 +3,10 @@ import { Divider, Row, Col } from 'antd';
 
 const VotedTime = ({place_options, UID}) =>{
     const [show_options, setShowOptions] = useState([])
-    const options = Object.keys(place_options)
+    
     useEffect(()=>{
         if(place_options){
+            const options = Object.keys(place_options)
             let newShowOptions = []
             options.map((e)=>{
                 if(place_options[e].indexOf(UID) !== -1){
@@ -28,7 +29,7 @@ const VotedTime = ({place_options, UID}) =>{
                     </Divider>
                     <h2>地點如下：</h2>
                     <div>
-                        {show_options?(show_options.map((e)=>(<p>{e}</p>))):(null)}
+                        {show_options?(show_options.map((e, index)=>(<p key={index}>{e}</p>))):(null)}
                     </div>
                 </Col>
             </Row>
