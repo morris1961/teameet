@@ -1,15 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Divider, Row, Col } from 'antd';
+import moment from 'moment';
+import 'moment-timezone';
 
 const VotedTime = ({time_options, UID}) =>{
-    const show_options = []
+    const [show_options, setShowOptions] = useState([])
     const options = Object.keys(time_options)
+
     useEffect(()=>{
+        let newShowOptions = []
         options.map((e)=>{
             if(time_options[e].indexOf(UID) !== -1){
-                show_options.push(e)
+                newShowOptions.push(e)
             }
         }) 
+        setShowOptions(newShowOptions)
     }, [])
 
     return(
@@ -22,7 +27,7 @@ const VotedTime = ({time_options, UID}) =>{
                     </Divider>
                     <h2>時間如下：</h2>
                     <div>
-                        {show_options.map((e)=>(<p>{e}</p>))}
+                        {show_options.map((e)=>(<p>{moment(e).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')}</p>))}
                     </div>
                 </Col>
             </Row>
