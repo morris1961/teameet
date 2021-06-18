@@ -10,6 +10,7 @@ async function time({ UID, DID }) {
   var voted = false;
   var error_msg = "Something wrong...";
   var isSelect = false;
+  var time_result = "";
   try {
     const discussion = await Discussion.findById(DID);
     if (!discussion) {
@@ -31,7 +32,8 @@ async function time({ UID, DID }) {
     }
     isDue = (new Date().getTime() - discussion.deadline.getTime()) >= 0
     isAdmin = UID.toString() === discussion.admin.toString();
-    isSelect = !(discussion.time_result == new Date(0));
+    time_result = discussion.time_result;
+    isSelect = !(time_result == new Date(0));
     status = true;
     error_msg = "Successed!";
   } catch (e) {
@@ -39,7 +41,7 @@ async function time({ UID, DID }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, time_options, isDue, isAdmin, voted, isSelect, error_msg };
+  return { status, time_options, isDue, isAdmin, voted, isSelect, time_result, error_msg };
 }
 
 export default time;
