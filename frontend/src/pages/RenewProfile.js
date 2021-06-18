@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import 'antd/dist/antd.css';
 import '../style/RenewProfile.css'
 import {Button, Input, Layout, notification} from 'antd';
 import {useHistory, useLocation} from "react-router-dom";
-import {renewProfile_req, client_ws } from "../Client"; 
 const { Header, Content } = Layout;
-const RegisterSuccess = () =>{
+const RegisterSuccess = ({status, sendData}) =>{
   const location = useLocation();
   var data = location.state.data;
   var {UID, UName, password, email} = data;
@@ -13,29 +12,30 @@ const RegisterSuccess = () =>{
   const history = useHistory();
   const [newUName, setUName] = useState(UName);
   const [newpassword, setPassword] = useState(password);
+  useEffect(()=>{
+    console.log(status);
+    if(status === true){
+      notification['success']({
+        message: '更新成功',
+        description:
+        '已更新您的個人資料, 即將跳轉回去',
+      });
+      setTimeout(history.goBack(), 2000 )
+    }else{
+      notification['error']({
+        message: '更新失敗',
+        description:
+        '伺服器出錯了, 麻煩你再嘗試一次',
+      });
+    }
+  });
+
   const handlerenew = () =>{
-    renewProfile_req({api:'renewProfile',
-                  data: {UID:UID, UName:newUName, password:newpassword}
-                });
-    client_ws.onmessage = function(e){
-    var msg = JSON.parse(e.data);
-    console.log(msg);
-    if(msg.api === 'renewProfile'){
-          if(msg.data.status === true){
-            notification['success']({
-              message: '更新成功',
-              description:
-              '已更新您的個人資料, 即將跳轉回去',
-            });
-            setTimeout(history.goBack(), 2000 )
-          }else{
-            notification['error']({
-              message: '更新失敗',
-              description:
-              '伺服器出錯了, 麻煩你再嘗試一次',
-            });
-          }
-  }}}
+
+    var data = {UID:UID, UName:newUName, password:newpassword};
+    sendData('renewProfile', data);
+    
+  }
   return( 
     <React.Fragment>
     

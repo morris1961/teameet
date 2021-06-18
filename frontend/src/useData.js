@@ -23,6 +23,10 @@ const useData = () => {
     const [status, setStatus] = useState();
     const [UID, setUID] = useState("");
     const [error_msg, setError_msg] = useState("");
+    const [recent, setRecent] = useState([{}]);
+    const [voting, setVoting] = useState([{}]);
+    const [admin, setAdmin] = useState("");
+    const [GID, setGID] = useState("");
 
     client.onopen = () => {
         console.log("client connected")
@@ -66,21 +70,49 @@ const useData = () => {
             }
             case "index": {
                 const { status } = data;
+                console.log("data:",data);
                 if (status === true) {
                     let un = data.UName
                     let g = data.group
                     setUName(un)
                     setGroup(g)
+                    setRecent(data.recent);
+                    setVoting(data.voting);
+                }else{
+                    setStatus(false);
                 }
                 break
             }
             case "createGroup": {
+                const { status } = data;
+                console.log(data);
+                if (status === true) {
+                    setAdmin(data.admin);
+                    setGName(data.GName);
+                    setFile(data.file);
+                }
                 break
             }
             case "joinGroup": {
+                const { status } = data;
+                console.log(data);
+                if (status === true) {
+                    setGID(data.GID);
+                    setGName(data.GName);
+                    setError_msg(data.error_msg);
+                    // setFile(data.file);
+                }
+                setError_msg(data.error_msg);
                 break
             }
             case "renewProfile": {
+                const { status } = data;
+                console.log(data);
+                if (status === true) {
+                    setStatus(true);
+                }else{
+                    setStatus(false);
+                }
                 break
             }
             case "group": {
