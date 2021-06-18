@@ -35,7 +35,7 @@ const Login = ({sendData, status, UID, error_msg}) =>{
   })
   const history = useHistory();
   const [email, setEmail] = useState("winniew0824@gmail.com");
-  const [password, setPassword] = useState("12");
+  const [password, setPassword] = useState("123");
   const [click, setClick] = useState(false);
 
 
