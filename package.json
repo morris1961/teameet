@@ -17,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/morris1961/teameet/issues"
   },
-  "homepage": "https://github.com/morris1961/teameet#readme"
+  "homepage": "https://github.com/morris1961/teameet#readme",
+  "dependencies": {
+    "dotenv-defaults": "^2.0.2",
+    "moment-timezone": "^0.5.33",
+    "mongoose": "^5.12.14",
+    "react-icons": "^4.2.0",
+    "react-if-elseif-else-render": "^1.0.2",
+    "react-scripts": "^4.0.3"
+  }
 }

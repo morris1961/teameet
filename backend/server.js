@@ -63,6 +63,7 @@ wss.on('connection', async function connection(ws) {
           (ret) => {
             msg.data = ret;
             ws.sendEvent(msg);
+            console.log("login_msg", msg)
           }
         );
         break;

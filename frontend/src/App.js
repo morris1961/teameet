@@ -35,7 +35,11 @@ const App = () =>{
     isSelectTime,
     isSelectPlace,
     time_result,
-    place_result,}
+    place_result,
+    status,
+    error_msg,
+    UID
+  }
   = useData()
 
   const displayStatus = (payload) =>{
@@ -61,8 +65,8 @@ const App = () =>{
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Beforelogin} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
+        <Route exact path="/login" render={()=>(<Login status = {status} error_msg={error_msg} UID={UID} sendData={sendData}/>)} />
+        <Route exact path="/register" render={()=>(<Register status = {status} sendData={sendData}/>)} />
         <Route exact path="/index" component={Index} />
         <Route exact path="/renewProfile" component={RenewProfile} />
         <Route exact path="/:UID" render={()=>(<HomePage UName={UName} group={group} sendData={sendData}/>)} />

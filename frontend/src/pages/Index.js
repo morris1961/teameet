@@ -62,73 +62,74 @@ const Index = () =>{
                   state:{data},
                 };
     history.push(path_renew)
+    
   }
   
   useEffect(()=>{
-    index_req({api:'index',
-                  data: {UID:UID}
-                });
-    client_ws.onmessage = function(e){
-    var msg = JSON.parse(e.data);
-    console.log(msg);
-    if(msg.api === 'index'){
-          if(msg.data.status === true){
-            setUName(msg.data.UName);
-            setVoting(msg.data.voting);
-            setRecent(msg.data.recent);
-          }else{
-            notification['error']({
-              message: '錯誤',
-              description:
-              '請稍後再重新登入一次, 並請你確認你的網路連接正常'+msg.data.error_msg,
-            });
-          }
-    }else if(msg.api === 'createGroup'){
-          if(msg.data.status === false){
-            notification['error']({
-              message: '錯誤',
-              description:
-              '請稍後再重新登入一次, 並請你確認你的網路連接正常'+ msg.data.error_msg,
-            });
-          }else if(msg.data.status === true){
-            notification['success']({
-              message: '成功',
-              description:
-              'success',
-            });
-            setGID(msg.data.GID);
-            setGName(msg.data.GName);
-            var data_creategroup = {UID: UID, GID: msg.data.GID};
-            var path_creategroup = {
-              pathname:"/group",
-              state:{data_creategroup},
-            }
-            setTimeout(history.push(path_creategroup), 2000 )
-          }
-    }else if(msg.api === 'joinGroup'){
-          if(msg.data.status === true){
-            notification['success']({
-              message: '成功',
-              description:
-              'success',
-            });
-            setGID(msg.data.GID);
-            setGName(msg.data.GName);
-            var data_group = {UID: UID, GID: msg.data.GID};
-            var path_group = {
-              pathname:"/",
-              state:{data_group},
-            }
-            setTimeout(history.push(path_group), 2000 )
-          }else{
-            notification['error']({
-              message: '錯誤',
-              description:
-              msg.data.error_msg,
-            });
-          }
-    }
-    }
+    // index_req({api:'index',
+    //               data: {UID:UID}
+    //             });
+    // client_ws.onmessage = function(e){
+    // var msg = JSON.parse(e.data);
+    // console.log(msg);
+    // if(msg.api === 'index'){
+    //       if(msg.data.status === true){
+    //         setUName(msg.data.UName);
+    //         setVoting(msg.data.voting);
+    //         setRecent(msg.data.recent);
+    //       }else{
+    //         notification['error']({
+    //           message: '錯誤',
+    //           description:
+    //           '請稍後再重新登入一次, 並請你確認你的網路連接正常'+msg.data.error_msg,
+    //         });
+    //       }
+    // }else if(msg.api === 'createGroup'){
+    //       if(msg.data.status === false){
+    //         notification['error']({
+    //           message: '錯誤',
+    //           description:
+    //           '請稍後再重新登入一次, 並請你確認你的網路連接正常'+ msg.data.error_msg,
+    //         });
+    //       }else if(msg.data.status === true){
+    //         notification['success']({
+    //           message: '成功',
+    //           description:
+    //           'success',
+    //         });
+    //         setGID(msg.data.GID);
+    //         setGName(msg.data.GName);
+    //         var data_creategroup = {UID: UID, GID: msg.data.GID};
+    //         var path_creategroup = {
+    //           pathname:"/group",
+    //           state:{data_creategroup},
+    //         }
+    //         setTimeout(history.push(path_creategroup), 2000 )
+    //       }
+    // }else if(msg.api === 'joinGroup'){
+    //       if(msg.data.status === true){
+    //         notification['success']({
+    //           message: '成功',
+    //           description:
+    //           'success',
+    //         });
+    //         setGID(msg.data.GID);
+    //         setGName(msg.data.GName);
+    //         var data_group = {UID: UID, GID: msg.data.GID};
+    //         var path_group = {
+    //           pathname:"/",
+    //           state:{data_group},
+    //         }
+    //         setTimeout(history.push(path_group), 2000 )
+    //       }else{
+    //         notification['error']({
+    //           message: '錯誤',
+    //           description:
+    //           msg.data.error_msg,
+    //         });
+    //       }
+    // }
+    // }
   });
 
   return( 

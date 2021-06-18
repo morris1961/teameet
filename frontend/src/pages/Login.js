@@ -1,17 +1,43 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import 'antd/dist/antd.css';
 import '../style/Login.css'
 import {Button, Input, Layout, notification} from 'antd';
 import {useHistory} from "react-router-dom";
-import useCallbackState from '../hooks/useCallbackState';
-import {login_req, client_ws } from "../Client"; 
 const { Header, Footer, Content } = Layout;
-const Login = () =>{
-  
+const Login = ({sendData, status, UID, error_msg}) =>{
+  useEffect(()=>{
+
+    if(click === true){
+      console.log("status", status);
+      if(status === undefined || error_msg === "" ){
+        console.log("undefined....")
+        // setClick(false);
+        return
+      }else if(status === true){
+        var data = {UID: UID, password: password, email:email};
+        var path = {
+          pathname:"/index",
+          state:{data},
+        }
+        history.push(path);
+        setClick(false);
+      }else if(status === false){
+        notification['error']({
+          message: '錯誤',
+          description:
+          '使用者錯誤 或是 密碼錯誤，請確認是否已經註冊！',
+          duration: 3,
+        });
+        setClick(false);
+      }
+
+    }
+  })
   const history = useHistory();
   const [email, setEmail] = useState("winniew0824@gmail.com");
   const [password, setPassword] = useState("12");
-  const [UID, setUID] = useCallbackState("");
+  const [click, setClick] = useState(false);
+
 
   const handlelogin = () =>{
     if(email.length===0){
@@ -32,41 +58,16 @@ const Login = () =>{
         description:
           '帳號須為合理mail(@gmail.com)',
       });
-    }else
-    {
-      login_req({api:'login',
-                  data: {email:email, password:password}});
-
-      client_ws.onmessage = function(e){
-        var msg = JSON.parse(e.data);
-        console.log(msg);
-
-        if(msg.data.status === false){
-          notification['error']({
-              message: '錯誤',
-              description:
-              '使用者錯誤 或是 密碼錯誤，請確認是否已經註冊！'+msg.data.error_msg,
-            });
-        }else if(msg.data.status === true){
-          setUID(msg.data.UID);
-          console.log(msg.data.UID);
-          var data = {UID: msg.data.UID, password: password, email:email};
-          var path = {
-            pathname:"/index",
-            state:{data},
-          }
-          history.push(path);
-        }
-        console.log(UID);
-      }
-     
+    }else{
+      var data = {email:email, password:password};
+      sendData('login', data)
+      console.log("login.js in frontend send:", data)
+      setClick(true);
     }
+  }
+  
     
-
-    // history.push(path);
     
-
-  };
   
   return( 
     <React.Fragment>
@@ -102,13 +103,6 @@ const Login = () =>{
                   className="login_searchbox"
                   onChange={(event)=>setPassword(()=>event.target.value)} 
                   value={password} />
-
-            {/* <Button
-                type="link"
-                className="forgetpass-button"
-                onClick = {useCallback(()=>history.push('/account/reset'), [history])}>
-              忘記密碼?
-            </Button> */}
         </div>
       </div>
     

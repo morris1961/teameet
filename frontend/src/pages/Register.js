@@ -1,18 +1,37 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, notification, Input, Layout } from 'antd';
 import { useHistory } from "react-router-dom";
 import { If, Then, Else } from 'react-if-elseif-else-render';
-import {register_req, client_ws } from "../Client"; 
 import 'antd/dist/antd.css';
 import '../style/Register.css'
 const { Header, Content } = Layout;
-const Register = () =>{
+const Register = ({sendData, status}) =>{
+  useEffect(()=>{
+    // console.log("useEffect ststus:", status)
+    if(click === true){
+      if(status === undefined){
+      console.log("undefined....")
+      setClick(false);
+      return
+    }else if(status === true){
+      setIsregistersuccess(true);
+      setClick(false);
+    }else if(status === false){
+      notification['error']({
+      message: '錯誤',
+      description:
+        '這個信箱已經註冊過了',
+      });
+      setClick(false);
+    } }
+});
   const history = useHistory();
-  const [UName, setUName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [pass2, setPass2] = useState("");
+  const [UName, setUName] = useState("winnie");
+  const [email, setEmail] = useState("winniew0824@gmail.com");
+  const [password, setPassword] = useState("123");
+  const [pass2, setPass2] = useState("123");
+  const [click, setClick] = useState(false);
   const [isregistersuccess,setIsregistersuccess] = useState(false);
   const handleregister = async()=>{
         if(email.length===0){
@@ -48,23 +67,12 @@ const Register = () =>{
           setPassword('');
           setPass2('');
         }else{
-          register_req({api:'register',
-                        data: {email:email, UName: UName, password:password}});
-          client_ws.onmessage = function(e){
-            var msg = JSON.parse(e.data);
-            console.log(msg);
-
-            if(msg.data.status === false){
-              notification['error']({
-                  message: '錯誤',
-                  description:
-                    '這個信箱已經註冊過了'+msg.data.error_msg,
-                });
-            }else if(msg.data.status === true){
-              setIsregistersuccess(true);
-            }
+          var data = {email:email, UName: UName, password:password};
+          sendData('register', data);
+          console.log("register.js in frontend send:", data);
+          setClick(true);
           }
-        }
+
       };
   return( 
     <React.Fragment>

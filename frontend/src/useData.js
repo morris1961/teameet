@@ -20,6 +20,9 @@ const useData = () => {
     const [isSelectTime, setIsSelectTime] = useState(false)
     const [time_result, setTimeResult] = useState('')
     const [place_result, setPlaceResult] = useState('')
+    const [status, setStatus] = useState();
+    const [UID, setUID] = useState("");
+    const [error_msg, setError_msg] = useState("");
 
     client.onopen = () => {
         console.log("client connected")
@@ -30,9 +33,35 @@ const useData = () => {
         const { api, data } = message
         switch (api) {
             case "register": {
+                const { status } = data;
+                if(status === false){
+                    setStatus(false);
+                }
+                else if (status === true){
+                    setStatus(true);
+                }
                 break
             }
             case "login": {
+                console.log("data",data);
+                const { status } = data;
+               
+                if(status === false){
+                    setStatus(false);
+                    // console.log("statusssss", status);
+                    setError_msg(data.error_msg);
+                }
+                else if (status === true) {
+                    
+                    // var uid = data.UID
+                    setUID(data.UID);
+                    setStatus(true);
+                    setError_msg(data.error_msg);
+                    // console.log("statusssss", status)
+                    // let g = data.group
+                    // setUName(un)
+                    // setGroup(g)
+                }
                 break
             }
             case "index": {
@@ -203,6 +232,9 @@ const useData = () => {
         place_options,
         isSelectTime,
         isSelectPlace,
+        status,
+        UID,
+        error_msg
     }
 }
 export default useData;
