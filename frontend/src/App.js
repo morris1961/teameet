@@ -73,8 +73,8 @@ const App = () =>{
         <Route exact path="/index" 
                 render={()=>(<Index status={status} 
                                   error_msg={error_msg} 
-                                  UName={UName} 
-                                  sendData={sendData} 
+                                  UName={UName}  
+                                  sendData={sendData}  
                                   recent = {recent} 
                                   voting={voting} 
                                   group={group}

@@ -202,7 +202,7 @@ const useData = () => {
                 const { status } = data;
                 if(status === true){
                     setTimeResult(data.time_result)
-                    setIsSelectTime(data.isSelect)
+                    setIsSelectTime(data.status)
                 }
                 break
             }
@@ -210,7 +210,7 @@ const useData = () => {
                 const { status } = data;
                 if(status === true){
                     setPlaceResult(data.place_result)
-                    setIsSelectPlace(data.isSelect)
+                    setIsSelectPlace(data.status)
                 }
                 break
             }
