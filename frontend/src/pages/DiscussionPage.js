@@ -37,7 +37,7 @@ const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendDat
     }, [])
 
     const back = () =>{
-      history.push({pathname:`/${UID}/${GID}`});
+      history.push({pathname:`/${UID}/${GID}`, state:{UName:location.state.UName}});
     }
 
 

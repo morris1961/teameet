@@ -7,27 +7,25 @@ import {Button, Input, Layout, notification} from 'antd';
 import {useHistory, useLocation} from "react-router-dom";
 import { If, Then, ElseIf, Else } from 'react-if-elseif-else-render';
 import  {BsGear}  from "react-icons/bs";
-import {index_req, client_ws, createGroup_req, joinGroup_req } from "../Client"; 
 const { Header, Content, Sider } = Layout;
-const Index = () =>{
+const Index = ({status, UName, recent, voting, group, sendData, error_msg}) =>{
   const history = useHistory();
   const location = useLocation();
   var data = location.state.data;
   var {UID, password, email} = data;
-  const [UName, setUName] = useState("");
   const [GID, setGID] = useState("");
-  const [voting, setVoting] = useState([
-    {GName:"群組1", GID:"888888", subject:"web", time:"1900/00/00 00:00:00", place:"博理 113"},
-    {GName:"群組2", GID:"777777", subject:"pro", time:"2019/12/27 10:30:00", place:"管五"},
-    {GName:"群組3", GID:"666666", subject:"gram", time:"2021/5/30 17:20:00", place:"地點"}
+ 
+  // const [voting, setVoting] = useState([
+  //   {GName:"群組1", GID:"888888", subject:"web", time:"1900/00/00 00:00:00", place:"博理 113"},
+  //   {GName:"群組2", GID:"777777", subject:"pro", time:"2019/12/27 10:30:00", place:"管五"},
+  //   {GName:"群組3", GID:"666666", subject:"gram", time:"2021/5/30 17:20:00", place:"地點"}
       
-  ])
-  const [recent, setRecent] = useState([
-    {GName:"組1", GID:"345678", subject:"1web", time:"2021/01/23 01:23:45", place:"1博理 113"},
-    {GName:"組2", GID:"123456", subject:"2pro", time:"2020/12/27 10:30:00", place:"2管五"},
-    {GName:"組3", GID:"654321", subject:"3gram", time:"2020/5/30 17:20:00", place:"3地點"}
-      
-  ])
+  // ])
+  // const [recent, setRecent] = useState([
+  //   {GName:"組1", GID:"345678", subject:"1web", time:"2021/01/23 01:23:45", place:"1博理 113"},
+  //   {GName:"組2", GID:"123456", subject:"2pro", time:"2020/12/27 10:30:00", place:"2管五"},
+  //   {GName:"組3", GID:"654321", subject:"3gram", time:"2020/5/30 17:20:00", place:"3地點"}
+  // ])
   const [isgearclicked, setIsgearclicked] = useState(false);
   const handlegear = () =>{
     setIsgearclicked(!isgearclicked);
@@ -38,6 +36,7 @@ const Index = () =>{
   const [code, setCode]=useState("");
   const [GName, setGName]=useState("");
   const [file, setFile]=useState("");
+  const [click_join, setClick_join]=useState(false);
   const handlecreategroup = () =>{
 
     setIscreateclicked(true);
@@ -45,45 +44,75 @@ const Index = () =>{
 
   }
   const handlecreate = () =>{
-    createGroup_req({api:'createGroup',data: {admin:UID, GName, file:file}});
+    var data = {admin:UID, GName, file:file};
+    sendData('createGroup', data);
   }
   const handlejoingroup = () =>{
     setIscreateclicked(false);
     setIsjoinclicked(true);
   }
   const handlejoin = () =>{
-    joinGroup_req({api:'joinGroup', data:{UID:UID, code:code}});
+    var data = {UID:UID, code:'#'+code};
+    sendData('joinGroup', data);
+    setClick_join(true);
   }
 
   const handlerenew = () => {
     var data = {UID, UName, password, email};
     var path_renew = {
                   pathname:"/renewProfile",
-                  state:{data},
-                };
+                  state:{data}};
     history.push(path_renew)
-    
   }
-  
+
   useEffect(()=>{
-    // index_req({api:'index',
-    //               data: {UID:UID}
-    //             });
-    // client_ws.onmessage = function(e){
-    // var msg = JSON.parse(e.data);
-    // console.log(msg);
-    // if(msg.api === 'index'){
-    //       if(msg.data.status === true){
-    //         setUName(msg.data.UName);
-    //         setVoting(msg.data.voting);
-    //         setRecent(msg.data.recent);
-    //       }else{
-    //         notification['error']({
-    //           message: '錯誤',
-    //           description:
-    //           '請稍後再重新登入一次, 並請你確認你的網路連接正常'+msg.data.error_msg,
-    //         });
-    //       }
+    var data = {UID:UID};
+    sendData('index', data);
+  },[])
+  useEffect(()=>{
+    // console.log("UName", UName);
+    // console.log("recent", recent);
+    // console.log("voting", voting);
+    // console.log("group", group);
+
+    if(status === false){
+      notification['error']({
+        message: '錯誤',
+        description:
+          '請稍後再重新登入一次, 並請你確認你的網路連接正常',
+        });
+    }
+    if(click_join === true){
+        if(error_msg === "The user has been in the group!" ){
+          notification['error']({
+            message: '錯誤',
+            description:
+              '你已經在該群組內',
+            });
+            setClick_join(false);
+        }else if(error_msg === "The code is not valid!"){
+          notification['error']({
+            message: '錯誤',
+            description:
+              '請再確認一次 code 是否正確',
+            });
+            setClick_join(false);
+          }
+        else if(error_msg === "Successed!"){
+          notification['success']({
+            message: '成功',
+            description:
+            'success',
+          });
+          var data_group = {UID: UID, GID: GID};
+          var path_group = {
+            pathname:"/:UID/:GID",
+            state:{data_group},
+          }
+          setTimeout(history.push('/:UID/:GID'), 2000 )
+        }
+    }
+    
     // }else if(msg.api === 'createGroup'){
     //       if(msg.data.status === false){
     //         notification['error']({
@@ -106,38 +135,22 @@ const Index = () =>{
     //         }
     //         setTimeout(history.push(path_creategroup), 2000 )
     //       }
-    // }else if(msg.api === 'joinGroup'){
-    //       if(msg.data.status === true){
-    //         notification['success']({
-    //           message: '成功',
-    //           description:
-    //           'success',
-    //         });
-    //         setGID(msg.data.GID);
-    //         setGName(msg.data.GName);
-    //         var data_group = {UID: UID, GID: msg.data.GID};
-    //         var path_group = {
-    //           pathname:"/",
-    //           state:{data_group},
-    //         }
-    //         setTimeout(history.push(path_group), 2000 )
-    //       }else{
-    //         notification['error']({
-    //           message: '錯誤',
-    //           description:
-    //           msg.data.error_msg,
-    //         });
-    //       }
-    // }
-    // }
   });
+  const handleback = () =>{
+    var passdata = {UID, password, email};
+    var path_group = {
+      pathname:"/index",
+      state:{passdata},
+    };
+    history.push(path_group);
+  }
 
   return( 
     <React.Fragment>
 
 <Layout style={{backgroundColor:"white"}}>
 <Sider className="index_sider">
-        <div className="index_Uname">
+        <div className="index_Uname" onClick={handleback}>
             {UName}
             <BsGear className="index_gear" onClick={handlegear}/>
         </div>
@@ -147,7 +160,7 @@ const Index = () =>{
             更新個人資料
         </Button>
         <Button style={{width:"80%", margin:"1vw", fontSize:"1.2vw", borderRadius:"2vw", marginBottom:"0.2vw"}}
-                // onClick={()=>{history.push('/createGroup')}}
+                onClick={()=>{history.push('/')}}
                 >
             登出
         </Button>
@@ -169,7 +182,8 @@ const Index = () =>{
             + 加入群組
         </Button>
         <div className="index_votinglist">
-          {voting.map((v, i)=><VotingGroups key={'v_'+i} UID={UID} GID={v.GID} GName={v.GName}/>)}
+          
+          {group.map((v, i)=><VotingGroups key={'v_'+i} UID={UID} GID={v.GID} GName={v.GName}/>)}
         </div>
         </>
       )}

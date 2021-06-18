@@ -38,7 +38,10 @@ const App = () =>{
     place_result,
     status,
     error_msg,
-    UID
+    UID,
+    recent, 
+    voting,
+    GID
   }
   = useData()
 
@@ -67,8 +70,17 @@ const App = () =>{
         <Route exact path="/" component={Beforelogin} />
         <Route exact path="/login" render={()=>(<Login status = {status} error_msg={error_msg} UID={UID} sendData={sendData}/>)} />
         <Route exact path="/register" render={()=>(<Register status = {status} sendData={sendData}/>)} />
-        <Route exact path="/index" component={Index} />
-        <Route exact path="/renewProfile" component={RenewProfile} />
+        <Route exact path="/index" 
+                render={()=>(<Index status={status} 
+                                  error_msg={error_msg} 
+                                  UName={UName}  
+                                  sendData={sendData}  
+                                  recent = {recent} 
+                                  voting={voting} 
+                                  group={group}
+                                  GID={GID}
+                                  />)} />
+        <Route exact path="/renewProfile" render={()=>(<RenewProfile status = {status} sendData={sendData}/>)} />
         <Route exact path="/:UID" render={()=>(<HomePage UName={UName} group={group} sendData={sendData}/>)} />
             <Route exact path="/:UID/:GID" 
             render={()=>
