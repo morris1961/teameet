@@ -160,7 +160,7 @@ const useData = () => {
                     setIsDue(data.isDue)
                     setIsAdmin(data.isAdmin)
                     setTimeVoted(data.voted)
-                    setIsSelectTime(data.status)
+                    setIsSelectTime(data.isSelect)
                 }
                 break
             }
@@ -171,7 +171,7 @@ const useData = () => {
                     setIsDue(data.isDue)
                     setIsAdmin(data.isAdmin)
                     setPlaceVoted(data.voted)
-                    setIsSelectPlace(data.status)
+                    setIsSelectPlace(data.isSelect)
                 }
                 break
             }
