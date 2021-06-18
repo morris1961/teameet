@@ -6,6 +6,7 @@ import 'moment-timezone';
 // function for every cases
 async function time({ UID, DID, times }) {
   var status = false;
+  var reTime_options = {};
   var error_msg = "Something wrong...";
   try {
     const discussion = await Discussion.findById(DID);
@@ -14,7 +15,7 @@ async function time({ UID, DID, times }) {
       error_msg = "The discussion is not valid!"
       return { status, error_msg };
     }
-    if ((new Date().getTime() - discussion.deadline.getTime()) >= 0){
+    if ((new Date().getTime() - discussion.deadline.getTime()) >= 0) {
       status = false;
       error_msg = "The deadline has arrived!"
       return { status, error_msg };
@@ -30,7 +31,9 @@ async function time({ UID, DID, times }) {
         }
       }
     }
-    console.log(time_options);
+    for (var [key, value] of time_options) {
+      reTime_options[key.replace(" ", ".")] = value;
+    }
     await discussion.updateOne({ $set: { time_options } })
     status = true;
     error_msg = "Successed!";
@@ -39,7 +42,7 @@ async function time({ UID, DID, times }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, time_options, error_msg };
+  return { status, time_options: reTime_options, error_msg };
 }
 
 export default time;
