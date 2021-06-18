@@ -49,7 +49,6 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
                         <Radio.Group name="radiogroup" onChange={(e)=>{
                             let time = moment.tz(e.target.value, 'Asia/Taipei').format(); setTimeResult(time)}}>
                             {show_options.map(({option, cnt}, index)=>{
-                                // console.log(cnt, max)
                                 if(cnt === max){
                                     return(<Radio key={index} value={option} style={{margin:'3px'}}>{option}： 
                                         <Tag color="cyan">{cnt} 票</Tag>
@@ -69,10 +68,20 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
                     ):(
                     <div>
                         {show_options.map(({option, cnt}, index)=>{
-                            return (
-                            <p key={index}>}>{option}： 
-                                <Tag color="blue">{cnt} 票</Tag>
-                            </p>)
+                            if(cnt === max){
+                                return(
+                                    <p key={index} value={option} style={{margin:'3px'}}>{option}： 
+                                        <Tag color="cyan">{cnt} 票</Tag>
+                                    </p>
+                                )
+                            }
+                            else{
+                                return (
+                                    <p key={index} value={option} style={{margin:'3px'}}>{option}： 
+                                        <Tag color="blue">{cnt} 票</Tag>
+                                    </p>)
+                            }
+                            
                         })}
                     </div>
                     )}

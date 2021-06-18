@@ -7,16 +7,18 @@ const VotedTime = ({time_options, UID}) =>{
     const [show_options, setShowOptions] = useState([])
     const options = Object.keys(time_options)
 
-    
 
     useEffect(()=>{
-        let newShowOptions = []
-        options.map((e)=>{
-            if(time_options[e].indexOf(UID) !== -1){
-                newShowOptions.push(e)
-            }
-        }) 
-        setShowOptions(newShowOptions)
+        if(options){
+            let newShowOptions = []
+            options.map((e)=>{
+                if(time_options[e].indexOf(UID) !== -1){
+                    newShowOptions.push(e)
+                }
+            }) 
+            setShowOptions(newShowOptions)
+        }
+        
     }, [])
 
     return(
