@@ -232,6 +232,8 @@ const useData = () => {
         place_options,
         isSelectTime,
         isSelectPlace,
+        time_result,
+        place_result,
         status,
         UID,
         error_msg
