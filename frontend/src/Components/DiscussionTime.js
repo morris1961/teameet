@@ -4,8 +4,8 @@ import { useParams } from 'react-router';
 import VotedTime from './VotedTime';
 import SelectedTime from './SelectedTime';
 import NotSelectedTime from './NotSelectedTime';
-
-
+import moment from 'moment';
+import 'moment-timezone';
 
 
 const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData, isSelect, displayStatus, time_result}) =>{
@@ -18,13 +18,15 @@ const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData, isSelect
     }, [])
 
     const handleCheck = (e, option)=>{
+
       let newCheckList = checkList
-      let n = `${option}`
+      // let n = `${option}`
+      let time = moment.tz(option, 'Asia/Taipei').format()
       if(e.target.checked){
-        newCheckList.push(n)
+        newCheckList.push(time)
       }
       else{
-        newCheckList = newCheckList.filter(item => (item !== n))
+        newCheckList = newCheckList.filter(item => (item !== time))
       }
       setCheckList(newCheckList)
     }
@@ -35,7 +37,7 @@ const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData, isSelect
         sendData("voteTime", data)
       }
       else{
-        // displayStatus
+        displayStatus({type: "error", msg: '請選擇要投票的時間'})
       }
     }
 
@@ -47,17 +49,16 @@ const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData, isSelect
         DID={DID} 
         displayStatus={displayStatus} 
         time_options={time_options} 
-        isAdim={isAdmin} 
+        isAdmin={isAdmin} 
         sendData={sendData}/>)):(voted?
         (<VotedTime time_options={time_options} UID={UID} />)
         :(<Row>
-          {console.log(checkList)}
           {options.map((option, index)=>{
             return(
             <>
               <Col span={2}></Col>
               <Col span={22}>
-                <Checkbox  style={{margin: "1%"}} onChange={(e)=>{handleCheck(e, option)}}> {option}</Checkbox>
+                <Checkbox key={index} style={{margin: "1%"}} onChange={(e)=>{handleCheck(e, option)}}>{moment(option).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')}</Checkbox>
               </Col>
               {index === options.length-1?(
               <>

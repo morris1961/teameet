@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { useParams } from 'react-router';
-import VotedPlace from './VotedPlace'
+import VotedPlace from './VotedPlace';
+import SelectedPlace from './SelectedPlace';
+import NotSelectedPlace from './NotSelectedPlace';
 
 const formItemLayout = {
     labelCol: {
@@ -21,7 +23,7 @@ const formItemLayoutWithOutLabel = {
     },
 };
 
-const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSelect}) =>{
+const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSelect, displayStatus, place_result}) =>{
     const { UID, GID, DID } = useParams()
     const options = Object.keys(place_options)
     const places = {"places": options.map((e, index)=>({key: index, name: e}))}
@@ -38,10 +40,13 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSele
             sendData("addPlace", data)
         }
         else{
+            if(checkList === []){
+                displayStatus({type: 'error', msg: '請選擇要投票的地方'})
+                return 
+            }
             let data = {UID, DID, places:checkList}
             sendData("votePlace", data)
             setSendVote(false)
-            
         }
     };
 
@@ -66,7 +71,15 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSele
     
     return(
         <>
-            {voted?(<VotedPlace UID={UID} place_options={place_options} />):
+            {isDue?(isSelect?(<SelectedPlace place_options={place_options} place_result={place_result}/>):(
+            <NotSelectedPlace 
+                UID={UID} 
+                DID={DID} 
+                displayStatus={displayStatus} 
+                time_options={place_options} 
+                isAdmin={isAdmin} 
+                sendData={sendData}/>)):
+            voted?(<VotedPlace UID={UID} place_options={place_options} />):
             (<>
             <Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish} autoComplete="off" initialValues={places}>
             {/* {console.log(checkList)}  */}

@@ -4,7 +4,7 @@ import {
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -16,6 +16,7 @@ const HomePage = ({UName, group, sendData}) =>{
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState("")
     const history = useHistory();
+    const location = useLocation();
 
     const onCollapse = collapsed => {
         console.log(collapsed);

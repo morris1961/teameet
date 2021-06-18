@@ -10,9 +10,10 @@ import {
   UserOutlined,
   WechatOutlined,
   SmileOutlined,
+  RollbackOutlined,
 } from '@ant-design/icons';
 ///// react-router-dom /////
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -23,6 +24,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
     const [activeKey, setActiveKey] = useState('ChatRoom')
     const [modalVisible, setModalVisible] = useState(false)
     const history = useHistory();
+    const location = useLocation();
     const onCollapse = collapsed => {
         console.log(collapsed);
         setCollapsed(collapsed);
@@ -36,6 +38,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
     useEffect(()=>{
       let data = {UID, GID}  
       sendData("group", data)
+      
     }, [])
 
     useEffect(()=>{
@@ -43,8 +46,11 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
         if(activeKey.search("Discussions_") !== -1){
           let id = activeKey.indexOf('_') + 1
           let DID = activeKey.slice(id)
-          history.push({pathname:`/${UID}/${GID}/${DID}`, state:{UName, GName}});
+          history.push({pathname:`/${UID}/${GID}/${DID}`, state:{UName:location.state.UName, GName}});
           // window.location.href = `/${UID}/${GID}/${DID}`
+        }
+        if(activeKey === 'Back'){
+          history.push({pathname:`/${UID}`});
         }
           
     })
@@ -56,7 +62,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}}>
-                {UName}
+                {location.state.UName}
               </Menu.Item>
               <Menu.Item key="ChatRoom" icon={<WechatOutlined />} title="ChatRoom">
                 聊天室
@@ -88,6 +94,9 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
                   )
                 })}
               </SubMenu>
+              <Menu.Item key="Back" icon={<RollbackOutlined />} title="回上一頁" onClick={(e)=>{setActiveKey("Back")}}>
+                回上一頁
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout">

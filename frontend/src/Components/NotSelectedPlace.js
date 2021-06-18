@@ -1,35 +1,31 @@
 import { useEffect, useState } from "react";
 import { Divider, Row, Col, Radio, Button, Tag } from 'antd';
-import moment from 'moment';
-import 'moment-timezone';
 
 
-const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStatus}) =>{
+const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displayStatus}) =>{
     const [show_options, setShowOptions] = useState([])
-    const [time_result, setTimeResult] = useState('')
+    const [place_result, setPlaceResult] = useState('')
     let max = 0
 
     useEffect(()=>{
-        const options = Object.keys(time_options)
+        const options = Object.keys(place_options)
         let newShowOptions = [] // 這裡改 show_options 就不行?
         options.map((e)=>{
-            let cnt = time_options[e].length
+            let cnt = place_options[e].length
             if(cnt > max){
                 max = cnt
             }
-            let formated = moment(e).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')
-            newShowOptions.push({option:formated, cnt})
+            newShowOptions.push({option:e, cnt})
         }) 
         setShowOptions(newShowOptions)
     }, [])
 
     const handleSubmit = () =>{
-        if(time_result === ''){
-            displayStatus({type: 'error', msg: '請選擇最終時間'})
+        if(place_result === ''){
+            displayStatus({type: 'error', msg: '請選擇最終地點'})
         }
-
-        let data = {UID, DID, time_result}
-        sendData("confirmTime", data)
+        let data = {UID, DID, place_result}
+        sendData("confirmPlace", data)
     }
 
     return(
@@ -43,9 +39,7 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
                     <h2>如下：</h2>
                     {isAdmin?(
                         <>
-                        <Radio.Group name="radiogroup" onChange={(e)=>{
-                            let time = moment.tz(e.target.value, 'Asia/Taipei').format(); setTimeResult(time)}}>
-                            {console.log('l')}
+                        <Radio.Group name="radiogroup" onChange={(e)=>{setPlaceResult(e.target.value)}}>\
                             {show_options.map(({option, cnt}, index)=>{
                                 if(cnt === max){
                                     return(<Radio key={index} value={option} style={{margin:'3px'}}>{option}： 
@@ -60,15 +54,14 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
                             })}
                         </Radio.Group>
                         <Button type="primary" htmlType="submit" onClick={handleSubmit}>
-                            確認時間
+                            確認地點
                         </Button>
                         </>
                     ):(
                     <div>
-                        {console.log("k")}
                         {show_options.map(({option, cnt}, index)=>{
                             return (
-                            <p key={index}>}>{option}： 
+                            <p key={index}>{option}： 
                                 <Tag color="blue">{cnt} 票</Tag>
                             </p>)
                         })}
@@ -82,4 +75,4 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
 
 }
 
-export default NotSelectedTime 
+export default NotSelectedPlace

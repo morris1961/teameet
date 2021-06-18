@@ -1,26 +1,20 @@
 import { useEffect, useState } from "react";
 import { Divider, Row, Col, Tag } from 'antd';
-import moment from 'moment';
-import 'moment-timezone';
 
-const SelectedTime = ({time_options, time_result}) =>{
+const SelectedPlace = ({place_options, place_result}) =>{
     const [show_options, setShowOptions] = useState([])
-    const [result, setResult] = useState('')
     let max = 0
 
     useEffect(()=>{
-        const options = Object.keys(time_options)
+        const options = Object.keys(place_options)
         let newShowOptions = [] // 這裡改 show_options 就不行?
         options.map((e)=>{
-            let cnt = time_options[e].length
+            let cnt = place_options[e].length
             if(cnt > max){
                 max = cnt
             }
-            let formated = moment(e).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')
-            newShowOptions.push({option:formated, cnt})
+            newShowOptions.push({option:e, cnt})
         }) 
-        let formatedResult = moment(time_result).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')
-        setResult(formatedResult)
         setShowOptions(newShowOptions)
     }, [])
 
@@ -35,7 +29,7 @@ const SelectedTime = ({time_options, time_result}) =>{
                     <h2>如下：</h2>
                     <div>
                         {show_options.map(({option, cnt}, index)=>{
-                        if(option === result){
+                        if(option === place_result){
                             return (
                                 <p key={index}>{option}：
                                     <Tag color="#0066CC">{cnt} 票</Tag>
@@ -59,4 +53,4 @@ const SelectedTime = ({time_options, time_result}) =>{
 
 }
 
-export default SelectedTime 
+export default SelectedPlace
