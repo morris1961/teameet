@@ -14,6 +14,11 @@ async function time({ UID, DID, times }) {
       error_msg = "The discussion is not valid!"
       return { status, error_msg };
     }
+    if ((new Date().getTime() - discussion.deadline.getTime()) >= 0){
+      status = false;
+      error_msg = "The deadline has arrived!"
+      return { status, error_msg };
+    }
     var time_options = discussion.time_options;
     for (let j = 0; j < times.length; j++) {
       const time = new Date(moment(times[j]).toDate());

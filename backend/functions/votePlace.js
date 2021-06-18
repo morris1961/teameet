@@ -12,6 +12,11 @@ async function votePlace({ UID, DID, places }) {
       error_msg = "The discussion is not valid!"
       return { status, error_msg };
     }
+    if ((new Date().getTime() - discussion.deadline.getTime()) >= 0){
+      status = false;
+      error_msg = "The deadline has arrived!"
+      return { status, error_msg };
+    }
     var place_options = discussion.place_options;
     for (let j = 0; j < places.length; j++) {
       for (var [key, value] of place_options) {
