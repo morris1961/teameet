@@ -268,7 +268,12 @@ const useData = () => {
         place_result,
         status,
         UID,
-        error_msg
+        error_msg,
+        recent,
+        voting,
+        admin,
+        GID
+
     }
 }
 export default useData;
