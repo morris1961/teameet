@@ -4,9 +4,9 @@ import Discussion from '../models/discussion.js'
 import moment from "moment";
 
 // function for every cases
-async function createDiscussion({ GID, UID, subject, content, time_start, time_span, time_end, deadline }) {
+async function createDiscussion({ GID, UID, subject, content, time_start, time_span, time_end, deadline, place }) {
   var status = false;
-  var DID = ""
+  var DID = "";
   var error_msg = "Something wrong...";
   var discussions = [];
   time_start = new Date(moment(time_start).toDate());
@@ -20,9 +20,6 @@ async function createDiscussion({ GID, UID, subject, content, time_start, time_s
       error_msg = "The group is not valid!"
       return { status, error_msg };
     }
-    const discussion = new Discussion({ admin: UID, subject, time_start, time_end, time_span, deadline, content });
-    await discussion.save();
-    DID = discussion._id;
     var time_options = new Map();
     var time_option = time_start;
     time_options.set(time_option.toISOString().replace(".", " "), []);
@@ -30,11 +27,15 @@ async function createDiscussion({ GID, UID, subject, content, time_start, time_s
       time_option.setMinutes(time_option.getMinutes() + time_span);
       time_options.set(time_option.toISOString().replace(".", " "), []);
     }
-    await discussion.updateOne({ $set: { time_options } });
+    var place_options = {};
+    place_options[place] = [];
+    const discussion = new Discussion({ admin: UID, subject, time_start, time_end, time_span, deadline, content, place_options, time_options });
+    await discussion.save();
+    DID = discussion._id;
 
     const newDiscussions = group.discussions;
     newDiscussions.push(DID);
-    await group.updateOne({ discussions: newDiscussions});
+    await group.updateOne({ discussions: newDiscussions });
 
     for (let i = 0; i < group.discussions.length; i++) {
       const aDisscussion = await Discussion.findById(group.discussions[i]);
