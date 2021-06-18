@@ -41,7 +41,7 @@ const App = () =>{
     UID,
     recent, 
     voting,
-    GID
+    GID,
   }
   = useData()
 

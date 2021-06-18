@@ -7,6 +7,8 @@ const VotedTime = ({time_options, UID}) =>{
     const [show_options, setShowOptions] = useState([])
     const options = Object.keys(time_options)
 
+    
+
     useEffect(()=>{
         let newShowOptions = []
         options.map((e)=>{
