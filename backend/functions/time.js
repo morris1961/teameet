@@ -33,7 +33,7 @@ async function time({ UID, DID }) {
     isDue = (new Date().getTime() - discussion.deadline.getTime()) >= 0
     isAdmin = UID.toString() === discussion.admin.toString();
     time_result = discussion.time_result;
-    isSelect = !(time_result == new Date(0));
+    isSelect = !(time_result.getTime() - new Date(0).getTime() === 0);
     status = true;
     error_msg = "Successed!";
   } catch (e) {
