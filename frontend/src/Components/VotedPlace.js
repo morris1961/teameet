@@ -5,7 +5,7 @@ const VotedTime = ({place_options, UID}) =>{
     const [show_options, setShowOptions] = useState([])
     const options = Object.keys(place_options)
     useEffect(()=>{
-        if(place_options !== undefined){
+        if(place_options){
             let newShowOptions = []
             options.map((e)=>{
                 if(place_options[e].indexOf(UID) !== -1){

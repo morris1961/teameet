@@ -35,6 +35,7 @@ const useData = () => {
     client.onmessage = (byteString) => {
         const message = JSON.parse(byteString.data);
         const { api, data } = message
+        console.log(message)
         switch (api) {
             case "register": {
                 const { status } = data;
@@ -185,6 +186,7 @@ const useData = () => {
             case "votePlace":{
                 const { status } = data;
                 if (status === true){
+                    setPlaceOptions(data.place_options)
                     setPlaceVoted(data.status)
                 }
                 break
@@ -193,6 +195,7 @@ const useData = () => {
             case "voteTime":{
                 const { status } = data;
                 if (status === true){
+                    setTimeOptions(data.time_options)
                     setTimeVoted(data.status)
                 }
                 break
@@ -272,7 +275,9 @@ const useData = () => {
         recent,
         voting,
         admin,
-        GID
+        GID,
+        time_options,
+        place_options,
 
     }
 }

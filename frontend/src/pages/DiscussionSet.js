@@ -21,6 +21,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
     const [timeEnd, setTimeEnd] = useState('')
     const [timeSpan, setTimeSpan] = useState('')
     const [deadline, setDeadline] = useState('')
+    const [place, setPlace] = useState('')
 
     const config = {
         rules: [{ type: 'object', required: true, message: 'Please select time!' }],
@@ -36,7 +37,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
 
 
     const handleSubmit = () =>{
-        console.log(UID, GID, subject, content, timeStart, timeEnd, timeSpan, deadline)
+        console.log(UID, GID, subject, content, timeStart, timeEnd, timeSpan, deadline, place)
         if(UID === ''){
             throw new Error ("Missing UID")
         }
@@ -58,7 +59,10 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
         if(deadline === ''){
             displayStatus({type:'error', msg:'請輸入投票截止日期'})
         }
-        let data = { UID, GID, subject, content, time_start: timeStart, time_end: timeEnd, time_span: timeSpan, deadline } 
+        if(deadline === ''){
+            displayStatus({type:'error', msg:'請輸入地點'})
+        }
+        let data = { UID, GID, subject, content, time_start: timeStart, time_end: timeEnd, time_span: timeSpan, deadline, place } 
         sendData("createDiscussion", data)
     }
 
@@ -86,10 +90,13 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
             layout="horizontal"
             >
                 <Form.Item label="主題">
-                <Input onChange={(e)=>{setSubject(e.target.value)}} />
+                    <Input onChange={(e)=>{setSubject(e.target.value)}} />
                 </Form.Item>
                 <Form.Item label="內容">
-                <Input.TextArea onChange={(e)=>{setContent(e.target.value)}}/>
+                    <Input.TextArea onChange={(e)=>{setContent(e.target.value)}}/>
+                </Form.Item>
+                <Form.Item label="地點">
+                    <Input onChange={(e)=>{setPlace(e.target.value)}} />
                 </Form.Item>
                 <Form.Item name="range-time-picker" label="討論時間範圍" {...rangeConfig}>
                     <RangePicker showTime format="YYYY-MM-DD HH:mm" disabledDate={disabledDate} minuteStep={30} onChange={onChangeRangePicker}/>

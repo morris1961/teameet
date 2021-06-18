@@ -13,6 +13,7 @@ import DiscussionPage from "./pages/DiscussionPage"
 import useData from "./useData"
 import { message } from 'antd'
 import 'antd/dist/antd.css';
+import DiscussionPlace from './Components/DiscussionPlace';
 
 const App = () =>{
 
@@ -41,7 +42,7 @@ const App = () =>{
     UID,
     recent, 
     voting,
-    GID
+    GID,
   }
   = useData()
 
@@ -115,6 +116,7 @@ const App = () =>{
               isSelectPlace={isSelectPlace}
               time_result={time_result}
               place_result={place_result}
+              displayStatus={displayStatus}
               />)} />
       </Switch>
     </BrowserRouter>
