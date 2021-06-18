@@ -5,11 +5,13 @@ import 'moment-timezone';
 
 const VotedTime = ({time_options, UID}) =>{
     const [show_options, setShowOptions] = useState([])
-    const options = Object.keys(time_options)
 
+    console.log(time_options)
 
     useEffect(()=>{
-        if(options){
+        if(time_options){
+            let options = []
+            options = Object.keys(time_options)
             let newShowOptions = []
             options.map((e)=>{
                 if(time_options[e].indexOf(UID) !== -1){
@@ -18,7 +20,6 @@ const VotedTime = ({time_options, UID}) =>{
             }) 
             setShowOptions(newShowOptions)
         }
-        
     }, [])
 
     return(
@@ -31,7 +32,7 @@ const VotedTime = ({time_options, UID}) =>{
                     </Divider>
                     <h2>時間如下：</h2>
                     <div>
-                        {show_options.map((e)=>(<p>{moment(e).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')}</p>))}
+                        {show_options.map((e, index)=>(<p key={index}>{moment(e).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')}</p>))}
                     </div>
                 </Col>
             </Row>
