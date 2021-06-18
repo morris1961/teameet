@@ -34,6 +34,8 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
       let data = {GID, file:url}
       sendData("renewFile", data)
     }
+    
+    console.log(location.state)
 
     useEffect(()=>{
       let data = {UID, GID}  

@@ -9,6 +9,7 @@ import 'moment-timezone';
 
 
 const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData, isSelect, displayStatus, time_result}) =>{
+    console.log(isSelect)
     const { UID, GID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
     const options = Object.keys(time_options)
