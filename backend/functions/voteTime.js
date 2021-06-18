@@ -39,7 +39,7 @@ async function time({ UID, DID, times }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, error_msg };
+  return { status, time_options, error_msg };
 }
 
 export default time;

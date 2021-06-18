@@ -40,7 +40,7 @@ async function votePlace({ UID, DID, places }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, error_msg };
+  return { status, place_options, error_msg };
 }
 
 export default votePlace;
