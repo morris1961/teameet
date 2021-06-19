@@ -5,8 +5,7 @@ import 'moment-timezone';
 
 const SelectedTime = ({time_options, time_result}) =>{
     const [show_options, setShowOptions] = useState([])
-    const [result, setResult] = useState('')
-    const [max, setMax] = useState(0)
+
 
     useEffect(()=>{
         const options = Object.keys(time_options)
@@ -20,9 +19,6 @@ const SelectedTime = ({time_options, time_result}) =>{
             let formated = moment(e).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')
             newShowOptions.push({option:formated, cnt})
         }) 
-        let formatedResult = moment(time_result).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')
-        setResult(formatedResult)
-        setMax(newMax)
         setShowOptions(newShowOptions)
     }, [])
 
@@ -37,7 +33,7 @@ const SelectedTime = ({time_options, time_result}) =>{
                     <h2>如下：</h2>
                     <div>
                         {show_options.map(({option, cnt}, index)=>{
-                        if(option === result){
+                        if(option === moment(time_result).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')){
                             return (
                                 <p key={index}>{option}：
                                     <Tag color="#0066CC">{cnt} 票</Tag>

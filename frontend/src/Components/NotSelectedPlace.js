@@ -29,7 +29,7 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
 
     const handleSubmit = () =>{
         if(place_result === ''){
-            displayStatus({type: 'error', msg: '請選擇最終時間'})
+            displayStatus({type: 'error', msg: '請選擇最終地點'})
         }
 
         let data = {UID, DID, place_result}
@@ -62,7 +62,7 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
                             })}
                         </Radio.Group>
                         <Button type="primary" htmlType="submit"  style={{marginTop: "10px"}} onClick={handleSubmit}>
-                            確認時間
+                            確認地點
                         </Button>
                         </>
                     ):(

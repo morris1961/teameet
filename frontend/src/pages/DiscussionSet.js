@@ -19,7 +19,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
     const [content, setContent] = useState('')
     const [timeStart, setTimeStart] = useState('')
     const [timeEnd, setTimeEnd] = useState('')
-    const [timeSpan, setTimeSpan] = useState('')
+    const [timeSpan, setTimeSpan] = useState('60')
     const [deadline, setDeadline] = useState('')
     const [place, setPlace] = useState('')
 
@@ -31,7 +31,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
     };
 
     const disabledDate = (current) => {
-        // Can not select days before today and today
+        // Can not select days before today 
         return current && current < moment().startOf('day');
     }
 
@@ -67,6 +67,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
     }
 
     const onChangeRangePicker = (value, dateString) =>{
+        //unformatted (moment type): value
         // Formatted Selected Time: dateString
         setTimeStart(moment.tz(dateString[0], 'Asia/Taipei').format())
         setTimeEnd(moment.tz(dateString[1], 'Asia/Taipei').format())
@@ -75,6 +76,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
     const onChangeDatePicker = (value, dateString) =>{
         setDeadline( moment.tz(dateString, 'Asia/Taipei').format())
     }
+
 
 
     return(
@@ -101,8 +103,8 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
                 <Form.Item name="range-time-picker" label="討論時間範圍" {...rangeConfig}>
                     <RangePicker showTime format="YYYY-MM-DD HH:mm" disabledDate={disabledDate} minuteStep={30} onChange={onChangeRangePicker}/>
                 </Form.Item>
-                <Form.Item label="討論時間間隔" name="size" defaultValue="60">
-                    <Radio.Group onChange={(e)=>{setTimeSpan(e.target.value)}}>
+                <Form.Item label="討論時間間隔" name="size" >
+                    <Radio.Group onChange={(e)=>{setTimeSpan(e.target.value)}} defaultValue="60">
                         <Radio.Button value="30">30 分鐘</Radio.Button>
                         <Radio.Button value="60">1 小時</Radio.Button>
                         <Radio.Button value="120">2 小時</Radio.Button>
@@ -111,14 +113,6 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
                 <Form.Item name="date-time-picker" label="投票截止時間" {...config}>
                     <DatePicker showTime format="YYYY-MM-DD HH"  disabledDate={disabledDate} onChange={onChangeDatePicker}/>
                 </Form.Item>
-                {/* <Form.Item>
-                    
-                </Form.Item> */}
-                
-                {/* <Row>
-                    <Col span={4}></Col> 
-                    
-                </Row> */}
             </Form>
             <Button type="primary" htmlType="submit" onClick={handleSubmit}>
                 創建討論

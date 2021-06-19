@@ -5,7 +5,6 @@ const SelectedPlace = ({place_options, place_result}) =>{
     const [show_options, setShowOptions] = useState([])
     const [max, setMax] = useState(0)
 
-    console.log(place_result)
 
     useEffect(()=>{
         const options = Object.keys(place_options)
