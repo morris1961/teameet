@@ -161,6 +161,7 @@ const useData = () => {
                     setIsAdmin(data.isAdmin)
                     setTimeVoted(data.voted)
                     setIsSelectTime(data.isSelect)
+                    setTimeResult(data.time_result)
                 }
                 break
             }
@@ -172,6 +173,7 @@ const useData = () => {
                     setIsAdmin(data.isAdmin)
                     setPlaceVoted(data.voted)
                     setIsSelectPlace(data.isSelect)
+                    setPlaceResult(data.place_result)
                 }
                 break
             }
