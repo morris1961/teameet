@@ -24,9 +24,7 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
             }) 
             setMax(newMax)
             setShowOptions(newShowOptions)
-        }
-        
-        
+        } 
     }, [])
 
     const handleSubmit = () =>{

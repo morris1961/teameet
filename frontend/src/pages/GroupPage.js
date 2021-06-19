@@ -18,7 +18,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, displayStatus}) =>{
+const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, displayStatus, message}) =>{
     const { UID, GID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('ChatRoom')
@@ -38,7 +38,6 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
     useEffect(()=>{
       let data = {UID, GID}  
       sendData("group", data)
-      
     }, [])
 
     useEffect(()=>{
@@ -46,14 +45,25 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
         if(activeKey.search("Discussions_") !== -1){
           let id = activeKey.indexOf('_') + 1
           let DID = activeKey.slice(id)
-          history.push({pathname:`/${UID}/${GID}/${DID}`, state:{UName:location.state.UName, GName}});
-          // window.location.href = `/${UID}/${GID}/${DID}`
+          /// get data for DiscussionPage
+          let data = {UID, DID}  
+          sendData("discussion", data)
+          /// get data for DiscussionPage
+          
         }
         if(activeKey === 'Back'){
           history.push({pathname:`/${UID}`});
         }
           
     })
+
+    useEffect(()=>{
+      if(activeKey.search("Discussions_") !== -1){
+        let id = activeKey.indexOf('_') + 1
+        let DID = activeKey.slice(id)
+        history.push({pathname:`/${UID}/${GID}/${DID}`, state:{UName:location.state.UName, GName, subject: message.data.subject, content: message.data.content}});
+      }
+    }, [message])
 
     return(
       <>

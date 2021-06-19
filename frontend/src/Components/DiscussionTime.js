@@ -15,11 +15,6 @@ const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData, isSelect
     const [options, setOptions] = useState([])
     
     useEffect(()=>{
-      let data = {UID, DID}  
-      sendData("time", data)      
-    }, [])
-
-    useEffect(()=>{
       if(time_options){
         let newOptions = []
         newOptions = Object.keys(time_options)

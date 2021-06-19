@@ -7,7 +7,6 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
     const [place_result, setPlaceResult] = useState('')
     const [max, setMax] = useState(0)
 
-    console.log(place_options, show_options)
 
     useEffect(()=>{
         if(place_options){

@@ -6,6 +6,8 @@ import { Divider, Row, Col } from 'antd';
 
 const DiscussionContent = ({subject, content}) =>{
 
+    
+
     return(
         <>
             <Row>

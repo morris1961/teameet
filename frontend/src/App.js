@@ -13,7 +13,6 @@ import DiscussionPage from "./pages/DiscussionPage"
 import useData from "./useData"
 import { message } from 'antd'
 import 'antd/dist/antd.css';
-import DiscussionPlace from './Components/DiscussionPlace';
 
 const App = () =>{
 
@@ -43,6 +42,7 @@ const App = () =>{
     recent, 
     voting,
     GID,
+    message,
   }
   = useData()
 
@@ -64,7 +64,6 @@ const App = () =>{
     }
   }
 
-  console.log(place_result)
 
   return( 
     
@@ -97,6 +96,7 @@ const App = () =>{
             group={group} 
             sendData={sendData}
             displayStatus={displayStatus}
+            message={message}
             />)} />
 
             <Route exact path="/:UID/:GID/:DID" 
@@ -119,6 +119,7 @@ const App = () =>{
               time_result={time_result}
               place_result={place_result}
               displayStatus={displayStatus}
+              message={message}
               />)} />
       </Switch>
     </BrowserRouter>

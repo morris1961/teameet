@@ -11,18 +11,11 @@ import PlaceModal from './PlaceModal'
 
 const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSelect, displayStatus, place_result}) =>{
 
-    console.log(place_result)
-
-
     const { UID, GID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
     const [modalVisible, setModalVisible] = useState(false)
     const [options, setOptions] = useState([])
-
-    useEffect(()=>{
-        let data = {UID, DID}  
-        sendData("place", data)
-    }, [])
+    
 
     useEffect(()=>{
         if(place_options){

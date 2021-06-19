@@ -67,7 +67,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
     }
 
     const onChangeRangePicker = (value, dateString) =>{
-        //unformatted (moment type): value
+        // unformatted (moment type): value
         // Formatted Selected Time: dateString
         setTimeStart(moment.tz(dateString[0], 'Asia/Taipei').format())
         setTimeEnd(moment.tz(dateString[1], 'Asia/Taipei').format())

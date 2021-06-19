@@ -18,28 +18,45 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendData, time_options, isDue, time_voted, place_voted, place_options, isSelectTime, isSelectPlace, displayStatus, time_result, place_result}) =>{
+const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendData, time_options, isDue, time_voted, place_voted, place_options, isSelectTime, isSelectPlace, displayStatus, time_result, place_result, message}) =>{
     const { UID, GID, DID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('content')
     const history = useHistory()
     const location = useLocation()
 
-    console.log(place_result)
-
     const onCollapse = collapsed => {
-        console.log(collapsed);
         setCollapsed(collapsed);
     };
-    
-    useEffect(()=>{
-      let data = {UID, DID}  
-      sendData("discussion", data)
-    }, [])
 
+    // 回上一頁
     const back = () =>{
       history.push({pathname:`/${UID}/${GID}`, state:{UName:location.state.UName}});
     }
+
+    // const handleClick_content = () =>{
+
+    // }
+
+
+    /// get data for DiscussionTime
+    const handleClick_time = () =>{
+      let data = {UID, DID}  
+      sendData("time", data)  
+    }
+
+    /// get data for DiscussionPlace
+    const handleClick_place = () =>{
+      let data = {UID, DID}  
+      sendData("place", data)
+    }
+
+    // setKey & render
+    useEffect(()=>{
+        if(message.api === 'time' || message.api === 'place'){
+          setActiveKey(message.api)
+        }
+    }, [message])
 
 
     return(
@@ -54,10 +71,10 @@ const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendDat
               <Menu.Item key="content" icon={<BookOutlined />} title="內容" onClick={(e)=>{setActiveKey(e.key)}}>
                 討論內容
               </Menu.Item>
-              <Menu.Item key="time" icon={<FieldTimeOutlined />} title="時間" onClick={(e)=>{setActiveKey(e.key)}}>
+              <Menu.Item key="time" icon={<FieldTimeOutlined />} title="時間" onClick={()=>{handleClick_time()}}>
                 討論時間
               </Menu.Item>
-              <Menu.Item key="place" icon={<HomeOutlined />} title="地點" onClick={(e)=>{setActiveKey(e.key)}}>
+              <Menu.Item key="place" icon={<HomeOutlined />} title="地點" onClick={()=>{handleClick_place()}}>
                 討論地點
               </Menu.Item>
               <Menu.Item key="Back" icon={<RollbackOutlined />} title="回上一頁" onClick={(e)=>{setActiveKey(e.key); back();}}>
@@ -75,7 +92,7 @@ const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendDat
                 <Breadcrumb.Item>{subject}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "content"?(<DiscussionContent subject={subject} content={content}/>):
+                {activeKey === "content"?(<DiscussionContent subject={location.state.subject} content={location.state.content}/>):
                 (activeKey === "time"?(
                 <DiscussionTime 
                 voted={time_voted} 
