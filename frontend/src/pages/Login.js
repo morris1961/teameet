@@ -4,16 +4,11 @@ import '../style/Login.css'
 import {Button, Input, Layout, notification} from 'antd';
 import {useHistory} from "react-router-dom";
 const { Header, Footer, Content } = Layout;
-const Login = ({sendData, status, UID, error_msg}) =>{
+const Login = ({sendData, status, UID, error_msg, isonmessage}) =>{
   useEffect(()=>{
 
     if(click === true){
-      console.log("status", status);
-      if(status === undefined || error_msg === "" ){
-        console.log("undefined....")
-        // setClick(false);
-        return
-      }else if(status === true){
+      if(isonmessage.status === true){
         var data = {UID: UID, password: password, email:email};
         var path = {
           pathname:"/index",
@@ -21,7 +16,7 @@ const Login = ({sendData, status, UID, error_msg}) =>{
         }
         history.push(path);
         setClick(false);
-      }else if(status === false){
+      }else if(isonmessage.status === false){
         notification['error']({
           message: '錯誤',
           description:
@@ -29,15 +24,21 @@ const Login = ({sendData, status, UID, error_msg}) =>{
           duration: 3,
         });
         setClick(false);
+      }else{
+        notification['error']({
+          message: '錯誤',
+          description:
+            '請稍後再試一次',
+          });
+          setClick(false);
       }
-
     }
-  })
+  },[isonmessage]);
   const history = useHistory();
-  const [email, setEmail] = useState("winniew0824@gmail.com");
-  const [password, setPassword] = useState("123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [click, setClick] = useState(false);
-
+  const validemail= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 
   const handlelogin = () =>{
     if(email.length===0){
@@ -52,11 +53,11 @@ const Login = ({sendData, status, UID, error_msg}) =>{
         description:
           '請輸入你的密碼(不可為空)',
       });
-    }else if(email.search("@gmail.com")  === -1){
+    }else if(!validemail.test(email)){
       notification['error']({
         message: '錯誤',
         description:
-          '帳號須為合理mail(@gmail.com)',
+          '帳號須為合理mail',
       });
     }else{
       var data = {email:email, password:password};

@@ -3,11 +3,13 @@ import '../style/RecentGroups.css';
 import { useHistory } from "react-router-dom";
 import { Button } from 'antd';
 
-const VotingGroups = (props) =>{
+const RecentGroups = (props) =>{
   const history = useHistory();
-  var data = {GId: props.GId, UID: props.UID};
+  var data = {GID: props.GId, UID: props.UID};
+  var UID = props.UID;
+  var GID = props.GID;
   var path = {
-    pathname:"/group",
+    pathname:`/${UID}/${GID}`,
     state:{data},
   }
   const handleOnClick = useCallback(() => history.push(path), [history]);
@@ -29,4 +31,4 @@ const VotingGroups = (props) =>{
 }
 
 
-export default VotingGroups;
+export default RecentGroups;

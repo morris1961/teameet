@@ -59,14 +59,15 @@
     width: 25vw;
     outline: none;
     padding: 14px 20px;
-    background: none;
+    /* background: none; */
     border: 2px solid gray;
     border-radius:25px;
     font-size: large; 
     text-align: left;
 }
 .create_GName{
-    margin-top: 5vw;
+    /* border: solid; */
+    margin-top: -25vw;
     height: 5vw;
     width: 80%;
     padding-left: 22vw;
@@ -85,7 +86,7 @@
     /* border:solid; */
     width: 40vw;
     height: 4.2vw;
-    margin-left: 1vw;
+    margin-left: vw;
     float: left;
     text-align: left;
 }

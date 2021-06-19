@@ -28,7 +28,7 @@ const useData = () => {
     const [admin, setAdmin] = useState("");
     const [GID, setGID] = useState("");
     const [message, setMessage] = useState("");
-
+    const [isonmessage, setIsonmessage] = useState({});
     client.onopen = () => {
         console.log("client connected")
     }
@@ -40,35 +40,11 @@ const useData = () => {
         console.log(message)
         switch (api) {
             case "register": {
-                const { status } = data;
-                if(status === false){
-                    setStatus(false);
-                }
-                else if (status === true){
-                    setStatus(true);
-                }
+                setIsonmessage(data);
                 break
             }
             case "login": {
-                console.log("data",data);
-                const { status } = data;
-               
-                if(status === false){
-                    setStatus(false);
-                    // console.log("statusssss", status);
-                    setError_msg(data.error_msg);
-                }
-                else if (status === true) {
-                    
-                    // var uid = data.UID
-                    setUID(data.UID);
-                    setStatus(true);
-                    setError_msg(data.error_msg);
-                    // console.log("statusssss", status)
-                    // let g = data.group
-                    // setUName(un)
-                    // setGroup(g)
-                }
+                setIsonmessage(data);
                 break
             }
             case "index": {
@@ -81,8 +57,10 @@ const useData = () => {
                     setGroup(g)
                     setRecent(data.recent);
                     setVoting(data.voting);
+                    setIsonmessage(data);
                 }else{
                     setStatus(false);
+                    setIsonmessage(data);
                 }
                 break
             }
@@ -93,6 +71,7 @@ const useData = () => {
                     setAdmin(data.admin);
                     setGName(data.GName);
                     setFile(data.file);
+                    setIsonmessage(data);
                 }
                 break
             }
@@ -103,19 +82,13 @@ const useData = () => {
                     setGID(data.GID);
                     setGName(data.GName);
                     setError_msg(data.error_msg);
-                    // setFile(data.file);
                 }
                 setError_msg(data.error_msg);
+                setIsonmessage(data);
                 break
             }
             case "renewProfile": {
-                const { status } = data;
-                console.log(data);
-                if (status === true) {
-                    setStatus(true);
-                }else{
-                    setStatus(false);
-                }
+                setIsonmessage(data);
                 break
             }
             case "group": {
@@ -283,6 +256,7 @@ const useData = () => {
         time_options,
         place_options,
         message,
+        isonmessage
     }
 }
 export default useData;

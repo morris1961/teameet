@@ -1,33 +1,96 @@
 import { useEffect, useState } from 'react'
-import { Layout, Menu, Breadcrumb } from 'antd';
+import {Button,Layout, Menu, Breadcrumb,Input, notification } from 'antd';
 import {
   TeamOutlined,
   UserOutlined,
+  LogoutOutlined,
+  FormOutlined,
+  PlusOutlined,
+  UsergroupAddOutlined,
+  RollbackOutlined,
 } from '@ant-design/icons';
+import '../style/Index.css';
 import { useParams, useHistory, useLocation } from "react-router-dom";
-
+import  {BsGear}  from "react-icons/bs";
+import VotingGroups from "../Components/VotingGroups";
+import { If, Then, ElseIf, Else } from 'react-if-elseif-else-render';
+import RecentGroups from "../Components/RecentGroups";
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const HomePage = ({UName, group, sendData}) =>{
-    const { UID } = useParams();
-    // const { UName, group, sendData } = useData();
+const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
+
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState("")
     const history = useHistory();
     const location = useLocation();
-
+    var data = location.state.data;
+    var {UID, password, email} = data;
+    const [GID, setGID] = useState("");
     const onCollapse = collapsed => {
         console.log(collapsed);
         setCollapsed(collapsed);
     };
+
+    const [iscreateclicked, setIscreateclicked] = useState(false);
+    const [isjoinclicked, setIsjoinclicked] = useState(false);
+  
+    const [code, setCode]=useState("");
+    const [GName, setGName]=useState("");
+    const [file, setFile]=useState("");
+    const [click_join, setClick_join]=useState(false);
+    const [click_create, setClick_create]=useState(false);
+
 
     // initialize
     useEffect(()=>{
       let data = {UID}
       sendData("index", data)
     }, [])
+    const handleback = () =>{
+      setIscreateclicked(false);
+      setIsjoinclicked(false);
+    };
+    
+    const handlecreategroup = () =>{
+      setIscreateclicked(true);
+      setIsjoinclicked(false);  
+    }
+    const handlecreate = () =>{
+      var data = {admin:UID, GName, file:file};
+      sendData('createGroup', data);
+      setClick_create(true);
+    }
+    const handlejoingroup = () =>{
+      setIscreateclicked(false);
+      setIsjoinclicked(true);
+    }
+    const handlejoin = () =>{
+      if(code === ""){
+        notification['error']({
+          message: '錯誤',
+          description:
+            'code不可為空',
+          });
+          return
+      }
+      var data = {UID:UID, code:'#'+code};
+      sendData('joinGroup', data);
+      setClick_join(true);  
+    }
+  
+    const handlerenew = () => {
+      var data = {UID, UName, password, email};
+      var path_renew = {
+                    pathname:"/renewProfile",
+                    state:{data}};
+      history.push(path_renew)
+    }
+    const [isgearclicked, setIsgearclicked] = useState(false);
+    const handlegear = () =>{
+      setIsgearclicked(!isgearclicked);
+    };
 
     useEffect(()=>{
 
@@ -37,24 +100,104 @@ const HomePage = ({UName, group, sendData}) =>{
         let data = {UID:UID, GID:GID}
         sendData("group", data)
         history.push({pathname:`/${UID}/${GID}`, state:{UName}});
-        // window.location.href = `/${UID}/${GID}`
       }
+      
     })
+    useEffect(()=>{
+      if(click_join === true){
+        console.log("error_msg", isonmessage.error_msg)
+        var error_msg = isonmessage.error_msg;
+        if(error_msg === "The user has been in the group!" ){
+          notification['error']({
+            message: '錯誤',
+            description:
+              '你已經在該群組內',
+            });
+            setClick_join(false);
+        }else if(error_msg === "The code is not valid!"){
+          notification['error']({
+            message: '錯誤',
+            description:
+              '請再確認一次 code 是否正確',
+            });
+            setClick_join(false);
+          }
+        else if(error_msg === "Successed!"){
+          notification['success']({
+            message: '成功',
+            description:
+            '成功加入該群組, 為你跳轉頁面',
+          });
+          var path_group = {
+            pathname:"/:UID/:GID",
+            state:{UName},
+          }
+          setTimeout(history.push(path_group), 2000 )
+        }
+    }else if(click_create === true){
+      if(isonmessage.status === false){
+            notification['error']({
+              message: '錯誤',
+              description:
+              '請稍後再重新登入一次, 並請你確認你的網路連接正常',
+            });
+            setClick_create(false);
+          }else if(isonmessage.status === true){
+            notification['success']({
+              message: '成功',
+              description:
+              '創建成功, 為你跳轉至群組畫面',
+            });
+            setGID(isonmessage.GID);
+            setGName(isonmessage.GName);
+            var path_creategroup = {
+              pathname:"/:UID/:GID",
+              state:{UName},
+            }
+            setTimeout(history.push(path_creategroup), 2000 )
+            setClick_create(false);
+
+    }}},[isonmessage])
 
     return(
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="1" icon={<UserOutlined />} title="User" style={{height: "60px"}}>
-                {UName}
+              <Menu.Item key="1" icon={<UserOutlined />} title="User" style={{height: "60px"}} >
+                <div onClick={handleback} style={{float:"left"}}>{UName}</div>
+                <BsGear className="index_gear" onClick={handlegear} style={{fontSize:"1.5vw",marginTop:"0.5vw"}}/>
               </Menu.Item>
-              <SubMenu key="sub2" icon={<TeamOutlined />} title="群組">
-                {group.map((g, index)=>{
-                  return(
-                  <Menu.Item key={`group_${g.GID}`} onClick={(e)=>{setActiveKey(e.key)}}>{g.GName}</Menu.Item>)
-                })}
-              </SubMenu>
+              {isgearclicked?(<>
+                <Menu.Item key="RenewProfile" icon={<FormOutlined />} title="RenewProdile" onClick={handlerenew}>
+                    更新個人資料
+                </Menu.Item>
+                <Menu.Item key="logout" icon={<LogoutOutlined />} title="Logout" onClick={()=>{history.push('/')}}>
+                    登出
+                </Menu.Item>
+                <Menu.Item key="Back" icon={<RollbackOutlined />} title="回上一頁" onClick={handlegear}>
+                    回上一頁
+                </Menu.Item>
+                </>
+                ):(
+                <>
+                <Menu.Item key="create" icon={<PlusOutlined />} title="創建群組"  onClick={handlecreategroup}>
+                    創建群組
+                </Menu.Item>
+
+                <Menu.Item key="join" icon={<UsergroupAddOutlined />} title="加入群組"  onClick={handlejoingroup}>
+                    加入群組
+                </Menu.Item>
+                <SubMenu key="sub2" icon={<TeamOutlined />} title="群組">
+                  {voting.map((g, index)=>{return(
+                          <Menu.Item key={`group_${g.GID}`} 
+                                     onClick={(e)=>{setActiveKey(e.key)}}>{g.GName}
+                          </Menu.Item>)
+                        })}
+                </SubMenu>
+                </>
+              )}
+              
             </Menu>
           </Sider>
           <Layout className="site-layout">
@@ -64,9 +207,93 @@ const HomePage = ({UName, group, sendData}) =>{
                 <Breadcrumb.Item>使用者</Breadcrumb.Item>
                 <Breadcrumb.Item>{UName}</Breadcrumb.Item>
               </Breadcrumb>
-              <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                Hello.
-              </div>
+              <If condition={iscreateclicked}>
+        <Then>
+        <Content>
+          <div style={{fontSize:"2vw", marginLeft:"2vw", height:"30vw"}}>
+              創建群組
+          </div>
+        
+        {/* <Content style={{paddingLeft:"1.2vw",backgroundColor:"white"}} > */}
+        <div className="create_GName" >
+          <div className="create_GName-title" > 群組名稱: </div>
+          <div className="create_GName-input" >
+              <Input 
+              className="create_searchbox"
+              placeholder="請輸入 群組名稱"
+              onChange={(event)=>setGName(()=>event.target.value)}
+              value={GName}
+            />
+            </div>
+        </div>
+
+        <div className="create_datalink" >
+          <div className="create_datalink-title" > 資料集連結: </div>
+          <div className="create_datalink-input" >
+              <Input 
+              className="create_searchbox"
+              placeholder="請輸入 資料集連結"
+              onChange={(event)=>setFile(()=>event.target.value)}
+              value={file}
+            />
+            </div>
+        </div>
+
+        <div className="create_create">
+        <Button
+            className="create_create-button"
+            onClick = {handlecreate}>
+          創建
+        </Button>
+         </div>
+          </Content>
+        </Then>
+         {/* click joinGroup */}
+        <ElseIf condition={isjoinclicked}>
+        <Content >
+            <div style={{fontSize:"2vw", marginLeft:"2vw"}}>
+                加入群組
+            </div>
+
+        
+        <div style={{marginTop:"4vw"}} >
+          <div style={{marginLeft:"25vw",height:"4.2vw",marginRight:"0.5vw",float:"left", textAlign:"left",fontSize:"2vw"}} > code: </div>
+          <div className="create_GName-input" >
+              <Input 
+              prefix="#"
+              className="create_searchbox"
+              placeholder="請輸入 code"
+              onChange={(event)=>setCode(()=>event.target.value)}
+              value={code}
+            />
+            </div>
+        </div>
+
+        <div className="create_create">
+        <Button
+            className="create_create-button"
+            onClick = {handlejoin}>
+          加入
+        </Button>
+         </div>
+          </Content>
+        </ElseIf>
+         {/* index */}
+        <Else>
+        <Header style={{backgroundColor:"white"}}>
+            <div style={{fontSize:"2vw", marginLeft:"-2vw"}}>
+                近期討論
+            </div>
+        </Header>
+        <Content style={{paddingLeft:"1.2vw",backgroundColor:"white"}} >
+            
+            {recent.map((v, i)=><RecentGroups key={'r_'+i}
+                                      UID={UID} GID={v.GID} GName={v.GName} 
+                                      time={v.time} subject={v.subject} place={v.place}/>)}
+            
+          </Content>
+        </Else>
+      </If>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
           </Layout>

@@ -6,33 +6,39 @@ import { If, Then, Else } from 'react-if-elseif-else-render';
 import 'antd/dist/antd.css';
 import '../style/Register.css'
 const { Header, Content } = Layout;
-const Register = ({sendData, status}) =>{
+const Register = ({sendData, status, isonmessage}) =>{
+  const history = useHistory();
+  const [UName, setUName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [pass2, setPass2] = useState("");
+  const [click, setClick] = useState(false);
+  const [isregistersuccess,setIsregistersuccess] = useState(false);
+  const validemail= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
+
   useEffect(()=>{
-    // console.log("useEffect ststus:", status)
     if(click === true){
-      if(status === undefined){
-      console.log("undefined....")
-      setClick(false);
-      return
-    }else if(status === true){
+    if(isonmessage.status === true){
       setIsregistersuccess(true);
       setClick(false);
-    }else if(status === false){
+    }else if(isonmessage.status === false){
       notification['error']({
       message: '錯誤',
       description:
         '這個信箱已經註冊過了',
       });
       setClick(false);
-    } }
-});
-  const history = useHistory();
-  const [UName, setUName] = useState("winnie");
-  const [email, setEmail] = useState("winniew0824@gmail.com");
-  const [password, setPassword] = useState("123");
-  const [pass2, setPass2] = useState("123");
-  const [click, setClick] = useState(false);
-  const [isregistersuccess,setIsregistersuccess] = useState(false);
+    }else{
+      notification['error']({
+        message: '錯誤',
+        description:
+          '請稍後再試一次',
+        });
+        setClick(false);
+    }
+  } 
+},[isonmessage]);
+ 
   const handleregister = async()=>{
         if(email.length===0){
           notification['error']({
@@ -66,6 +72,11 @@ const Register = ({sendData, status}) =>{
           });
           setPassword('');
           setPass2('');
+        }else if(!validemail.test(email)){
+          notification['error']({
+            message: '錯誤',
+            description:
+              '帳號須為合理mail'});
         }else{
           var data = {email:email, UName: UName, password:password};
           sendData('register', data);
@@ -163,8 +174,6 @@ const Register = ({sendData, status}) =>{
                     value={pass2} />
                 </div>
             </div>
-              
-
 
             <div className="register_button">
             <Button 

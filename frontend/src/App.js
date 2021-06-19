@@ -6,7 +6,6 @@ import Beforelogin from "./pages/Beforelogin";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RenewProfile from "./pages/RenewProfile";
-import Index from "./pages/Index";
 import HomePage from "./pages/HomePage"
 import GroupPage from "./pages/GroupPage"
 import DiscussionPage from "./pages/DiscussionPage"
@@ -43,6 +42,7 @@ const App = () =>{
     voting,
     GID,
     message,
+    isonmessage,
   }
   = useData()
 
@@ -69,20 +69,11 @@ const App = () =>{
     
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Beforelogin} />
-        <Route exact path="/login" render={()=>(<Login status = {status} error_msg={error_msg} UID={UID} sendData={sendData}/>)} />
-        <Route exact path="/register" render={()=>(<Register status = {status} sendData={sendData}/>)} />
-        <Route exact path="/index" 
-                render={()=>(<Index status={status} 
-                                  error_msg={error_msg} 
-                                  UName={UName}  
-                                  sendData={sendData}  
-                                  recent = {recent} 
-                                  voting={voting} 
-                                  group={group}
-                                  GID={GID}
-                                  />)} />
-        <Route exact path="/renewProfile" render={()=>(<RenewProfile status = {status} sendData={sendData}/>)} />
+      <Route exact path="/" component={Beforelogin} />
+        <Route exact path="/login" render={()=>(<Login status = {status} error_msg={error_msg} UID={UID} sendData={sendData} isonmessage={isonmessage}/>)} />
+        <Route exact path="/register" render={()=>(<Register status = {status} sendData={sendData} isonmessage={isonmessage}/>)} />
+        <Route exact path="/index" render={()=>(<HomePage UName={UName}  recent = {recent} voting={voting} group={group} sendData={sendData} isonmessage={isonmessage}/>)} />
+        <Route exact path="/renewProfile" render={()=>(<RenewProfile status = {status} sendData={sendData} isonmessage={isonmessage}/>)} />
         <Route exact path="/:UID" render={()=>(<HomePage UName={UName} group={group} sendData={sendData}/>)} />
             <Route exact path="/:UID/:GID" 
             render={()=>
