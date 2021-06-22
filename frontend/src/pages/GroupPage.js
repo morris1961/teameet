@@ -36,10 +36,10 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
       sendData("renewFile", data)
     }
     
-    useEffect(()=>{
-      let data = {UID, GID}  
-      sendData("group", data)
-    }, [])
+    // useEffect(()=>{
+    //   let data = {UID, GID}  
+    //   sendData("group", data)
+    // }, [])
 
     // useEffect(()=>{
 // 
@@ -80,11 +80,14 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
     }
 
     const handleBack = () =>{
-      var data = location.state.data;
-      var {UID, password, email} = data;
-      var data = {UID: UID, password: password, email:email};
-      console.log("dataaa",data)
-      history.push({pathname:`/index`, state:{data}});
+      var data1 = location.state.data;
+      var data = data1.postdata;
+      var path = {
+        pathname:"/index",
+        state:{data},
+      }
+      console.log("pushback", data)
+      history.push(path);
     }
 
     return(

@@ -3,40 +3,51 @@ import 'antd/dist/antd.css';
 import '../style/Login.css'
 import {Button, Input, Layout, notification} from 'antd';
 import {useHistory} from "react-router-dom";
+import { SettingOutlined } from '@ant-design/icons';
 const { Header, Footer, Content } = Layout;
-const Login = ({sendData, isonmessage}) =>{
+const Login = ({sendData, mess}) =>{
   useEffect(()=>{
 
-    if(click === true){
-      if(isonmessage.status === true){
-        var data = {UID: isonmessage.UID, password: password, email:email};
-        var path = {
-          pathname:"/index",
-          state:{data},
-        }
-        history.push(path);
-        setClick(false);
-      }else if(isonmessage.status === false){
+    if(mess.api === "login"){
+      if(mess.data.status === true){
+        var data ={UID: mess.data.UID}
+        sendData('index', data);
+        setUID(mess.data.UID)
+      }else if(mess.data.status === false){
         notification['error']({
           message: '錯誤',
           description:
           '使用者錯誤 或是 密碼錯誤，請確認是否已經註冊！',
           duration: 3,
         });
-        setClick(false);
       }else{
         notification['error']({
           message: '錯誤',
           description:
             '請稍後再試一次',
           });
-          setClick(false);
       }
+    }else if(mess.api === "index"){
+      var postdata = new Object();
+      postdata.UID = UID;
+      postdata.password = password;
+      postdata.email=email;
+
+      var data = mess.data;
+      data.postdata = postdata;
+      console.log("data in index push", data)
+        var path = {
+          pathname:"/index",
+          state:{data},
+        }
+        history.push(path);
     }
-  },[isonmessage]);
+  },[mess]);
+  
   const history = useHistory();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [UID, setUID] = useState("");
+  const [email, setEmail] = useState("winniew0824@gmail.com");
+  const [password, setPassword] = useState("123");
   const [click, setClick] = useState(false);
   const validemail= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 
@@ -65,10 +76,7 @@ const Login = ({sendData, isonmessage}) =>{
       console.log("login.js in frontend send:", data)
       setClick(true);
     }
-  }
-  
-    
-    
+  }    
   
   return( 
     <React.Fragment>
@@ -78,8 +86,7 @@ const Login = ({sendData, isonmessage}) =>{
           <div style={{marginLeft:"-2vw", fontSize:"3vw", color:"#000099"}}>
             TEAMEET
           </div>
-
-        </Header>
+      </Header>
 
       <Content style={{backgroundColor:"white"}}>
       <div className="login_account-welcome">

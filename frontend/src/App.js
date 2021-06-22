@@ -36,13 +36,10 @@ const App = () =>{
     time_result,
     place_result,
     status,
-    error_msg,
-    UID,
     recent, 
     voting,
-    GID,
     mess,
-    isonmessage,
+
   }
   = useData()
 
@@ -70,10 +67,10 @@ const App = () =>{
     <BrowserRouter>
       <Switch>
       <Route exact path="/" component={Beforelogin} />
-        <Route exact path="/login" render={()=>(<Login status = {status} error_msg={error_msg} UID={UID} sendData={sendData} isonmessage={isonmessage}/>)} />
-        <Route exact path="/register" render={()=>(<Register status = {status} sendData={sendData} isonmessage={isonmessage}/>)} />
-        <Route exact path="/index" render={()=>(<HomePage UName={UName}  recent = {recent} voting={voting} group={group} sendData={sendData} isonmessage={isonmessage}/>)} />
-        <Route exact path="/renewProfile" render={()=>(<RenewProfile status = {status} sendData={sendData} isonmessage={isonmessage}/>)} />
+        <Route exact path="/login" render={()=>(<Login sendData={sendData} mess={mess}/>)} />
+        <Route exact path="/register" render={()=>(<Register status = {status} sendData={sendData} mess={mess}/>)} />
+        <Route exact path="/index" render={()=>(<HomePage sendData={sendData} mess={mess}/>)} />
+        <Route exact path="/renewProfile" render={()=>(<RenewProfile sendData={sendData} mess={mess}/>)} />
         <Route exact path="/:UID" render={()=>(<HomePage UName={UName} group={group} sendData={sendData}/>)} />
             <Route exact path="/:UID/:GID" 
             render={()=>

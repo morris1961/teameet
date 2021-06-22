@@ -28,7 +28,7 @@ const useData = () => {
     const [admin, setAdmin] = useState("");
     const [GID, setGID] = useState("");
     const [mess, setMess] = useState("");
-    const [isonmessage, setIsonmessage] = useState({});
+
     client.onopen = () => {
         console.log("client connected")
     }
@@ -40,55 +40,27 @@ const useData = () => {
         console.log(message)
         switch (api) {
             case "register": {
-                setIsonmessage(data);
+                setMess(data);
                 break
             }
             case "login": {
-                setIsonmessage(data);
+                setMess(data);
                 break
             }
             case "index": {
-                const { status } = data;
-                console.log("data:",data);
-                if (status === true) {
-                    let un = data.UName
-                    let g = data.group
-                    setUName(un)
-                    setGroup(g)
-                    setRecent(data.recent);
-                    setVoting(data.voting);
-                    setIsonmessage(data);
-                }else{
-                    setStatus(false);
-                    setIsonmessage(data);
-                }
+                setMess(data);
                 break
             }
             case "createGroup": {
-                const { status } = data;
-                console.log(data);
-                if (status === true) {
-                    setAdmin(data.admin);
-                    setGName(data.GName);
-                    setFile(data.file);
-                    setIsonmessage(data);
-                }
+                setMess(data);
                 break
             }
             case "joinGroup": {
-                const { status } = data;
-                console.log(data);
-                if (status === true) {
-                    setGID(data.GID);
-                    setGName(data.GName);
-                    setError_msg(data.error_msg);
-                }
-                setError_msg(data.error_msg);
-                setIsonmessage(data);
+                setMess(data);
                 break
             }
             case "renewProfile": {
-                setIsonmessage(data);
+                setMess(data);
                 break
             }
             case "group": {
@@ -256,7 +228,6 @@ const useData = () => {
         time_options,
         place_options,
         mess,
-        isonmessage
     }
 }
 export default useData;

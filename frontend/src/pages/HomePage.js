@@ -19,14 +19,17 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
+const HomePage = ({sendData, mess}) =>{
 
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState("")
     const history = useHistory();
     const location = useLocation();
     var data = location.state.data;
-    var {UID, password, email} = data;
+    // console.log("data in homepage", location.state)
+    var {UName, postdata, group, recent, voting, email, password} = data;
+    var {UID, password, email} = postdata;
+    // console.log("indexxx",data)
     const [GID, setGID] = useState("");
     const onCollapse = collapsed => {
         console.log(collapsed);
@@ -42,12 +45,11 @@ const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
     const [click_join, setClick_join]=useState(false);
     const [click_create, setClick_create]=useState(false);
 
-
     // initialize
-    useEffect(()=>{
-      let data = {UID}
-      sendData("index", data)
-    }, [])
+    // useEffect(()=>{
+    //   let data = {UID}
+    //   sendData("index", data)
+    // }, [])
     const handleback = () =>{
       setIscreateclicked(false);
       setIsjoinclicked(false);
@@ -60,7 +62,6 @@ const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
     const handlecreate = () =>{
       var data = {admin:UID, GName, file:file};
       sendData('createGroup', data);
-      setClick_create(true);
     }
     const handlejoingroup = () =>{
       setIscreateclicked(false);
@@ -95,64 +96,82 @@ const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
     //history.push({pathname:`/${UID}/${GID}`, state:{UName, password, email}});
     const handleGroupClick = (GID) =>{
       let data = {UID, GID}
+      setGID(GID);
       sendData("group", data)
+      
     }
 
     useEffect(()=>{
-      if(click_join === true){
-        console.log("error_msg", isonmessage.error_msg)
-        var error_msg = isonmessage.error_msg;
-        if(error_msg === "The user has been in the group!" ){
-          notification['error']({
-            message: '錯誤',
-            description:
-              '你已經在該群組內',
-            });
-            setClick_join(false);
-        }else if(error_msg === "The code is not valid!"){
-          notification['error']({
-            message: '錯誤',
-            description:
-              '請再確認一次 code 是否正確',
-            });
-            setClick_join(false);
-          }
-        else if(error_msg === "Successed!"){
-          notification['success']({
-            message: '成功',
-            description:
-            '成功加入該群組, 為你跳轉頁面',
-          });
-          var path_group = {
-            pathname:`/${UID}/${GID}`,
-            state:{UName},
-          }
-          setTimeout(history.push(path_group), 2000 )
-        }
-    }else if(click_create === true){
-      if(isonmessage.status === false){
-            notification['error']({
-              message: '錯誤',
-              description:
-              '請稍後再重新登入一次, 並請你確認你的網路連接正常',
-            });
-            setClick_create(false);
-          }else if(isonmessage.status === true){
-            notification['success']({
-              message: '成功',
-              description:
-              '創建成功, 為你跳轉至群組畫面',
-            });
-            setGID(isonmessage.GID);
-            setGName(isonmessage.GName);
-            var path_creategroup = {
-              pathname:`/${UID}/${GID}`,
-              state:{UName},
-            }
-            setTimeout(history.push(path_creategroup), 2000 )
-            setClick_create(false);
+      if(mess.api === "index"){
+          console.log("index", mess)
+        // console.log("error_msg", message.error_msg)
+        // var error_msg = message.error_msg;
+        // if(error_msg === "The user has been in the group!" ){
+        //   notification['error']({
+        //     message: '錯誤',
+        //     description:
+        //       '你已經在該群組內',
+        //     });
+        //     setClick_join(false);
+        // }else if(error_msg === "The code is not valid!"){
+        //   notification['error']({
+        //     message: '錯誤',
+        //     description:
+        //       '請再確認一次 code 是否正確',
+        //     });
+        //     setClick_join(false);
+        //   }
+        // else if(error_msg === "Successed!"){
+        //   notification['success']({
+        //     message: '成功',
+        //     description:
+        //     '成功加入該群組, 為你跳轉頁面',
+        //   });
+          // var path_group = {
+          //   pathname:`/${UID}/${GID}`,
+          //   state:{UName},
+          // }
+          // setTimeout(history.push(path_group), 2000 )
+        
+     }
+    // else if(click_create === true){
+    //   if(message.status === false){
+    //         notification['error']({
+    //           message: '錯誤',
+    //           description:
+    //           '請稍後再重新登入一次, 並請你確認你的網路連接正常',
+    //         });
+    //         setClick_create(false);
+    //       }else if(message.status === true){
+    //         notification['success']({
+    //           message: '成功',
+    //           description:
+    //           '創建成功, 為你跳轉至群組畫面',
+    //         });
+    //         setGID(message.GID);
+    //         setGName(message.GName);
+    //         var path_creategroup = {
+    //           pathname:`/${UID}/${GID}`,
+    //           state:{UName},
+    //         }
+    //         // setTimeout(history.push(path_creategroup), 2000 )
+    //         setClick_create(false);
 
-    }}},[isonmessage])
+    else if(mess.api === 'group'){
+      // var GID = GID;
+      // console.log("GID", {GID})
+      var data = mess.data;
+      data.postdata = {UName, postdata, group, recent, voting, email, password};
+      // console.log(data)
+      console.log("data in hp push", data)
+        var path = {
+          pathname:`/${UID}/${GID}`,
+          state:{data},
+        }
+        // history.push(path);
+        history.push(path);
+    }
+    },[mess])
 
     return(
         <Layout style={{ minHeight: '100vh' }}>
@@ -282,9 +301,9 @@ const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
         </Header>
         <Content style={{paddingLeft:"1.2vw",backgroundColor:"white"}} >
             
-            {recent.map((v, i)=><RecentGroups key={'r_'+i}
+            {/* {recent.map((v, i)=><RecentGroups key={'r_'+i}
                                       UID={UID} GID={v.GID} GName={v.GName} 
-                                      time={v.time} subject={v.subject} place={v.place}/>)}
+                                      time={v.time} subject={v.subject} place={v.place}/>)} */}
             
           </Content>
         </Else>

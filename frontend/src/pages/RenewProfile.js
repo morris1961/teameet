@@ -4,7 +4,7 @@ import '../style/RenewProfile.css'
 import {Button, Input, Layout, notification} from 'antd';
 import {useHistory, useLocation} from "react-router-dom";
 const { Header, Content } = Layout;
-const RegisterSuccess = ({sendData, isonmessage}) =>{
+const RegisterSuccess = ({sendData, message}) =>{
   const location = useLocation();
   var data = location.state.data;
   var {UID, UName, password, email} = data;
@@ -15,7 +15,7 @@ const RegisterSuccess = ({sendData, isonmessage}) =>{
   const [click, setClick] = useState(false);
   useEffect(()=>{
     if(click === true){
-      if(isonmessage.status === true){
+      if(message.data.status === true){
         console.log("tureeeeeeeeee")
       notification['success']({
         message: '更新成功',
@@ -32,7 +32,7 @@ const RegisterSuccess = ({sendData, isonmessage}) =>{
       });
       setClick(false);
     }}
-  },[isonmessage]);
+  },[message]);
 
   const handlerenew = () =>{
 

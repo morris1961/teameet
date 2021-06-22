@@ -6,40 +6,36 @@ import { If, Then, Else } from 'react-if-elseif-else-render';
 import 'antd/dist/antd.css';
 import '../style/Register.css'
 const { Header, Content } = Layout;
-const Register = ({sendData, status, isonmessage}) =>{
+const Register = ({sendData, message}) =>{
   const history = useHistory();
   const [UName, setUName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pass2, setPass2] = useState("");
-  const [click, setClick] = useState(false);
   const [isregistersuccess,setIsregistersuccess] = useState(false);
   const validemail= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 
   useEffect(()=>{
-    if(click === true){
-    if(isonmessage.status === true){
+    if(message.api === "register"){
+    if(message.data.status === true){
       setIsregistersuccess(true);
-      setClick(false);
-    }else if(isonmessage.status === false){
+    }else if(message.data.status === false){
       notification['error']({
       message: '錯誤',
       description:
         '這個信箱已經註冊過了',
       });
-      setClick(false);
     }else{
       notification['error']({
         message: '錯誤',
         description:
           '請稍後再試一次',
         });
-        setClick(false);
     }
   } 
-},[isonmessage]);
+},[message]);
  
-  const handleregister = async()=>{
+  const handleregister = ()=>{
         if(email.length===0){
           notification['error']({
             message: '錯誤',
@@ -81,7 +77,6 @@ const Register = ({sendData, status, isonmessage}) =>{
           var data = {email:email, UName: UName, password:password};
           sendData('register', data);
           console.log("register.js in frontend send:", data);
-          setClick(true);
           }
 
       };
