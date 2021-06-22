@@ -27,7 +27,7 @@ const useData = () => {
     const [voting, setVoting] = useState([{}]);
     const [admin, setAdmin] = useState("");
     const [GID, setGID] = useState("");
-    const [message, setMessage] = useState("");
+    const [mess, setMess] = useState("");
     const [isonmessage, setIsonmessage] = useState({});
     client.onopen = () => {
         console.log("client connected")
@@ -35,7 +35,7 @@ const useData = () => {
 
     client.onmessage = (byteString) => {
         const message = JSON.parse(byteString.data);
-        setMessage(message)
+        setMess(message)
         const { api, data } = message
         console.log(message)
         switch (api) {
@@ -255,7 +255,7 @@ const useData = () => {
         GID,
         time_options,
         place_options,
-        message,
+        mess,
         isonmessage
     }
 }

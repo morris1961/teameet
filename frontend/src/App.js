@@ -41,7 +41,7 @@ const App = () =>{
     recent, 
     voting,
     GID,
-    message,
+    mess,
     isonmessage,
   }
   = useData()
@@ -87,7 +87,7 @@ const App = () =>{
             group={group} 
             sendData={sendData}
             displayStatus={displayStatus}
-            message={message}
+            message={mess}
             />)} />
 
             <Route exact path="/:UID/:GID/:DID" 
@@ -110,7 +110,7 @@ const App = () =>{
               time_result={time_result}
               place_result={place_result}
               displayStatus={displayStatus}
-              message={message}
+              message={mess}
               />)} />
       </Switch>
     </BrowserRouter>

@@ -92,17 +92,12 @@ const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
       setIsgearclicked(!isgearclicked);
     };
 
-    useEffect(()=>{
+    //history.push({pathname:`/${UID}/${GID}`, state:{UName, password, email}});
+    const handleGroupClick = (GID) =>{
+      let data = {UID, GID}
+      sendData("group", data)
+    }
 
-      if(activeKey.search("group_") !== -1){
-        let id = activeKey.indexOf('_') + 1
-        let GID = activeKey.slice(id) 
-        let data = {UID:UID, GID:GID}
-        sendData("group", data)
-        history.push({pathname:`/${UID}/${GID}`, state:{UName, password, email}});
-      }
-      
-    })
     useEffect(()=>{
       if(click_join === true){
         console.log("error_msg", isonmessage.error_msg)
@@ -191,7 +186,7 @@ const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
                 <SubMenu key="sub2" icon={<TeamOutlined />} title="群組">
                   {group.map((g, index)=>{return(
                           <Menu.Item key={`group_${g.GID}`} 
-                                     onClick={(e)=>{setActiveKey(e.key)}}>{g.GName}
+                                     onClick={(e)=>{handleGroupClick(g.GID)}}>{g.GName}
                           </Menu.Item>)
                         })}
                 </SubMenu>
