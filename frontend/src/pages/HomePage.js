@@ -129,7 +129,7 @@ const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
             '成功加入該群組, 為你跳轉頁面',
           });
           var path_group = {
-            pathname:"/:UID/:GID",
+            pathname:`/${UID}/${GID}`,
             state:{UName},
           }
           setTimeout(history.push(path_group), 2000 )
@@ -151,7 +151,7 @@ const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
             setGID(isonmessage.GID);
             setGName(isonmessage.GName);
             var path_creategroup = {
-              pathname:"/:UID/:GID",
+              pathname:`/${UID}/${GID}`,
               state:{UName},
             }
             setTimeout(history.push(path_creategroup), 2000 )
@@ -189,7 +189,7 @@ const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
                     加入群組
                 </Menu.Item>
                 <SubMenu key="sub2" icon={<TeamOutlined />} title="群組">
-                  {voting.map((g, index)=>{return(
+                  {group.map((g, index)=>{return(
                           <Menu.Item key={`group_${g.GID}`} 
                                      onClick={(e)=>{setActiveKey(e.key)}}>{g.GName}
                           </Menu.Item>)

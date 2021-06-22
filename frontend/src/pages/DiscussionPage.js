@@ -89,7 +89,7 @@ const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendDat
                 <Breadcrumb.Item>群組</Breadcrumb.Item>
                 <Breadcrumb.Item>{location.state.GName}</Breadcrumb.Item>
                 <Breadcrumb.Item>討論</Breadcrumb.Item>
-                <Breadcrumb.Item>{subject}</Breadcrumb.Item>
+                <Breadcrumb.Item>{location.state.subject}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                 {activeKey === "content"?(<DiscussionContent subject={location.state.subject} content={location.state.content}/>):

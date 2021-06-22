@@ -25,7 +25,7 @@ async function discussion({ UID, DID }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, subject, content, isAdmin, error_msg };
+  return { status, subject, content, isAdmin, DID, error_msg };
 }
 
 export default discussion;

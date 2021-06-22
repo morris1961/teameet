@@ -25,6 +25,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
     const [modalVisible, setModalVisible] = useState(false)
     const history = useHistory();
     const location = useLocation();
+
     const onCollapse = collapsed => {
         console.log(collapsed);
         setCollapsed(collapsed);
@@ -40,34 +41,51 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
       sendData("group", data)
     }, [])
 
-    useEffect(()=>{
-
-        if(activeKey.search("Discussions_") !== -1){
-          let id = activeKey.indexOf('_') + 1
-          let DID = activeKey.slice(id)
-          /// get data for DiscussionPage
-          let data = {UID, DID}  
-          sendData("discussion", data)
-          /// get data for DiscussionPage
+    // useEffect(()=>{
+// 
+        // if(activeKey.search("Discussions_") !== -1){
+        //   let id = activeKey.indexOf('_') + 1
+        //   let DID = activeKey.slice(id)
+        //   /// get data for DiscussionPage
+        //   let data = {UID, DID}  
+        //   sendData("discussion", data)
+        //   /// get data for DiscussionPage
           
-        }
-        if(activeKey === 'Back'){
-          var data = location.state.data;
-          var {UID, password, email} = data;
-          var data = {UID: UID, password: password, email:email};
-          console.log("dataaa",data)
-          history.push({pathname:`/index`, state:{data}});
-        }
+        // }
+        // if(activeKey === 'Back'){
+        //   var data = location.state.data;
+        //   var {UID, password, email} = data;
+        //   var data = {UID: UID, password: password, email:email};
+        //   console.log("dataaa",data)
+        //   history.push({pathname:`/index`, state:{data}});
+        // }
           
-    })
+    // })
 
     useEffect(()=>{
-      if(activeKey.search("Discussions_") !== -1){
-        let id = activeKey.indexOf('_') + 1
-        let DID = activeKey.slice(id)
-        history.push({pathname:`/${UID}/${GID}/${DID}`, state:{UName:location.state.UName, GName, subject: message.data.subject, content: message.data.content}});
+      // if(activeKey.search("Discussions_") !== -1){
+      //   let id = activeKey.indexOf('_') + 1
+      //   let DID = activeKey.slice(id)
+      if(message.api === 'discussion'){
+        history.push({pathname:`/${UID}/${GID}/${message.data.DID}`, state:{UName:location.state.UName, GName, subject: message.data.subject, content: message.data.content}});
       }
+      // }
     }, [message])
+
+    const handleDiscussionClick = (DID) =>{
+      /// get data for DiscussionPage
+      let data = {UID, DID}  
+      sendData("discussion", data)
+      /// get data for DiscussionPage
+    }
+
+    const handleBack = () =>{
+      var data = location.state.data;
+      var {UID, password, email} = data;
+      var data = {UID: UID, password: password, email:email};
+      console.log("dataaa",data)
+      history.push({pathname:`/index`, state:{data}});
+    }
 
     return(
       <>
@@ -104,11 +122,11 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
               <SubMenu key="Discussions" icon={<TeamOutlined />} title="討論">
                 {discussions.map((d, index)=>{
                   return(
-                    <Menu.Item key={`Discussions_${d.DID}`} onClick={(e)=>{setActiveKey(e.key);}}>{d.subject}</Menu.Item>
+                    <Menu.Item key={`Discussions_${d.DID}`} onClick={(e)=>{handleDiscussionClick(d.DID);}}>{d.subject}</Menu.Item>
                   )
                 })}
               </SubMenu>
-              <Menu.Item key="Back" icon={<RollbackOutlined />} title="回上一頁" onClick={(e)=>{setActiveKey("Back")}}>
+              <Menu.Item key="Back" icon={<RollbackOutlined />} title="回上一頁" onClick={(e)=>{handleBack()}}>
                 回上一頁
               </Menu.Item>
             </Menu>
