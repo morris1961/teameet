@@ -52,7 +52,11 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
           
         }
         if(activeKey === 'Back'){
-          history.push({pathname:`/${UID}`});
+          var data = location.state.data;
+          var {UID, password, email} = data;
+          var data = {UID: UID, password: password, email:email};
+          console.log("dataaa",data)
+          history.push({pathname:`/index`, state:{data}});
         }
           
     })

@@ -4,12 +4,12 @@ import '../style/Login.css'
 import {Button, Input, Layout, notification} from 'antd';
 import {useHistory} from "react-router-dom";
 const { Header, Footer, Content } = Layout;
-const Login = ({sendData, status, UID, error_msg, isonmessage}) =>{
+const Login = ({sendData, isonmessage}) =>{
   useEffect(()=>{
 
     if(click === true){
       if(isonmessage.status === true){
-        var data = {UID: UID, password: password, email:email};
+        var data = {UID: isonmessage.UID, password: password, email:email};
         var path = {
           pathname:"/index",
           state:{data},

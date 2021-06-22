@@ -99,7 +99,7 @@ const HomePage = ({UName, recent, voting, group, sendData, isonmessage}) =>{
         let GID = activeKey.slice(id) 
         let data = {UID:UID, GID:GID}
         sendData("group", data)
-        history.push({pathname:`/${UID}/${GID}`, state:{UName}});
+        history.push({pathname:`/${UID}/${GID}`, state:{UName, password, email}});
       }
       
     })
