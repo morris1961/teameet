@@ -9,7 +9,7 @@ async function group({ UID, GID }) {
   var code = "";
   var GName = "";
   var isAdmin = false;
-  var content = []; // (sort by time)  // todo
+  var messages = []; // (sort by time)  // todo
   var file = "";
   var discussions = [];
   var error_msg = "Something wrong...";
@@ -29,7 +29,8 @@ async function group({ UID, GID }) {
     code = group.code;
     GName = group.GName;
     isAdmin = group.admin.toString() === UID.toString();
-    content = group.content;
+    // todo
+    // messages = group.messages;
     file = group.file;
     for (let i = 0; i < group.discussions.length; i++) {
       const aDisscussion = await Discussion.findById(group.discussions[i]);
@@ -42,7 +43,7 @@ async function group({ UID, GID }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, code, GName, isAdmin, content, file, discussions, error_msg };
+  return { status, code, GName, isAdmin, messages, file, discussions, error_msg };
 }
 
 export default group;

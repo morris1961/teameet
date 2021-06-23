@@ -16,15 +16,12 @@ const GroupSchema = new Schema({
     unique: true,
     match: /^#/,
   },
-  content: {
-    type: Array,
-    default: []
-  },
+  messages: [{ type: mongoose.Types.ObjectId, ref: "Message" }],
   file: {
     type: String,
     default: "",
   },
-  discussions: [{type: mongoose.Types.ObjectId, ref: "Discussion"}]
+  discussions: [{ type: mongoose.Types.ObjectId, ref: "Discussion" }],
 })
 
 // Creating a table within database with the defined schema

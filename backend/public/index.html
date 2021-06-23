@@ -146,6 +146,21 @@
         <button onclick="sendMessage('confirmTime')">confirmTime</button>
       </div>
     </li>
+    <li>
+      <div>
+        <input id="UIDCH" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="GIDCH" placeholder="DID" value="60af1e7eee0d0006dc01a852" />
+        <button onclick="sendMessage('chat')">chat</button>
+      </div>
+    </li>
+    <li>
+      <div>
+        <input id="UIDM" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="GIDM" placeholder="DID" value="60af1e7eee0d0006dc01a852" />
+        <input id="bodyM">
+        <button onclick="sendMessage('message')">message</button>
+      </div>
+    </li>
   </ul>
   <script>
     const server = new WebSocket('ws://localhost:4000');
@@ -361,7 +376,29 @@
             data: { UID: UIDCTDOM.value, DID: DIDCTDOM.value, time_result: time_resultCTDOM.value },
           });
           break;
-
+        case 'chat':
+          const UIDCHDOM = document.getElementById('UIDCH');
+          const GIDCHDOM = document.getElementById('GIDCH');
+          if (!UIDCHDOM.value || !GIDCHDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDCHDOM.value, GID: GIDCHDOM.value },
+          });
+          break;
+        case 'message':
+          const UIDMDOM = document.getElementById('UIDM');
+          const GIDMDOM = document.getElementById('GIDM');
+          const bodyMDOM = document.getElementById('bodyM');
+          if (!UIDMDOM.value || !GIDMDOM.value || !bodyMDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDMDOM.value, GID: GIDMDOM.value, body: bodyMDOM.value },
+          });
+          break;
         default:
           console.log("QQ")
           break;

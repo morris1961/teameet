@@ -27,6 +27,8 @@ import addPlace from './functions/addPlace.js';
 import votePlace from './functions/votePlace.js';
 import confirmTime from './functions/confirmTime.js';
 import confirmPlace from './functions/confirmPlace.js';
+import send from './functions/message.js';
+import chat from './functions/chat.js';
 
 // init server
 const app = express();
@@ -181,6 +183,22 @@ wss.on('connection', async function connection(ws) {
         break;
       case "confirmTime":
         confirmTime(data).then(
+          (ret) => {
+            msg.data = ret;
+            ws.sendEvent(msg);
+          }
+        );
+        break;
+      case "chat":
+        chat(data).then(
+          (ret) => {
+            msg.data = ret;
+            ws.sendEvent(msg);
+          }
+        );
+        break;
+      case "message":
+        send(data).then(
           (ret) => {
             msg.data = ret;
             ws.sendEvent(msg);
