@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import ChatModal from '../Components/ChatModal'
+import ChatModal from '../Components/URLModal'
 import DiscussionSet from './DiscussionSet'
 import DiscussionPage from './DiscussionPage'
 ///// antd /////
@@ -14,6 +14,7 @@ import {
 } from '@ant-design/icons';
 ///// react-router-dom /////
 import { useParams, useHistory, useLocation } from "react-router-dom";
+import ChatRoom from '../Components/ChatRoom';
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -72,7 +73,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}}>
-                {location.state.UName}
+                {location.state.data.UName}
               </Menu.Item>
               <Menu.Item key="ChatRoom" icon={<WechatOutlined />} title="ChatRoom">
                 聊天室
@@ -117,7 +118,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
                 <Breadcrumb.Item>{GName}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null)}
+                {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus}/>):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
