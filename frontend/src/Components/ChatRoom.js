@@ -11,6 +11,10 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
         let data = {UID, GID, body:msg}
         sendData('message', data)
     }
+
+    useEffect(()=>{
+        endMsg.current.scrollIntoView({behavior: "smooth"})
+    })
     
     
     return(
@@ -48,7 +52,7 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
                 } 
                 handleMessage(msg)
                 setMessageInput("")
-                endMsg.current.scrollIntoView({behavior: "smooth"})
+                // endMsg.current.scrollIntoView({behavior: "smooth"})
             }}
             ></Input.Search>
         </>

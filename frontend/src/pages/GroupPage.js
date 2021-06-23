@@ -51,6 +51,14 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
       if(message.api === 'chat'){
         setActiveKey("ChatRoom")
       }
+      if(message.api === 'renewFile'){
+        if(message.data.status === true){
+          displayStatus({type: 'success', msg: '資料集連結已成功更新！'})
+        }
+        else{
+          displayStatus({type: 'error', msg: '資料集連結更新失敗'})
+        }
+      }
     }, [message])
 
     const handleDiscussionClick = (DID) =>{
@@ -88,8 +96,8 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
               <Menu.Item key="ChatRoom" icon={<WechatOutlined />} title="ChatRoom" onClick={()=>{handleChatRoom()}}>
                 聊天室
               </Menu.Item>
-              <SubMenu key="File" icon={<FileOutlined />} title="資料集錦">
-                <Menu.Item key="gotoURL" onClick={(e)=>{window.open(file)}}>前往連結</Menu.Item>
+              <SubMenu key="File" icon={<FileOutlined />} title="資料集連結">
+                <Menu.Item key="gotoURL" onClick={(e)=>{window.open(location.state.data.file)}}>前往連結</Menu.Item>
                 <Menu.Item key="renewURL" onClick={()=>{setModalVisible(true)}}>更新連結</Menu.Item>
               </SubMenu>
 
