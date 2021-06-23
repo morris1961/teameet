@@ -28,6 +28,7 @@ const useData = () => {
     const [admin, setAdmin] = useState("");
     const [GID, setGID] = useState("");
     const [mess, setMess] = useState("");
+    const [messages, setMessages] = useState([])
 
     client.onopen = () => {
         console.log("client connected")
@@ -166,6 +167,23 @@ const useData = () => {
                 }
                 break
             }
+            case "chat":{
+                const { status } = data;
+                if(status === true){
+                    setMessages(data.messages)
+                }
+                break
+            }
+            case "message":{
+                const { status } = data;
+                if(status === true){
+                    const {sender, body} = data
+                    let newMessages = messages
+                    newMessages.push({sender, body})
+                    setMessages(newMessages)
+                }
+                break
+            }
             default:
                 break
         }
@@ -228,6 +246,7 @@ const useData = () => {
         time_options,
         place_options,
         mess,
+        messages,
     }
 }
 export default useData;

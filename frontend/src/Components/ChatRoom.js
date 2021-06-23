@@ -1,27 +1,40 @@
 import "../App.css";
-import { useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import {Tabs, Input} from "antd"
 
 
-const ChatRoom = ({UName, displayStatus}) =>{
+const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
     const [messageInput, setMessageInput] = useState("") 
-    const [messages, setMessages] = useState([{sender:"a", body:"b"}, {sender:"c", body:"d"}])
+    const endMsg = useRef(null) 
+
+    const handleMessage = (msg) =>{
+        let data = {UID, GID, body:msg}
+        sendData('message', data)
+    }
+
+    useEffect(()=>{
+        endMsg.current.scrollIntoView({behavior: "smooth"})
+    })
+    
     
     return(
         <>
-            {messages.map(({sender, body}, index)=>{
-                return sender === UName?(
-                    <div key={index} style={{display: "flex", justifyContent: "flex-end"}}>
-                        <p className="wrap">{body}</p>
-                        <p style={{fontStyle:"italic"}}>{sender}  &ensp;</p> 
-                    </div> //這裡 p 沒有 key 會噴 error //&ensp; -> 半形空格
-                ):(
-                    <div key={index} style={{display: "flex", justifyContent: "flex-start"}}>
-                        <p style={{fontStyle:"italic"}}>{sender}  &ensp;</p> 
-                        <p className="wrap">{body}</p>
-                    </div>
-                )})}
-        
+            <div className="App-message">
+                {console.log(messages)}
+                {messages === undefined ? null:(messages === []? (<p>loading...</p>): (messages.map(({sender, body}, index)=>{
+
+                    return sender === UName?(
+                        <div id={index} style={{display: "flex", justifyContent: "flex-end"}} ref={index === messages.length - 1?endMsg:null}>
+                            <p className="wrap">{body}</p>
+                            <p style={{fontStyle:"italic"}}>{sender}  &ensp;</p> 
+                        </div> //這裡 p 沒有 key 會噴 error //&ensp; -> 半形空格
+                    ):(
+                        <div id={index} style={{display: "flex", justifyContent: "flex-start"}}>
+                            <p style={{fontStyle:"italic"}}>{sender}  &ensp;</p> 
+                            <p className="wrap">{body}</p>
+                        </div>
+                    )})))}
+            </div>
             
             <Input.Search
             placeholder="Please enter message here..."
@@ -37,8 +50,9 @@ const ChatRoom = ({UName, displayStatus}) =>{
                     })
                     return
                 } 
-                // storeMessage(me, friend, msg, activeKey, chatLog)
+                handleMessage(msg)
                 setMessageInput("")
+                // endMsg.current.scrollIntoView({behavior: "smooth"})
             }}
             ></Input.Search>
         </>

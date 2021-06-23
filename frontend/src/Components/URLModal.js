@@ -8,7 +8,7 @@ const ChatModal = ({visible, onCreate, onCancel}) =>{
         // <h1>aaa</h1>
         <Modal
             visible={visible}
-            title="Please enter a new URL below"
+            title="請在下方輸入新的資料集連結"
             okText="Renew"
             cancelText="Cancel"
             onCancel={onCancel}
