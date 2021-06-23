@@ -34,7 +34,7 @@ async function index({ UID }) {
             DID: aDiscussion._id,
             GName: aGroup.GName,
             subject: aDiscussion.subject,
-            time: aDiscussion.time_result,
+            time_result: aDiscussion.time_result,
             place: aDiscussion.place_result,
             deadline: aDiscussion.deadline,
           })
@@ -48,7 +48,7 @@ async function index({ UID }) {
               DID: aDiscussion._id,
               GName: aGroup.GName,
               subject: aDiscussion.subject,
-              time: aDiscussion.time_result,
+              time_result: aDiscussion.time_result,
               place: aDiscussion.place_result,
             })
           }
