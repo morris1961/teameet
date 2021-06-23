@@ -98,7 +98,7 @@ const HomePage = ({sendData, mess}) =>{
       let data = {UID, GID}
       setGID(GID);
       sendData("group", data)
-      
+
     }
 
     useEffect(()=>{
@@ -161,6 +161,7 @@ const HomePage = ({sendData, mess}) =>{
       // var GID = GID;
       // console.log("GID", {GID})
       var data = mess.data;
+      data.UName = UName
       data.postdata = {UName, postdata, group, recent, voting, email, password};
       // console.log(data)
       console.log("data in hp push", data)

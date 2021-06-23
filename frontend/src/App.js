@@ -39,6 +39,7 @@ const App = () =>{
     recent, 
     voting,
     mess,
+    messages,
 
   }
   = useData()
@@ -61,6 +62,7 @@ const App = () =>{
     }
   }
 
+  console.log(messages)
 
   return( 
     
@@ -85,6 +87,7 @@ const App = () =>{
             sendData={sendData}
             displayStatus={displayStatus}
             message={mess}
+            messages={messages}
             />)} />
 
             <Route exact path="/:UID/:GID/:DID" 

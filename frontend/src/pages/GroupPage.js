@@ -19,10 +19,12 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, displayStatus, message}) =>{
+const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, displayStatus, message, messages}) =>{
+
+
     const { UID, GID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
-    const [activeKey, setActiveKey] = useState('ChatRoom')
+    const [activeKey, setActiveKey] = useState('')
     const [modalVisible, setModalVisible] = useState(false)
     const history = useHistory();
     const location = useLocation();
@@ -37,14 +39,17 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
       sendData("renewFile", data)
     }
     
-    // useEffect(()=>{
-    //   let data = {UID, GID}  
-    //   sendData("group", data)
-    // }, [])
+    useEffect(()=>{
+      let data = {UID, GID}  
+      sendData("chat", data)
+    }, [])
 
     useEffect(()=>{
       if(message.api === 'discussion'){
         history.push({pathname:`/${UID}/${GID}/${message.data.DID}`, state:{UName:location.state.UName, GName, subject: message.data.subject, content: message.data.content}});
+      }
+      if(message.api === 'chat'){
+        setActiveKey("ChatRoom")
       }
     }, [message])
 
@@ -66,6 +71,11 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
       history.push(path);
     }
 
+    const handleChatRoom = () =>{
+      let data = {UID, GID}
+      sendData('chat', data)
+    }
+
     return(
       <>
         <Layout style={{ minHeight: '100vh' }}>
@@ -75,7 +85,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
               <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}}>
                 {location.state.data.UName}
               </Menu.Item>
-              <Menu.Item key="ChatRoom" icon={<WechatOutlined />} title="ChatRoom">
+              <Menu.Item key="ChatRoom" icon={<WechatOutlined />} title="ChatRoom" onClick={()=>{handleChatRoom()}}>
                 聊天室
               </Menu.Item>
               <SubMenu key="File" icon={<FileOutlined />} title="資料集錦">
@@ -118,7 +128,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
                 <Breadcrumb.Item>{GName}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus}/>):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
+                {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} messages={messages} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
