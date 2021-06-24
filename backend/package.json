@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "./node_modules/.bin/babel . -d ../server -s --ignore node_modules/**/*.js",
+    "start": "node server.js",
     "server": "nodemon --exec babel-node server.js"
   },
   "keywords": [],
