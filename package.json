@@ -8,12 +8,12 @@
   },
   "main": "index.js",
   "scripts": {
-    "start-client": "cd frontend && npm start",
+    "prod": "node ./backend/dist/bundle.js",
     "build-client": "cd frontend && npm install && npm run build",
     "build-server": "cd backedn && npm run build",
     "build": "npm run build-client && npm run build-server",
-    "start": "node ./backend/dist/bundle.js",
-    "server":  "cd backend && npm run server",
+    "start": "cd frontend && npm start",
+    "server": "cd backend && npm run server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
