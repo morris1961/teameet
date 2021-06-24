@@ -1,18 +1,19 @@
+// import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { Form, Modal, Input } from "antd";
 
-const PlaceModal = ({visible, onCreate, onCancel}) =>{
+const ChatModal = ({visible, onCreate, onCancel}) =>{
     const [form] = Form.useForm()
     return(
         <Modal
             visible={visible}
-            title="請輸入新增地點名稱"
-            okText="新增"
-            cancelText="取消"
+            title="請在下方輸入新的資料集連結"
+            okText="Renew"
+            cancelText="Cancel"
             onCancel={onCancel}
             onOk={() => {
             form.validateFields().then((values) => {
-                form.resetFields(); // 清空格子
+                form.resetFields(); 
                 onCreate(values); 
             }).catch((error) => {
                 window.alert('Validate Failed:', error);
@@ -24,12 +25,12 @@ const PlaceModal = ({visible, onCreate, onCancel}) =>{
             name="form_in_modal"
             >
                 <Form.Item
-                name="place" // name attr 後面取的名字是讓 onCreate 那邊可以取得使用者輸入的這格的值
-                label="新地點"
+                name="url" 
+                label="新連結"
                 rules={[
                     {
                       required: true,
-                      message: '錯誤：請輸入要新增的地點！',
+                      message: '錯誤：請輸入新的連結！',
                     },
                 ]}
                 >
@@ -39,4 +40,4 @@ const PlaceModal = ({visible, onCreate, onCancel}) =>{
         </Modal>
     )
 }
-export default PlaceModal;
+export default ChatModal;

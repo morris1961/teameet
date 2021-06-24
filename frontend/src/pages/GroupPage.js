@@ -1,7 +1,9 @@
 import {useEffect, useState} from 'react'
-import ChatModal from '../Components/URLModal'
+import ChatModal from '../Components/Modal/URLModal'
 import DiscussionSet from './DiscussionSet'
-import DiscussionPage from './DiscussionPage'
+import ChatRoom from '../Components/ChatRoom'
+///// react-router-dom /////
+import { useParams, useHistory, useLocation } from "react-router-dom";
 ///// antd /////
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
@@ -12,15 +14,13 @@ import {
   SmileOutlined,
   RollbackOutlined,
 } from '@ant-design/icons';
-///// react-router-dom /////
-import { useParams, useHistory, useLocation } from "react-router-dom";
-import ChatRoom from '../Components/ChatRoom';
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, displayStatus, message, messages}) =>{
 
+
+const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>{
 
     const { UID, GID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
@@ -29,8 +29,8 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
     const history = useHistory();
     const location = useLocation();
 
+    // sider 隱藏
     const onCollapse = collapsed => {
-        console.log(collapsed);
         setCollapsed(collapsed);
     };
 
@@ -39,19 +39,30 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
       sendData("renewFile", data)
     }
     
+    // GroupPage default render chatRoom
     useEffect(()=>{
       let data = {UID, GID}  
       sendData("chat", data)
     }, [])
 
     useEffect(()=>{
+      // 進討論頁面
       if(message.api === 'discussion'){
-        history.push({pathname:`/${UID}/${GID}/${message.data.DID}`, state:{UName:location.state.UName, GName, subject: message.data.subject, content: message.data.content}});
+        // 跟討論有關 data (content, subject, DID) 從回傳 message 取，其他從 location.state.data
+        let data = {
+          UName:location.state.data.UName, 
+          file:location.state.data.file, 
+          GName: location.state.data.GName, 
+          subject: message.data.subject, 
+          content: message.data.content,
+          isAdmin: message.data.isAdmin,
+        }
+        history.push({pathname:`/${UID}/${GID}/${message.data.DID}`, state:{data}});
       }
-      if(message.api === 'chat'){
+      else if(message.api === 'chat'){
         setActiveKey("ChatRoom")
       }
-      if(message.api === 'renewFile'){
+      else if(message.api === 'renewFile'){
         if(message.data.status === true){
           displayStatus({type: 'success', msg: '資料集連結已成功更新！'})
         }
@@ -61,21 +72,19 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
       }
     }, [message])
 
+
     const handleDiscussionClick = (DID) =>{
       /// get data for DiscussionPage
       let data = {UID, DID}  
       sendData("discussion", data)
-      /// get data for DiscussionPage
     }
 
     const handleBack = () =>{
-      var data1 = location.state.data;
-      var data = data1.postdata;
+      let data = {} 
       var path = {
         pathname:"/index",
         state:{data},
       }
-      console.log("pushback", data)
       history.push(path);
     }
 
@@ -90,10 +99,10 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}}>
+              <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}} onClick={()=>{handleBack()}}>
                 {location.state.data.UName}
               </Menu.Item>
-              <Menu.Item key="ChatRoom" icon={<WechatOutlined />} title="ChatRoom" onClick={()=>{handleChatRoom()}}>
+              <Menu.Item key="ChatRoom" icon={<WechatOutlined />} title="聊天室" onClick={()=>{handleChatRoom()}}>
                 聊天室
               </Menu.Item>
               <SubMenu key="File" icon={<FileOutlined />} title="資料集連結">
@@ -113,7 +122,7 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
                     setModalVisible(false)
                 }}/>
 
-              <Menu.Item key="Discussion" icon={<SmileOutlined />} title="Discussion" onClick={(e)=>{setActiveKey("Discussion")}}>
+              <Menu.Item key="Discussion" icon={<SmileOutlined />} title="來約討論" onClick={(e)=>{setActiveKey("Discussion")}}>
                 來約討論
               </Menu.Item>
               <SubMenu key="Discussions" icon={<TeamOutlined />} title="討論">
@@ -129,11 +138,10 @@ const GroupPage = ({UName, code, GName, isAdmin, file, discussions, sendData, di
             </Menu>
           </Sider>
           <Layout className="site-layout">
-            {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>群組</Breadcrumb.Item>
-                <Breadcrumb.Item>{GName}</Breadcrumb.Item>
+                <Breadcrumb.Item>{location.state.data.GName}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                 {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} messages={messages} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}

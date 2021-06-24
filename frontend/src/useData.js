@@ -2,15 +2,7 @@ import { useState } from "react";
 const client = new WebSocket('ws://localhost:4000')
 
 const useData = () => {
-    const [file, setFile] = useState("")
-    const [code, setCode] = useState("")
-    const [group, setGroup] = useState([])
-    const [UName, setUName] = useState("")
-    const [isAdmin, setIsAdmin] = useState(false)
-    const [discuss_content, setDiscussContent] = useState("") 
     const [discussions, setDiscussions] = useState([])
-    const [GName, setGName] = useState("")
-    const [subject, setSubject] = useState("")
     const [time_options, setTimeOptions] = useState({})
     const [place_options, setPlaceOptions] = useState({})
     const [isDue, setIsDue] = useState(false)
@@ -21,12 +13,10 @@ const useData = () => {
     const [time_result, setTimeResult] = useState('')
     const [place_result, setPlaceResult] = useState('')
     const [status, setStatus] = useState();
-    const [UID, setUID] = useState("");
     const [error_msg, setError_msg] = useState("");
     const [recent, setRecent] = useState([{}]);
     const [voting, setVoting] = useState([{}]);
     const [admin, setAdmin] = useState("");
-    const [GID, setGID] = useState("");
     const [mess, setMess] = useState("");
     const [messages, setMessages] = useState([])
 
@@ -67,23 +57,7 @@ const useData = () => {
             case "group": {
                 const { status } = data;
                 if (status === true) {
-                    setCode(data.code)
-                    setGName(data.GName)
-                    // setContent(data.content)
                     setDiscussions(data.discussions)
-                    setIsAdmin(data.isAdmin)
-                    setFile(data.file)
-                }
-
-                break
-            }
-            case "renewFile": {
-                const { status } = data;
-                if(status === true){
-                    setFile(data.file)
-                }
-                else{
-                    console.log("DB error")
                 }
                 break
             }
@@ -91,22 +65,11 @@ const useData = () => {
                 setDiscussions(data.discussions)
                 break
             }
-            case "discussion": {
-                const { status } = data;
-                if (status === true){
-                    setSubject(data.subject)
-                    setDiscussContent(data.content)
-                    setIsAdmin(data.isAdmin)
-                    
-                }
-                break
-            }
             case "time": {
                 const { status } = data;
                 if (status === true){
                     setTimeOptions(data.time_options)
                     setIsDue(data.isDue)
-                    setIsAdmin(data.isAdmin)
                     setTimeVoted(data.voted)
                     setIsSelectTime(data.isSelect)
                     setTimeResult(data.time_result)
@@ -118,7 +81,6 @@ const useData = () => {
                 if (status === true){
                     setPlaceOptions(data.place_options)
                     setIsDue(data.isDue)
-                    setIsAdmin(data.isAdmin)
                     setPlaceVoted(data.voted)
                     setIsSelectPlace(data.isSelect)
                     setPlaceResult(data.place_result)
@@ -178,7 +140,7 @@ const useData = () => {
                 const { status } = data;
                 if(status === true){
                     const {sender, body} = data
-                    let newMessages = messages
+                    let newMessages = [...messages]
                     newMessages.push({sender, body})
                     setMessages(newMessages)
                 }
@@ -189,13 +151,14 @@ const useData = () => {
         }
     }
 
-
+    // send meesage to backend
     const sendData = async (api, data) => {
         await waitForOpenSocket()
         const message = { api, data }
         client.send(JSON.stringify(message))
     }
 
+    // 處理 websocket connect 連接需延遲傳送問題
     const waitForOpenSocket = () => {
         return new Promise((resolve, reject) => {
             const maxNumberOfAttempts = 10
@@ -216,37 +179,26 @@ const useData = () => {
     }
 
 
-    return {
-        sendData,
-        code,
-        group,
-        isAdmin,
-        discussions,
-        file,
-        UName,
-        GName,
-        discuss_content,
-        subject,
-        time_options,
-        isDue,
-        time_voted,
-        place_voted,
-        place_options,
-        isSelectTime,
-        isSelectPlace,
-        time_result,
-        place_result,
+    return { 
         status,
-        UID,
         error_msg,
         recent,
         voting,
         admin,
-        GID,
+        /// 下半部是我會用到的
+        isDue,
+        isSelectTime,
+        isSelectPlace,
+        time_voted,
+        place_voted,
         time_options,
         place_options,
+        time_result,
+        place_result,
         mess,
         messages,
+        discussions,
+        sendData,
     }
 }
 export default useData;

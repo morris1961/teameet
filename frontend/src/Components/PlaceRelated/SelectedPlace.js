@@ -3,21 +3,15 @@ import { Divider, Row, Col, Tag } from 'antd';
 
 const SelectedPlace = ({place_options, place_result}) =>{
     const [show_options, setShowOptions] = useState([])
-    const [max, setMax] = useState(0)
 
 
     useEffect(()=>{
         const options = Object.keys(place_options)
-        let newShowOptions = [] // 這裡改 show_options 就不行?
-        let newMax = 0
+        let newShowOptions = [] // 這裡改 show_options 會出 error
         options.map((e)=>{
             let cnt = place_options[e].length
-            if(cnt > newMax){
-                newMax = cnt
-            }
             newShowOptions.push({option:e, cnt})
         }) 
-        setMax(newMax)
         setShowOptions(newShowOptions)
     }, [])
 

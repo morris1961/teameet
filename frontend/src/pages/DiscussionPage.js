@@ -1,11 +1,10 @@
 import {useEffect, useState} from 'react'
 import { Layout, Menu, Breadcrumb, BackTop } from 'antd';
 import DiscussionContent from '../Components/DiscussionContent'
-import DiscussionTime from '../Components/DiscussionTime'
-import DiscussionPlace from '../Components/DiscussionPlace'
+import DiscussionTime from '../Components/TimeRelated/DiscussionTime'
+import DiscussionPlace from '../Components/PlaceRelated/DiscussionPlace'
 import {
   UserOutlined,
-  WechatOutlined,
   FieldTimeOutlined,
   BookOutlined,
   HomeOutlined,
@@ -14,11 +13,10 @@ import {
 import { useParams, useHistory, useLocation } from "react-router-dom";
 
 
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
+const { Content, Footer, Sider } = Layout;
 
 
-const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendData, time_options, isDue, time_voted, place_voted, place_options, isSelectTime, isSelectPlace, displayStatus, time_result, place_result, message}) =>{
+const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  place_options, time_voted, place_voted, time_result, place_result, displayStatus, sendData, message}) =>{
     const { UID, GID, DID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('content')
@@ -31,13 +29,25 @@ const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendDat
 
     // 回上一頁
     const back = () =>{
-      history.push({pathname:`/${UID}/${GID}`, state:{UName:location.state.UName}});
+      let data = {
+        UName:location.state.data.UName, 
+        file: location.state.data.file, 
+        GName: location.state.data.GName}
+      history.push({pathname:`/${UID}/${GID}`, state:{data}});
     }
 
-    // const handleClick_content = () =>{
-
-    // }
-
+    //按名字回首頁
+    const backToIndex = ()=>{
+      // let data1 = location.state.data;
+      // var data = data1.postdata;
+      // var path = {
+      //   pathname:"/index",
+      //   state:{data},
+      // }
+      // console.log("pushback", data)
+      // history.push(path);
+      
+    }
 
     /// get data for DiscussionTime
     const handleClick_time = () =>{
@@ -65,8 +75,8 @@ const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendDat
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo" />
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}}>
-                {location.state.UName}
+              <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}} onClick={backToIndex()}>
+                {location.state.data.UName}
               </Menu.Item>
               <Menu.Item key="content" icon={<BookOutlined />} title="內容" onClick={(e)=>{setActiveKey(e.key)}}>
                 討論內容
@@ -77,41 +87,42 @@ const DiscussionPage = ({UName, DName, GName, isAdmin, subject, content, sendDat
               <Menu.Item key="place" icon={<HomeOutlined />} title="地點" onClick={()=>{handleClick_place()}}>
                 討論地點
               </Menu.Item>
-              <Menu.Item key="Back" icon={<RollbackOutlined />} title="回上一頁" onClick={(e)=>{setActiveKey(e.key); back();}}>
+              <Menu.Item key="Back" icon={<RollbackOutlined />} title="回上一頁" onClick={()=>{back()}}>
                 回上一頁
               </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout">
-            {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>群組</Breadcrumb.Item>
-                <Breadcrumb.Item>{location.state.GName}</Breadcrumb.Item>
+                <Breadcrumb.Item>{location.state.data.GName}</Breadcrumb.Item>
                 <Breadcrumb.Item>討論</Breadcrumb.Item>
-                <Breadcrumb.Item>{location.state.subject}</Breadcrumb.Item>
+                <Breadcrumb.Item>{location.state.data.subject}</Breadcrumb.Item>
               </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "content"?(<DiscussionContent subject={location.state.subject} content={location.state.content}/>):
+                {activeKey === "content"?(<DiscussionContent subject={location.state.data.subject} content={location.state.data.content}/>):
                 (activeKey === "time"?(
                 <DiscussionTime 
                 voted={time_voted} 
-                time_options={time_options} 
                 isDue={isDue} 
-                isAdmin={isAdmin} 
-                sendData={sendData} 
+                isAdmin={location.state.data.isAdmin} 
+                time_options={time_options}
+                time_result={time_result}
                 isSelect={isSelectTime} 
+                sendData={sendData} 
                 displayStatus={displayStatus}
-                time_result={time_result}/>):(
+                />):(
                 <DiscussionPlace 
                 voted={place_voted} 
-                place_options={place_options}
                 isDue={isDue} 
-                isAdmin={isAdmin} 
-                sendData={sendData} 
+                isAdmin={location.state.data.isAdmin} 
+                place_options={place_options}
+                place_result={place_result}
                 isSelect={isSelectPlace} 
+                sendData={sendData} 
                 displayStatus={displayStatus}
-                place_result={place_result} />))}
+                 />))}
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

@@ -15,8 +15,6 @@ const VotedTime = ({place_options, UID}) =>{
             })
             setShowOptions(newShowOptions)
         }
-        
-
     }, [])
 
     return(
