@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import VotedPlace from './VotedPlace';
 import SelectedPlace from './SelectedPlace';
 import NotSelectedPlace from './NotSelectedPlace';
-import PlaceModal from './PlaceModal'
+import PlaceModal from '../Modal/PlaceModal';
 
 
 

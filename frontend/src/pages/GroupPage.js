@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import ChatModal from '../Components/URLModal'
+import ChatModal from '../Components/Modal/URLModal'
 import DiscussionSet from './DiscussionSet'
 import ChatRoom from '../Components/ChatRoom'
 ///// react-router-dom /////
@@ -49,7 +49,15 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
       // 進討論頁面
       if(message.api === 'discussion'){
         // 跟討論有關 data (content, subject, DID) 從回傳 message 取，其他從 location.state.data
-        history.push({pathname:`/${UID}/${GID}/${message.data.DID}`, state:{UName:location.state.data.UName, GName: location.state.data.GName, subject: message.data.subject, content: message.data.content}});
+        let data = {
+          UName:location.state.data.UName, 
+          file:location.state.data.file, 
+          GName: location.state.data.GName, 
+          subject: message.data.subject, 
+          content: message.data.content,
+          isAdmin: message.data.isAdmin,
+        }
+        history.push({pathname:`/${UID}/${GID}/${message.data.DID}`, state:{data}});
       }
       else if(message.api === 'chat'){
         setActiveKey("ChatRoom")

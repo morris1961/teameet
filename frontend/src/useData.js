@@ -3,11 +3,8 @@ const client = new WebSocket('ws://localhost:4000')
 
 const useData = () => {
     const [group, setGroup] = useState([])
-    const [isAdmin, setIsAdmin] = useState(false)
     const [discussions, setDiscussions] = useState([])
     const [discuss_content, setDiscussContent] = useState("") 
-    const [GName, setGName] = useState("")
-    const [subject, setSubject] = useState("")
     const [time_options, setTimeOptions] = useState({})
     const [place_options, setPlaceOptions] = useState({})
     const [isDue, setIsDue] = useState(false)
@@ -18,12 +15,10 @@ const useData = () => {
     const [time_result, setTimeResult] = useState('')
     const [place_result, setPlaceResult] = useState('')
     const [status, setStatus] = useState();
-    const [UID, setUID] = useState("");
     const [error_msg, setError_msg] = useState("");
     const [recent, setRecent] = useState([{}]);
     const [voting, setVoting] = useState([{}]);
     const [admin, setAdmin] = useState("");
-    const [GID, setGID] = useState("");
     const [mess, setMess] = useState("");
     const [messages, setMessages] = useState([])
 
@@ -69,27 +64,8 @@ const useData = () => {
 
                 break
             }
-            case "renewFile": {
-                const { status } = data;
-                if(status === true){
-                }
-                else{
-                    console.log("DB error")
-                }
-                break
-            }
             case "createDiscussion": {
                 setDiscussions(data.discussions)
-                break
-            }
-            case "discussion": {
-                const { status } = data;
-                if (status === true){
-                    setSubject(data.subject)
-                    setDiscussContent(data.content)
-                    setIsAdmin(data.isAdmin)
-                    
-                }
                 break
             }
             case "time": {
@@ -97,7 +73,6 @@ const useData = () => {
                 if (status === true){
                     setTimeOptions(data.time_options)
                     setIsDue(data.isDue)
-                    setIsAdmin(data.isAdmin)
                     setTimeVoted(data.voted)
                     setIsSelectTime(data.isSelect)
                     setTimeResult(data.time_result)
@@ -109,7 +84,6 @@ const useData = () => {
                 if (status === true){
                     setPlaceOptions(data.place_options)
                     setIsDue(data.isDue)
-                    setIsAdmin(data.isAdmin)
                     setPlaceVoted(data.voted)
                     setIsSelectPlace(data.isSelect)
                     setPlaceResult(data.place_result)
@@ -210,11 +184,9 @@ const useData = () => {
     return {
         sendData,
         group,
-        isAdmin,
-        GName,
+        // isAdmin,
         discussions,
         discuss_content,
-        subject,
         time_options,
         isDue,
         time_voted,
@@ -225,12 +197,10 @@ const useData = () => {
         time_result,
         place_result,
         status,
-        UID,
         error_msg,
         recent,
         voting,
         admin,
-        GID,
         time_options,
         place_options,
         mess,

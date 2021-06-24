@@ -1,11 +1,12 @@
 import "../App.css";
 import { useEffect, useState, useRef } from "react"
-import {Tabs, Input} from "antd"
+import { Input } from "antd"
 
 
 const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
     const [messageInput, setMessageInput] = useState("") 
     const endMsg = useRef(null) 
+
 
     const handleMessage = (msg) =>{
         let data = {UID, GID, body:msg}
@@ -14,13 +15,12 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
 
     useEffect(()=>{
         endMsg.current.scrollIntoView({behavior: "smooth"})
-    })
+    }, [messages])
     
     
     return(
         <>
             <div className="App-message">
-                {console.log(messages)}
                 {messages === undefined ? null:(messages === []? (<p>loading...</p>): (messages.map(({sender, body}, index)=>{
 
                     return sender === UName?(

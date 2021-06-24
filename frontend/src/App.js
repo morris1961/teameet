@@ -17,11 +17,8 @@ const App = () => {
 
   const {
     sendData,
-    isAdmin,
-    GName,
     discussions,
     discuss_content,
-    subject,
     time_options,
     isDue,
     time_voted,
@@ -58,7 +55,6 @@ const App = () => {
     }
   }
 
-  console.log(discussions)
 
   return (
 
@@ -82,9 +78,6 @@ const App = () => {
         <Route exact path="/:UID/:GID/:DID"
           render={() =>
           (<DiscussionPage
-            GName={GName}
-            isAdmin={isAdmin}
-            subject={subject}
             content={discuss_content}
             sendData={sendData}
             time_options={time_options}
@@ -92,7 +85,6 @@ const App = () => {
             time_voted={time_voted}
             place_voted={place_voted}
             place_options={place_options}
-            isAdmin={isAdmin}
             isSelectTime={isSelectTime}
             isSelectPlace={isSelectPlace}
             time_result={time_result}
