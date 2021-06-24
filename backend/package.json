@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "build": "babel . -d ../server -s --ignore node_modules/**/*.js",
     "server": "nodemon --exec babel-node server.js"
   },
   "keywords": [],

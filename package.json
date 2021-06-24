@@ -9,8 +9,10 @@
   "main": "index.js",
   "scripts": {
     "start-client": "cd frontend && npm start",
-    "build": "(cd frontend && npm install && npm run build) && (cd backend && npm install)",
-    "start": "cd backend && npm run server",
+    "build-server": "rm -rf ./server && mkdir server && cd backend && npm install && npm run build",
+    "build-client": "cd frontend && npm install && npm run build",
+    "build": "npm run build-client && npm run build-server",
+    "start": "node ./server/server.js",
     "server":  "cd backend && npm run server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
