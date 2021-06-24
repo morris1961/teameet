@@ -43,7 +43,7 @@ async function message({ UID, GID, body }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, sender: UName, body, error_msg };
+  return { status, time: nowTime, sender: UName, body, error_msg };
 }
 
 export default message;
