@@ -10,7 +10,7 @@
   "scripts": {
     "prod": "node ./backend/dist/bundle.js",
     "build-client": "cd frontend && npm install && npm run build",
-    "build-server": "cd backedn && npm run build",
+    "build-server": "cd backend && npm run build",
     "build": "npm run build-client && npm run build-server",
     "start": "cd frontend && npm start",
     "server": "cd backend && npm run server",
