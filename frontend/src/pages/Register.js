@@ -6,7 +6,7 @@ import { If, Then, Else } from 'react-if-elseif-else-render';
 import 'antd/dist/antd.css';
 import '../style/Register.css'
 const { Header, Content } = Layout;
-const Register = ({sendData, message}) =>{
+const Register = ({sendData, mess}) =>{
   const history = useHistory();
   const [UName, setUName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,10 +16,10 @@ const Register = ({sendData, message}) =>{
   const validemail= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 
   useEffect(()=>{
-    if(message.api === "register"){
-      if(message.data.status === true){
+    if(mess.api === "register"){
+      if(mess.data.status === true){
         setIsregistersuccess(true);
-      }else if(message.data.status === false){
+      }else if(mess.data.status === false){
         notification['error']({
         message: '錯誤',
         description:
@@ -33,7 +33,7 @@ const Register = ({sendData, message}) =>{
           });
       }
   } 
-},[message]);
+},[mess]);
  
   const handleregister = ()=>{
         if(email.length===0){

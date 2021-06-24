@@ -42,12 +42,6 @@ const HomePage = ({sendData, mess}) =>{
     const [GName, setGName]=useState("");
     const [file, setFile]=useState("");
 
-
-    // initialize
-    // useEffect(()=>{
-    //   let data = {UID}
-    //   sendData("index", data)
-    // }, [])
     const handleback = () =>{
       setIscreateclicked(false);
       setIsjoinclicked(false);
@@ -90,82 +84,66 @@ const HomePage = ({sendData, mess}) =>{
       setIsgearclicked(!isgearclicked);
     };
 
-    //history.push({pathname:`/${UID}/${GID}`, state:{UName, password, email}});
     const handleGroupClick = (GID) =>{
       let data = {UID, GID}
       setGID(GID);
       sendData("group", data)
-
     }
 
     useEffect(()=>{
-      if(mess.api === "index"){
-          console.log("index", mess)
-        // console.log("error_msg", message.error_msg)
-        // var error_msg = message.error_msg;
-        // if(error_msg === "The user has been in the group!" ){
-        //   notification['error']({
-        //     message: '錯誤',
-        //     description:
-        //       '你已經在該群組內',
-        //     });
-        //     setClick_join(false);
-        // }else if(error_msg === "The code is not valid!"){
-        //   notification['error']({
-        //     message: '錯誤',
-        //     description:
-        //       '請再確認一次 code 是否正確',
-        //     });
-        //     setClick_join(false);
-        //   }
-        // else if(error_msg === "Successed!"){
-        //   notification['success']({
-        //     message: '成功',
-        //     description:
-        //     '成功加入該群組, 為你跳轉頁面',
-        //   });
-          // var path_group = {
-          //   pathname:`/${UID}/${GID}`,
-          //   state:{UName},
-          // }
-          // setTimeout(history.push(path_group), 2000 )
-        
-     }
-    // else if(click_create === true){
-    //   if(message.status === false){
-    //         notification['error']({
-    //           message: '錯誤',
-    //           description:
-    //           '請稍後再重新登入一次, 並請你確認你的網路連接正常',
-    //         });
-    //         setClick_create(false);
-    //       }else if(message.status === true){
-    //         notification['success']({
-    //           message: '成功',
-    //           description:
-    //           '創建成功, 為你跳轉至群組畫面',
-    //         });
-    //         setGID(message.GID);
-    //         setGName(message.GName);
-    //         var path_creategroup = {
-    //           pathname:`/${UID}/${GID}`,
-    //           state:{UName},
-    //         }
-    //         // setTimeout(history.push(path_creategroup), 2000 )
-    //         setClick_create(false);
-
-    else if(mess.api === 'group'){
-      var data = mess.data;
-      data.UName = UName
-      data.postdata = {UName, UID, password, email, group, recent, voting, email, password};
-      console.log("data in hp push", data)
-        var path = {
-          pathname:`/${UID}/${GID}`,
-          state:{data},
-        }
-        history.push(path);
-    }
-    },[mess])
+      if(mess.api === "joinGroup"){
+        var error_msg = mess.data.error_msg;
+        if(error_msg === "The user has been in the group!" ){
+          notification['error']({
+            message: '錯誤',
+            description:
+              '你已經在該群組內',
+            });
+        }else if(error_msg === "The code is not valid!"){
+          notification['error']({
+            message: '錯誤',
+            description:
+              '請再確認一次 code 是否正確',
+            });
+          }else if(error_msg === "Successed!"){
+          notification['success']({
+            message: '成功',
+            description:
+            '成功加入該群組, 為你跳轉頁面',
+            });
+            setGID(mess.data.GID)
+            let data = {UID, GID}
+            sendData("group", data)
+          }
+      }else if(mess.api === "createGroup"){
+      if(mess.data.status === false){
+            notification['error']({
+              message: '錯誤',
+              description:
+              '請稍後再重新登入一次, 並請你確認你的網路連接正常',
+            });
+          }else if(mess.data.status === true){
+            notification['success']({
+              message: '成功',
+              description:
+              '創建成功, 為你跳轉至群組畫面',
+            });
+            setGID(mess.data.GID);
+            setGName(mess.data.GName);
+            let data = {UID, GID}
+            sendData("group", data)
+          }
+        }else if(mess.api === 'group'){
+            var data = mess.data;
+            data.UName = UName
+            data.postdata = {UName, UID, password, email, group, recent, voting, email, password};
+            console.log("data in hp push", data)
+              var path = {
+                pathname:`/${UID}/${GID}`,
+                state:{data},
+              }
+              history.push(path);
+          }},[mess])
 
     return(
         <Layout style={{ minHeight: '100vh' }}>
@@ -209,7 +187,6 @@ const HomePage = ({sendData, mess}) =>{
             </Menu>
           </Sider>
           <Layout className="site-layout">
-            {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>使用者</Breadcrumb.Item>
@@ -221,8 +198,6 @@ const HomePage = ({sendData, mess}) =>{
           <div style={{fontSize:"2vw", marginLeft:"2vw", height:"30vw"}}>
               創建群組
           </div>
-        
-        {/* <Content style={{paddingLeft:"1.2vw",backgroundColor:"white"}} > */}
         <div className="create_GName" >
           <div className="create_GName-title" > 群組名稱: </div>
           <div className="create_GName-input" >
