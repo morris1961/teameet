@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Form, Input, Button, Checkbox, Row, Col,  } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Row, Col,  } from 'antd';
 import { useParams } from 'react-router';
 import VotedPlace from './VotedPlace';
 import SelectedPlace from './SelectedPlace';
@@ -11,12 +10,12 @@ import PlaceModal from '../Modal/PlaceModal';
 
 const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSelect, displayStatus, place_result}) =>{
 
-    const { UID, GID, DID } = useParams()
+    const { UID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
     const [modalVisible, setModalVisible] = useState(false)
     const [options, setOptions] = useState([])
     
-
+    // 取 option key render
     useEffect(()=>{
         if(place_options){
             let newOptions = []
@@ -32,7 +31,6 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSele
     }
 
     const handleSubmit = () =>{
-        console.log(checkList)
         if(checkList.length === 0){
             displayStatus({type: 'error', msg: '請選擇要投票的地方'})
             return 
@@ -48,10 +46,10 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSele
             <NotSelectedPlace 
                 UID={UID} 
                 DID={DID} 
-                displayStatus={displayStatus} 
                 place_options={place_options} 
                 isAdmin={isAdmin} 
-                sendData={sendData}/>)):
+                sendData={sendData}
+                displayStatus={displayStatus} />)):
             voted?(<VotedPlace UID={UID} place_options={place_options} />):
             (<>
             <Checkbox.Group style={{ width: '100%' }} onChange={(list)=>{setCheckList(list)}}>

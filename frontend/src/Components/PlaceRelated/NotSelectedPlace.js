@@ -7,12 +7,12 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
     const [place_result, setPlaceResult] = useState('')
     const [max, setMax] = useState(0)
 
-
+    // 取 option key render，並計算最大票數
     useEffect(()=>{
         if(place_options){
             let options = []
             options = Object.keys(place_options)
-            let newShowOptions = [] // 這裡改 show_options 就不行?
+            let newShowOptions = [] // 這裡改 show_options 會出 error
             let newMax = 0
             options.map((e)=>{
                 let cnt = place_options[e].length
@@ -40,9 +40,14 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
             <Row>
                 <Col span={2}></Col>
                 <Col span={18}>
+                {isAdmin?
+                    (<Divider orientation="center" plain>
+                        投票結果！（您還未選擇最終結果）
+                    </Divider>):(
                     <Divider orientation="center" plain>
-                        投票結果！（創建討論者還未選擇最終結果）
+                        投票結果！（您還未選擇最終結果）
                     </Divider>
+                )}
                     <h2>如下：</h2>
                     {isAdmin?(
                         <>

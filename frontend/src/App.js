@@ -18,7 +18,6 @@ const App = () => {
   const {
     sendData,
     discussions,
-    discuss_content,
     time_options,
     isDue,
     time_voted,
@@ -78,7 +77,6 @@ const App = () => {
         <Route exact path="/:UID/:GID/:DID"
           render={() =>
           (<DiscussionPage
-            content={discuss_content}
             sendData={sendData}
             time_options={time_options}
             isDue={isDue}

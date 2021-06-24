@@ -2,9 +2,7 @@ import { useState } from "react";
 const client = new WebSocket('ws://localhost:4000')
 
 const useData = () => {
-    const [group, setGroup] = useState([])
     const [discussions, setDiscussions] = useState([])
-    const [discuss_content, setDiscussContent] = useState("") 
     const [time_options, setTimeOptions] = useState({})
     const [place_options, setPlaceOptions] = useState({})
     const [isDue, setIsDue] = useState(false)
@@ -61,7 +59,6 @@ const useData = () => {
                 if (status === true) {
                     setDiscussions(data.discussions)
                 }
-
                 break
             }
             case "createDiscussion": {
@@ -154,13 +151,14 @@ const useData = () => {
         }
     }
 
-
+    // send meesage to backend
     const sendData = async (api, data) => {
         await waitForOpenSocket()
         const message = { api, data }
         client.send(JSON.stringify(message))
     }
 
+    // 處理 websocket connect 連接需延遲傳送問題
     const waitForOpenSocket = () => {
         return new Promise((resolve, reject) => {
             const maxNumberOfAttempts = 10
@@ -181,30 +179,26 @@ const useData = () => {
     }
 
 
-    return {
-        sendData,
-        group,
-        // isAdmin,
-        discussions,
-        discuss_content,
-        time_options,
-        isDue,
-        time_voted,
-        place_voted,
-        place_options,
-        isSelectTime,
-        isSelectPlace,
-        time_result,
-        place_result,
+    return { 
         status,
         error_msg,
         recent,
         voting,
         admin,
+        /// 下半部是我會用到的
+        isDue,
+        isSelectTime,
+        isSelectPlace,
+        time_voted,
+        place_voted,
         time_options,
         place_options,
+        time_result,
+        place_result,
         mess,
         messages,
+        discussions,
+        sendData,
     }
 }
 export default useData;

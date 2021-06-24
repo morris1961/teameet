@@ -24,7 +24,7 @@ const PlaceModal = ({visible, onCreate, onCancel}) =>{
             name="form_in_modal"
             >
                 <Form.Item
-                name="place" // name attr 後面取的名字是讓 onCreate 那邊可以取得使用者輸入的這格的值
+                name="place" 
                 label="新地點"
                 rules={[
                     {

@@ -5,14 +5,15 @@ import { Input } from "antd"
 
 const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
     const [messageInput, setMessageInput] = useState("") 
-    const endMsg = useRef(null) 
+    const endMsg = useRef(null)  // 最新訊息的 ref
 
-
+    // send new message
     const handleMessage = (msg) =>{
         let data = {UID, GID, body:msg}
         sendData('message', data)
     }
 
+    // 滾輪自動滑到最新訊息
     useEffect(()=>{
         endMsg.current.scrollIntoView({behavior: "smooth"})
     }, [messages])
@@ -52,7 +53,6 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
                 } 
                 handleMessage(msg)
                 setMessageInput("")
-                // endMsg.current.scrollIntoView({behavior: "smooth"})
             }}
             ></Input.Search>
         </>

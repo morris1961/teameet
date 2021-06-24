@@ -8,9 +8,9 @@ import moment from 'moment';
 import 'moment-timezone';
 
 
-const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData, isSelect, displayStatus, time_result}) =>{
+const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_result, sendData, displayStatus}) =>{
 
-    const { UID, GID, DID } = useParams()
+    const { UID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
     const [options, setOptions] = useState([])
     
@@ -25,7 +25,7 @@ const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData, isSelect
     const handleCheck = (e, option)=>{
 
       let newCheckList = checkList
-      // let n = `${option}`
+      // 將時間轉換成 DB 所需形式
       let time = moment.tz(option, 'Asia/Taipei').format()
       if(e.target.checked){
         newCheckList.push(time)
@@ -52,10 +52,10 @@ const DiscussionTime = ({time_options, voted, isDue, isAdmin, sendData, isSelect
         <NotSelectedTime 
         UID={UID} 
         DID={DID} 
-        displayStatus={displayStatus} 
-        time_options={time_options} 
         isAdmin={isAdmin} 
-        sendData={sendData}/>)):(voted?
+        time_options={time_options} 
+        sendData={sendData}
+        displayStatus={displayStatus} />)):(voted?
         (<VotedTime time_options={time_options} UID={UID} />)
         :(<Row>
           {options.map((option, index)=>{

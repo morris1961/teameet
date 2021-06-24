@@ -5,7 +5,6 @@ import { Form, Modal, Input } from "antd";
 const ChatModal = ({visible, onCreate, onCancel}) =>{
     const [form] = Form.useForm()
     return(
-        // <h1>aaa</h1>
         <Modal
             visible={visible}
             title="請在下方輸入新的資料集連結"
@@ -14,7 +13,7 @@ const ChatModal = ({visible, onCreate, onCancel}) =>{
             onCancel={onCancel}
             onOk={() => {
             form.validateFields().then((values) => {
-                form.resetFields(); // 清空格子
+                form.resetFields(); 
                 onCreate(values); 
             }).catch((error) => {
                 window.alert('Validate Failed:', error);
@@ -26,7 +25,7 @@ const ChatModal = ({visible, onCreate, onCancel}) =>{
             name="form_in_modal"
             >
                 <Form.Item
-                name="url" // name attr 後面取的名字是讓 onCreate 那邊可以取得使用者輸入的這格的值
+                name="url" 
                 label="新連結"
                 rules={[
                     {
