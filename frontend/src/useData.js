@@ -2,13 +2,10 @@ import { useState } from "react";
 const client = new WebSocket('ws://localhost:4000')
 
 const useData = () => {
-    const [file, setFile] = useState("")
-    const [code, setCode] = useState("")
     const [group, setGroup] = useState([])
-    const [UName, setUName] = useState("")
     const [isAdmin, setIsAdmin] = useState(false)
-    const [discuss_content, setDiscussContent] = useState("") 
     const [discussions, setDiscussions] = useState([])
+    const [discuss_content, setDiscussContent] = useState("") 
     const [GName, setGName] = useState("")
     const [subject, setSubject] = useState("")
     const [time_options, setTimeOptions] = useState({})
@@ -67,12 +64,7 @@ const useData = () => {
             case "group": {
                 const { status } = data;
                 if (status === true) {
-                    setCode(data.code)
-                    setGName(data.GName)
-                    // setContent(data.content)
                     setDiscussions(data.discussions)
-                    setIsAdmin(data.isAdmin)
-                    setFile(data.file)
                 }
 
                 break
@@ -80,7 +72,6 @@ const useData = () => {
             case "renewFile": {
                 const { status } = data;
                 if(status === true){
-                    setFile(data.file)
                 }
                 else{
                     console.log("DB error")
@@ -178,7 +169,7 @@ const useData = () => {
                 const { status } = data;
                 if(status === true){
                     const {sender, body} = data
-                    let newMessages = messages
+                    let newMessages = [...messages]
                     newMessages.push({sender, body})
                     setMessages(newMessages)
                 }
@@ -218,13 +209,10 @@ const useData = () => {
 
     return {
         sendData,
-        code,
         group,
         isAdmin,
-        discussions,
-        file,
-        UName,
         GName,
+        discussions,
         discuss_content,
         subject,
         time_options,
