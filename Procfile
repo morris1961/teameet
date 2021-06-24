@@ -1,1 +1,1 @@
-web: npm insatll && npm start
+web: npm start
