@@ -56,3 +56,10 @@
   padding: 20px;
   overflow: auto;
 }
+
+.time{
+  color: gray;
+  font-size: 1px;
+  margin-right: 5px;
+  margin-top: 10px;
+}

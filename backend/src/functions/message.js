@@ -2,11 +2,13 @@ import Group from "../models/group.js";
 import User from "../models/user.js";
 import Message from "../models/message.js";
 
+
 async function message({ UID, GID, body }) {
   var status = false;
   var UName = "";
   var messages = [];
   var error_msg = "Something wrong...";
+  const nowTime = new Date();
   try {
     const nowTime = new Date();
     const user = await User.findById(UID)
