@@ -8,10 +8,10 @@
   },
   "main": "index.js",
   "scripts": {
-    "prod": "node ./dist/bundle.js",
+    "prod": "node ./backend/dist/bundle.js",
+    "build": "",
     "build-client": "cd frontend && npm install && npm run build",
     "build-server": "cd backend && npm install && npm run build",
-    "build": "",
     "start": "cd frontend && npm start",
     "server": "cd backend && npm run server",
     "test": "echo \"Error: no test specified\" && exit 1"
