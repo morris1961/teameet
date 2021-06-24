@@ -139,9 +139,9 @@ const useData = () => {
             case "message":{
                 const { status } = data;
                 if(status === true){
-                    const {sender, body} = data
+                    const {sender, body, time} = data
                     let newMessages = [...messages]
-                    newMessages.push({sender, body})
+                    newMessages.push({sender, body, time})
                     setMessages(newMessages)
                 }
                 break

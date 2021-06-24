@@ -1,6 +1,8 @@
 import "../App.css";
 import { useEffect, useState, useRef } from "react"
-import { Input } from "antd"
+import { Divider, Input } from "antd"
+import moment from 'moment';
+import 'moment-timezone';
 
 
 const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
@@ -18,17 +20,29 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
         endMsg.current.scrollIntoView({behavior: "smooth"})
     }, [messages])
     
-    
+    let lastDate = ''
     return(
         <>
             <div className="App-message">
-                {messages === undefined ? null:(messages === []? (<p>loading...</p>): (messages.map(({sender, body}, index)=>{
-
+                {messages === undefined ? null:(messages === []? (<p>loading...</p>): (messages.map(({sender, body, time}, index)=>{
+                    let renderDate = false
+                    let date = moment(time).tz('Asia/Taipei').format('YYYY/MM/DD')
+                    if(lastDate !== date){
+                        lastDate = date
+                        renderDate = true
+                    }
                     return sender === UName?(
-                        <div id={index} style={{display: "flex", justifyContent: "flex-end"}} ref={index === messages.length - 1?endMsg:null}>
-                            <p className="wrap">{body}</p>
-                            <p style={{fontStyle:"italic"}}>{sender}  &ensp;</p> 
-                        </div> //這裡 p 沒有 key 會噴 error //&ensp; -> 半形空格
+                        <>
+                            {renderDate?(
+                            <Divider orientation="center" plain style={{color: "gray"}}>
+                                {date}
+                            </Divider>):(null)}
+                            <div id={index} style={{display: "flex", justifyContent: "flex-end"}} ref={index === messages.length - 1?endMsg:null}>
+                                <p className="time"> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
+                                <p className="wrap">{body}</p>
+                                <p style={{fontStyle:"italic"}}>{sender}  &ensp;</p> 
+                            </div> 
+                        </>
                     ):(
                         <div id={index} style={{display: "flex", justifyContent: "flex-start"}}>
                             <p style={{fontStyle:"italic"}}>{sender}  &ensp;</p> 
