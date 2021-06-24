@@ -26,10 +26,9 @@ const HomePage = ({sendData, mess}) =>{
     const history = useHistory();
     const location = useLocation();
     var data = location.state.data;
-    // console.log("data in homepage", location.state)
-    var {UName, postdata, group, recent, voting, email, password} = data;
-    var {UID, password, email} = postdata;
-    // console.log("indexxx",data)
+    
+    var {UName, UID, password, email, group, recent, voting, email, password} = data;
+    
     const [GID, setGID] = useState("");
     const onCollapse = collapsed => {
         console.log(collapsed);
@@ -42,8 +41,7 @@ const HomePage = ({sendData, mess}) =>{
     const [code, setCode]=useState("");
     const [GName, setGName]=useState("");
     const [file, setFile]=useState("");
-    const [click_join, setClick_join]=useState(false);
-    const [click_create, setClick_create]=useState(false);
+
 
     // initialize
     // useEffect(()=>{
@@ -78,7 +76,6 @@ const HomePage = ({sendData, mess}) =>{
       }
       var data = {UID:UID, code:'#'+code};
       sendData('joinGroup', data);
-      setClick_join(true);  
     }
   
     const handlerenew = () => {
@@ -158,18 +155,14 @@ const HomePage = ({sendData, mess}) =>{
     //         setClick_create(false);
 
     else if(mess.api === 'group'){
-      // var GID = GID;
-      // console.log("GID", {GID})
       var data = mess.data;
       data.UName = UName
-      data.postdata = {UName, postdata, group, recent, voting, email, password};
-      // console.log(data)
+      data.postdata = {UName, UID, password, email, group, recent, voting, email, password};
       console.log("data in hp push", data)
         var path = {
           pathname:`/${UID}/${GID}`,
           state:{data},
         }
-        // history.push(path);
         history.push(path);
     }
     },[mess])
@@ -295,18 +288,67 @@ const HomePage = ({sendData, mess}) =>{
         </ElseIf>
          {/* index */}
         <Else>
-        <Header style={{backgroundColor:"white"}}>
-            <div style={{fontSize:"2vw", marginLeft:"-2vw"}}>
+        <Content style={{paddingLeft:"1.2vw",width:"50%", float:"left", fontSize:"1vw"}} >
+        <div style={{fontSize:"2vw", marginLeft:"2vw", }}>
+                將要討論
+        </div>
+        <Menu mode="inline" defaultOpenKeys={['recent3']}>
+            {voting.map((v, index)=>{
+              if(index < 3)
+              {return(
+                    <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
+                          onClick={(e)=>{handleGroupClick(v.GID)}}>
+                      <RecentGroups key={'v_'+index}
+                                UID={UID} GID={v.GID} GName={v.GName} 
+                                time={v.time} subject={v.subject} place={v.place}/>
+                    </Menu.Item>)
+                  }
+              if(voting.size > 3){
+              <SubMenu key="recent>3" title="其他群組">
+              {voting.map((v, index)=>{
+                if(index >= 3)
+                {return(
+                      <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
+                                 onClick={(e)=>{handleGroupClick(v.GID)}}>
+                        <RecentGroups key={'v_'+index}
+                                  UID={UID} GID={v.GID} GName={v.GName} 
+                                  time={v.time} subject={v.subject} place={v.place}/>
+                      </Menu.Item>)
+                    }})}
+              </SubMenu> }})}
+        </Menu>
+        </Content>
+
+        <Content style={{paddingLeft:"1.2vw",width:"50%", float:"left"}} >
+        <div style={{fontSize:"2vw", marginLeft:"2vw", }}>
                 近期討論
-            </div>
-        </Header>
-        <Content style={{paddingLeft:"1.2vw",backgroundColor:"white"}} >
-            
-            {/* {recent.map((v, i)=><RecentGroups key={'r_'+i}
-                                      UID={UID} GID={v.GID} GName={v.GName} 
-                                      time={v.time} subject={v.subject} place={v.place}/>)} */}
-            
-          </Content>
+        </div>
+        <Menu mode="inline" defaultOpenKeys={['recent3']}>
+          {recent.map((v, index)=>{
+              if(index < 3)
+              {return(
+                    <Menu.Item key={`recent_${index}`} style ={{height:"auto"}}
+                          onClick={(e)=>{handleGroupClick(v.GID)}}>
+                      <RecentGroups key={'r_'+index}
+                                UID={UID} GID={v.GID} GName={v.GName} 
+                                time={v.time} subject={v.subject} place={v.place}/>
+                    </Menu.Item>)
+                  }
+              if(recent.size > 3){
+              <SubMenu key="recent>3" title="其他群組">
+              {recent.map((r, index)=>{
+                if(index >= 3)
+                {return(
+                      <Menu.Item key={`recent_${index}`} style ={{height:"auto"}}
+                                 onClick={(e)=>{handleGroupClick(r.GID)}}>
+                        <RecentGroups key={'r_'+index}
+                                  UID={UID} GID={r.GID} GName={r.GName} 
+                                  time={r.time} subject={r.subject} place={r.place}/>
+                      </Menu.Item>)
+                    }})}
+              </SubMenu> }})}
+        </Menu>
+        </Content>
         </Else>
       </If>
             </Content>

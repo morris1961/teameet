@@ -28,13 +28,10 @@ const Login = ({sendData, mess}) =>{
           });
       }
     }else if(mess.api === "index"){
-      var postdata = new Object();
-      postdata.UID = UID;
-      postdata.password = password;
-      postdata.email=email;
-
       var data = mess.data;
-      data.postdata = postdata;
+      data.UID=UID;
+      data.email=email;
+      data.password=password;
       console.log("data in index push", data)
         var path = {
           pathname:"/index",
@@ -48,7 +45,6 @@ const Login = ({sendData, mess}) =>{
   const [UID, setUID] = useState("");
   const [email, setEmail] = useState("winniew0824@gmail.com");
   const [password, setPassword] = useState("123");
-  const [click, setClick] = useState(false);
   const validemail= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 
   const handlelogin = () =>{
@@ -74,7 +70,6 @@ const Login = ({sendData, mess}) =>{
       var data = {email:email, password:password};
       sendData('login', data)
       console.log("login.js in frontend send:", data)
-      setClick(true);
     }
   }    
   

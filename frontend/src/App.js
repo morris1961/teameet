@@ -28,8 +28,6 @@ const App = () => {
     time_result,
     place_result,
     status,
-    recent,
-    voting,
     mess,
     messages,
 
@@ -61,7 +59,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Beforelogin} />
         <Route exact path="/login" render={() => (<Login sendData={sendData} mess={mess} />)} />
-        <Route exact path="/register" render={() => (<Register status={status} sendData={sendData} mess={mess} />)} />
+        <Route exact path="/register" render={() => (<Register sendData={sendData} mess={mess} />)} />
         <Route exact path="/index" render={() => (<HomePage sendData={sendData} mess={mess} />)} />
         <Route exact path="/renewProfile" render={() => (<RenewProfile sendData={sendData} mess={mess} />)} />
         <Route exact path="/:UID/:GID"

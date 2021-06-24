@@ -17,21 +17,21 @@ const Register = ({sendData, message}) =>{
 
   useEffect(()=>{
     if(message.api === "register"){
-    if(message.data.status === true){
-      setIsregistersuccess(true);
-    }else if(message.data.status === false){
-      notification['error']({
-      message: '錯誤',
-      description:
-        '這個信箱已經註冊過了',
-      });
-    }else{
-      notification['error']({
+      if(message.data.status === true){
+        setIsregistersuccess(true);
+      }else if(message.data.status === false){
+        notification['error']({
         message: '錯誤',
         description:
-          '請稍後再試一次',
+          '這個信箱已經註冊過了',
         });
-    }
+      }else{
+        notification['error']({
+          message: '錯誤',
+          description:
+            '請稍後再試一次',
+          });
+      }
   } 
 },[message]);
  
