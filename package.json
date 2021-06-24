@@ -14,7 +14,6 @@
     "build-client": "cd frontend && npm install && npm run build",
     "build-server": "cd backend && npm install && npm run build",
     "heroku-postbuild": "npm run build && cp -r frontend/build ./",
-    "heroku-cleanup": "cd backend && npm prune --production",
     "start": "cd frontend && npm start",
     "server": "cd backend && npm run server",
     "test": "echo \"Error: no test specified\" && exit 1"
