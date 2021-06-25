@@ -13,7 +13,7 @@
     background-color:rgba(255, 255, 255,0.6);
     width:100%;
     margin:40px auto;
-    height: 28vw;
+    height: 30vw;
     border: solid;
     border-color: rgba(255, 255, 255,0.6);
 }
@@ -88,4 +88,5 @@
     text-align: center;
     font-size: 1.2vw;
     color: blue;
+    background-color: transparent;
 }
