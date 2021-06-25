@@ -12,7 +12,6 @@ import {
 import '../style/Index.css';
 import {useHistory, useLocation } from "react-router-dom";
 import  {BsGear}  from "react-icons/bs";
-import { If, Then, ElseIf, Else } from 'react-if-elseif-else-render';
 import RecentGroups from "../Components/RecentGroups";
 import VotingGroups from "../Components/VotingGroups";
 const { Content, Footer, Sider } = Layout;
@@ -25,7 +24,6 @@ const HomePage = ({sendData, mess}) =>{
     const history = useHistory();
     const location = useLocation();
     var data = location.state.data;
-    console.log(data)
     var {UName, UID, password, email, group, recent, voting} = data;
     
     const [GID, setGID] = useState("");
@@ -110,12 +108,11 @@ const HomePage = ({sendData, mess}) =>{
             description:
             '成功加入該群組, 為你跳轉頁面',
             });
-            setGID(mess.data.GID)
-            let data = {UID, GID}
+            let data = {UID, GID:mess.data.GID}
             sendData("group", data)
           }
       }else if(mess.api === "createGroup"){
-      if(mess.data.status === false){
+          if(mess.data.status === false){
             notification['error']({
               message: '錯誤',
               description:
@@ -129,8 +126,8 @@ const HomePage = ({sendData, mess}) =>{
             });
             setGID(mess.data.GID);
             setGName(mess.data.GName);
-            let data = {UID, GID}
-            sendData("group", data)
+            let data = {UID, GID:mess.data.GID};
+            sendData("group", data);
           }
         }else if(mess.api === 'group'){
             var data = mess.data;
