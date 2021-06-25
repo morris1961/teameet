@@ -5,6 +5,7 @@ import moment from 'moment';
 import 'moment-timezone';
 
 
+
 const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
     const [messageInput, setMessageInput] = useState("") 
     const endMsg = useRef(null)  // 最新訊息的 ref
@@ -46,11 +47,17 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
                             </div> 
                         </>
                     ):(
-                        <div id={index} style={{display: "flex", justifyContent: "flex-start"}} ref={index === messages.length - 1?endMsg:null}>
-                            <p style={{fontStyle:"italic", marginLeft: "5px"}}> {sender}  &ensp;</p> 
-                            <p className="wrap">{body}</p>
-                            <p className="time"> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
-                        </div>
+                        <>
+                            {renderDate?(
+                            <Divider orientation="center" plain style={{color: "gray"}}>
+                                {date}
+                            </Divider>):(null)}
+                            <div id={index} style={{display: "flex", justifyContent: "flex-start"}} ref={index === messages.length - 1?endMsg:null}>
+                                <p style={{fontStyle:"italic", marginLeft: "5px"}}> {sender}  &ensp;</p> 
+                                <p className="wrap">{body}</p>
+                                <p className="time"> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
+                            </div>
+                        </>
                     )})))}
             </div>
             
