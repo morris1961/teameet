@@ -70,7 +70,23 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
           displayStatus({type: 'error', msg: '資料集連結更新失敗'})
         }
       }
+      else if(message.api === 'index'){
+        var {UID, email, password} =  location.state.data;
+        var data = message.data;
+        data.UID=UID;
+        data.email=email;
+        data.password=password;
+        console.log("data in index push", data)
+          var path = {
+            pathname:"/index",
+            state:{data},
+          }
+          history.push(path);
+      }
     }, [message])
+
+    
+    
 
 
     const handleDiscussionClick = (DID) =>{
@@ -80,13 +96,8 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
     }
 
     const handleBack = () =>{
-      var data = location.state.data;
-      var path = {
-        pathname:"/index",
-        state:{data},
-      }
-      console.log(data)
-      history.push(path);
+      var data ={UID}
+      sendData('index', data);
     }
 
     const handleChatRoom = () =>{
