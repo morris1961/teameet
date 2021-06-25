@@ -95,7 +95,11 @@ const Register = ({sendData, mess}) =>{
 
           </Header>
 
-          <Content style={{backgroundColor:"white"}}>
+          <Content style={{height:"40vw",
+                      backgroundSize:'cover',
+                      backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',
+                      }}>
+          <div className="register_opacity">
           <div className="registersuccess_txt">
             Hi! {UName} 謝謝你決定加入 TEAMEET，
           </div>
@@ -116,6 +120,7 @@ const Register = ({sendData, mess}) =>{
               點此登入
             </Button>
           </div>
+          </div>
           </Content>
         </Then>
         <Else>
@@ -128,13 +133,18 @@ const Register = ({sendData, mess}) =>{
               </span>
           </Header>
 
-          <Content style={{backgroundColor:"white"}}>
+          <Content style={{height:"40vw",
+                      backgroundSize:'cover',
+                      backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',
+                      }}
+                      >
+            <div className="register_opacity">
             <div className="register_account">
                 <div className="register_account-title">帳號: </div>
                 <div className="register_account-input">
                 <Input 
                 className="register_searchbox"
-                placeholder="                                                @gmail.com"
+                placeholder="                                          @gmail.com"
                 onChange={(event)=>setEmail(()=>event.target.value)}
                 value={email}/>
                 </div>
@@ -176,6 +186,7 @@ const Register = ({sendData, mess}) =>{
                 onClick = {handleregister}>
                 註冊
             </Button>
+            </div>
             </div>
           </Content>
         </Else>

@@ -152,7 +152,7 @@ const HomePage = ({sendData, mess}) =>{
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item key="1" icon={<UserOutlined />} title="User" style={{height: "60px"}} >
                 <div onClick={handleback} style={{float:"left"}}>{UName}</div>
-                <BsGear className="index_gear" onClick={handlegear} style={{fontSize:"1.5vw",marginTop:"0.5vw"}}/>
+                <BsGear className="index_gear" onClick={handlegear} style={{fontSize:"1.5vw",marginLeft:"0.5vw",marginTop:"0.5vw"}}/>
               </Menu.Item>
               {isgearclicked?(<>
                 <Menu.Item key="RenewProfile" icon={<FormOutlined />} title="RenewProdile" onClick={handlerenew}>
