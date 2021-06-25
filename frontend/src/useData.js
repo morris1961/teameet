@@ -1,5 +1,6 @@
 import { useState } from "react";
-const client = new WebSocket('ws://localhost:4000')
+const HOST = location.origin.replace(/^http/, 'ws')
+const client = new WebSocket(HOST)
 
 const useData = () => {
     const [discussions, setDiscussions] = useState([])

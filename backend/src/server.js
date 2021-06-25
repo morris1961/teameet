@@ -33,7 +33,14 @@ import chat from './functions/chat.js';
 // init server
 const app = express();
 const server = http.createServer(app);
-app.use(express.static("./public"));
+if (process.env.MODE === "devlopment") {
+  console.log("devlopment mode");
+  app.use(express.static("./public"));
+}
+else if (process.env.MODE === "production") {
+  console.log("production mode");
+  app.use(express.static("../frontend/build"));
+}
 const wss = new WebSocket.Server({
   server,
 });
@@ -212,7 +219,7 @@ wss.on('connection', async function connection(ws) {
   });
 });
 
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 5000
 server.listen(PORT, () => {
   console.log(`Listening on http://localhost:${PORT}`)
 })

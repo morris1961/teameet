@@ -163,7 +163,8 @@
     </li>
   </ul>
   <script>
-    const server = new WebSocket('ws://localhost:4000');
+    const HOST = location.origin.replace(/^http/, 'ws')
+    const server = new WebSocket(HOST);
     server.onopen = () => console.log('Server connected.');
     server.onmessage = (m) => {
       console.log(JSON.parse(m.data));
