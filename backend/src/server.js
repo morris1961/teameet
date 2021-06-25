@@ -208,7 +208,9 @@ wss.on('connection', async function connection(ws) {
         send(data).then(
           (ret) => {
             msg.data = ret;
-            ws.sendEvent(msg);
+            wss.clients.forEach((client) => {
+              client.send(JSON.stringify(msg));
+            });
           }
         );
         break;
