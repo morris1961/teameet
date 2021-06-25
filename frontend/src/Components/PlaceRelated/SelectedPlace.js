@@ -8,12 +8,12 @@ const SelectedPlace = ({place_options, place_result}) =>{
     useEffect(()=>{
         const options = Object.keys(place_options)
         let newShowOptions = [] // 這裡改 show_options 會出 error
-        options.map((e)=>{
+        options.forEach((e)=>{
             let cnt = place_options[e].length
             newShowOptions.push({option:e, cnt})
         }) 
         setShowOptions(newShowOptions)
-    }, [])
+    }, [place_options])
 
     return(
         <>

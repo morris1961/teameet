@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Input, Radio, DatePicker, Button, Row, Col } from 'antd';
+import { Input, Radio, DatePicker, Button } from 'antd';
 import moment from 'moment';
 import 'moment-timezone';
 
@@ -12,9 +12,8 @@ const formItemLayoutWithOutLabel = {
     },
 };
 
-const { RangePicker, rangeConfig } = DatePicker
+const { RangePicker } = DatePicker
 const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
-    const [sendCreate, setSendCreate] = useState(false)
     const [subject, setSubject] = useState('')
     const [content, setContent] = useState('')
     const [timeStart, setTimeStart] = useState('')
@@ -22,13 +21,6 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
     const [timeSpan, setTimeSpan] = useState('60')
     const [deadline, setDeadline] = useState('')
     const [place, setPlace] = useState('')
-
-    const config = {
-        rules: [{ type: 'object', required: true, message: 'Please select time!' }],
-    };
-    const rangeConfig = {
-        rules: [{ type: 'array', required: true, message: 'Please select time!' }],
-    };
 
     const disabledDate = (current) => {
         // Can not select days before today 
@@ -100,7 +92,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
                 <Form.Item label="地點">
                     <Input onChange={(e)=>{setPlace(e.target.value)}} />
                 </Form.Item>
-                <Form.Item name="range-time-picker" label="討論時間範圍" {...rangeConfig}>
+                <Form.Item name="range-time-picker" label="討論時間範圍">
                     <RangePicker showTime format="YYYY-MM-DD HH:mm" disabledDate={disabledDate} minuteStep={30} onChange={onChangeRangePicker}/>
                 </Form.Item>
                 <Form.Item label="討論時間間隔" name="size" >
@@ -110,7 +102,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
                         <Radio.Button value="120">2 小時</Radio.Button>
                     </Radio.Group>
                 </Form.Item>
-                <Form.Item name="date-time-picker" label="投票截止時間" {...config}>
+                <Form.Item name="date-time-picker" label="投票截止時間">
                     <DatePicker showTime format="YYYY-MM-DD HH"  disabledDate={disabledDate} onChange={onChangeDatePicker}/>
                 </Form.Item>
             </Form>

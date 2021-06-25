@@ -14,7 +14,7 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
             const options = Object.keys(time_options)
             let newShowOptions = [] // 這裡改 show_options 會出 error
             let newMax = 0
-            options.map((e)=>{
+            options.forEach((e)=>{
                 let cnt = time_options[e].length
                 if(cnt > newMax){
                     newMax = cnt
@@ -25,7 +25,7 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
             setMax(newMax)
             setShowOptions(newShowOptions)
         } 
-    }, [])
+    }, [time_options])
 
     const handleSubmit = () =>{
         if(time_result === ''){
