@@ -1,4 +1,6 @@
 import { useState } from "react";
+import dotenv from 'dotenv-defaults';
+dotenv.config();
 
 const PORT = process.env.PORT || 4000
 const HOST = `ws://localhost:${PORT}/`;
