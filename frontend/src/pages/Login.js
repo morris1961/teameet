@@ -79,7 +79,7 @@ const Login = ({sendData, mess}) =>{
     <Layout>
       <Header style={{backgroundColor:"white"}}>
           <div style={{marginLeft:"-2vw", fontSize:"3vw", color:"#000099"}}
-               onClick={()=>{history.push('/')}}>
+               >
             TEAMEET
           </div>
       </Header>
@@ -121,10 +121,6 @@ const Login = ({sendData, mess}) =>{
           登入
         </Button>
       </div>
-      </div>
-      </Content>
-
-      <Footer style={{backgroundColor:"white"}}>
       <div className="login_bottom-register">
         <Button
             className= "login_bottom-register-button"
@@ -132,7 +128,10 @@ const Login = ({sendData, mess}) =>{
           還沒有帳號？點此註冊
         </Button>
       </div>
-      </Footer>
+      </div>
+     
+      </Content>
+
 
     </Layout>
 
