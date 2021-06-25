@@ -3,6 +3,7 @@ import { Layout, Menu, Breadcrumb, BackTop } from 'antd';
 import DiscussionContent from '../Components/DiscussionContent'
 import DiscussionTime from '../Components/TimeRelated/DiscussionTime'
 import DiscussionPlace from '../Components/PlaceRelated/DiscussionPlace'
+import logo from '../image/logo.png';
 import {
   UserOutlined,
   FieldTimeOutlined,
@@ -36,7 +37,7 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
       history.push({pathname:`/${UID}/${GID}`, state:{data}});
     }
 
-    //按名字回首頁
+    //按 logo 回首頁
     const backToIndex = ()=>{
       // let data1 = location.state.data;
       // var data = data1.postdata;
@@ -73,7 +74,9 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
         
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-            <div className="logo" />
+            <div className="logo">
+              <img src={logo} width="90%" alt="logo"/>
+            </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}} onClick={backToIndex()}>
                 {location.state.data.UName}
