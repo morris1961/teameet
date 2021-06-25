@@ -136,8 +136,13 @@ const HomePage = ({sendData, mess}) =>{
         }else if(mess.api === 'group'){
             var data = mess.data;
             data.UName = UName
-            data.postdata = {UName, UID, password, email, group, recent, voting, email, password};
-            console.log("data in hp push", data)
+            data.UID = UID
+            data.password=password
+            data.email=email
+            data.group=group
+            data.voting=voting 
+            data.recent=recent
+            console.log("data in homepage push to group", data)
               var path = {
                 pathname:`/${UID}/${GID}`,
                 state:{data},

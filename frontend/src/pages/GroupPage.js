@@ -80,11 +80,12 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
     }
 
     const handleBack = () =>{
-      let data = {} 
+      var data = location.state.data;
       var path = {
         pathname:"/index",
         state:{data},
       }
+      console.log(data)
       history.push(path);
     }
 
