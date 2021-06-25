@@ -25,7 +25,7 @@ const HomePage = ({sendData, mess}) =>{
     const history = useHistory();
     const location = useLocation();
     var data = location.state.data;
-    
+    console.log(data)
     var {UName, UID, password, email, group, recent, voting} = data;
     
     const [GID, setGID] = useState("");
@@ -187,132 +187,116 @@ const HomePage = ({sendData, mess}) =>{
                 </SubMenu>
                 </>
               )}
-              
             </Menu>
           </Sider>
+
           <Layout className="site-layout">
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>使用者</Breadcrumb.Item>
                 <Breadcrumb.Item>{UName}</Breadcrumb.Item>
               </Breadcrumb>
-              <If condition={iscreateclicked}>
-        <Then>
-        <Content>
-          <div style={{fontSize:"2vw", marginLeft:"2vw", height:"30vw"}}>
-              創建群組
-          </div>
-        <div className="create_GName" >
-          <div className="create_GName-title" > 群組名稱: </div>
-          <div className="create_GName-input" >
-              <Input 
-              className="create_searchbox"
-              placeholder="請輸入 群組名稱"
-              onChange={(event)=>setGName(()=>event.target.value)}
-              value={GName}
-            />
-            </div>
-        </div>
+            {iscreateclicked?(<>
+            <Content>
+                  <div style={{fontSize:"2vw", marginLeft:"2vw", height:"30vw"}}>創建群組</div>
+                  <div className="create_GName" >
+                    <div className="create_GName-title" > 群組名稱: </div>
+                    <div className="create_GName-input" >
+                        <Input 
+                        className="create_searchbox"
+                        placeholder="請輸入 群組名稱"
+                        onChange={(event)=>setGName(()=>event.target.value)}
+                        value={GName}
+                      />
+                      </div>
+                  </div>
 
-        <div className="create_datalink" >
-          <div className="create_datalink-title" > 資料集連結: </div>
-          <div className="create_datalink-input" >
-              <Input 
-              className="create_searchbox"
-              placeholder="請輸入 資料集連結"
-              onChange={(event)=>setFile(()=>event.target.value)}
-              value={file}
-            />
-            </div>
-        </div>
+                  <div className="create_datalink" >
+                    <div className="create_datalink-title" > 資料集連結: </div>
+                    <div className="create_datalink-input" >
+                        <Input 
+                        className="create_searchbox"
+                        placeholder="請輸入 資料集連結"
+                        onChange={(event)=>setFile(()=>event.target.value)}
+                        value={file}/>
+                      </div>
+                  </div>
 
-        <div className="create_create">
-        <Button
-            className="create_create-button"
-            onClick = {handlecreate}>
-          創建
-        </Button>
-         </div>
+                  <div className="create_create">
+                  <Button
+                      className="create_create-button"
+                      onClick = {handlecreate}>
+                    創建
+                  </Button>
+                  </div>
+          </Content></>):(<>
+          {isjoinclicked?(<>
+          <Content>
+                <div style={{fontSize:"2vw", marginLeft:"2vw"}}>加入群組</div>
+              
+                <div style={{marginTop:"4vw"}} >
+                  <div style={{marginLeft:"25vw",height:"4.2vw",marginRight:"0.5vw",float:"left", textAlign:"left",fontSize:"2vw"}} > code: </div>
+                  <div className="create_GName-input" >
+                      <Input 
+                      prefix="#"
+                      className="create_searchbox"
+                      placeholder="請輸入 code"
+                      onChange={(event)=>setCode(()=>event.target.value)}
+                      value={code}/>
+                    </div>
+                </div>
+
+                <div className="create_create">
+                <Button
+                    className="create_create-button"
+                    onClick = {handlejoin}>
+                  加入
+                </Button>
+                </div>
+          </Content></>):(<>
+          <Content style={{paddingLeft:"1.2vw",width:"50%", float:"left", fontSize:"1vw"}} >
+                  <div style={{fontSize:"2vw", marginLeft:"2vw", }}>將要討論</div>  
+                  <Menu mode="inline" defaultOpenKeys={['recent3']}>
+                      {voting.map((v, index)=>{
+                        if(index < 3){
+                          return(
+                              <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
+                                    onClick={(e)=>{handleGroupClick(v.GID)}}>
+                                <VotingGroups key={'v_'+index}
+                                          UID={UID} GID={v.GID} GName={v.GName} 
+                                          deadline={v.deadline} subject={v.subject} place={v.place}/>
+                              </Menu.Item>)
+                        }
+                        if(voting.size > 3){
+                          <SubMenu key="recent>3" title="其他群組">
+                          {voting.map((v, index)=>{
+                          if(index >= 3){
+                            return(
+                                <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
+                                          onClick={(e)=>{handleGroupClick(v.GID)}}>
+                                  <VotingGroups key={'v_'+index}
+                                            UID={UID} GID={v.GID} GName={v.GName} 
+                                            deadline={v.deadline} subject={v.subject} place={v.place}/>
+                                </Menu.Item>)
+                              }})}
+                          </SubMenu> }
+                      })}
+                  </Menu>
           </Content>
-        </Then>
-         {/* click joinGroup */}
-        <ElseIf condition={isjoinclicked}>
-        <Content >
-            <div style={{fontSize:"2vw", marginLeft:"2vw"}}>
-                加入群組
-            </div>
 
-        
-        <div style={{marginTop:"4vw"}} >
-          <div style={{marginLeft:"25vw",height:"4.2vw",marginRight:"0.5vw",float:"left", textAlign:"left",fontSize:"2vw"}} > code: </div>
-          <div className="create_GName-input" >
-              <Input 
-              prefix="#"
-              className="create_searchbox"
-              placeholder="請輸入 code"
-              onChange={(event)=>setCode(()=>event.target.value)}
-              value={code}
-            />
-            </div>
-        </div>
-
-        <div className="create_create">
-        <Button
-            className="create_create-button"
-            onClick = {handlejoin}>
-          加入
-        </Button>
-         </div>
-          </Content>
-        </ElseIf>
-         {/* index */}
-        <Else>
-        <Content style={{paddingLeft:"1.2vw",width:"50%", float:"left", fontSize:"1vw"}} >
-        <div style={{fontSize:"2vw", marginLeft:"2vw", }}>
-                將要討論
-        </div>
-        <Menu mode="inline" defaultOpenKeys={['recent3']}>
-            {voting.map((v, index)=>{
-              if(index < 3)
-              {return(
-                    <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
-                          onClick={(e)=>{handleGroupClick(v.GID)}}>
-                      <VotingGroups key={'v_'+index}
-                                UID={UID} GID={v.GID} GName={v.GName} 
-                                deadline={v.deadline} subject={v.subject} place={v.place}/>
-                    </Menu.Item>)
-                  }
-              if(voting.size > 3){
-              <SubMenu key="recent>3" title="其他群組">
-              {voting.map((v, index)=>{
-                if(index >= 3)
-                {return(
-                      <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
-                                 onClick={(e)=>{handleGroupClick(v.GID)}}>
-                        <VotingGroups key={'v_'+index}
-                                  UID={UID} GID={v.GID} GName={v.GName} 
-                                  deadline={v.deadline} subject={v.subject} place={v.place}/>
-                      </Menu.Item>)
-                    }})}
-              </SubMenu> }})}
-        </Menu>
-        </Content>
-
-        <Content style={{paddingLeft:"1.2vw",width:"50%", float:"left"}} >
-        <div style={{fontSize:"2vw", marginLeft:"2vw", }}>
-                近期討論
-        </div>
-        <Menu mode="inline" defaultOpenKeys={['recent3']}>
+          <Content style={{paddingLeft:"1.2vw",width:"50%", float:"left"}} >
+          <div style={{fontSize:"2vw", marginLeft:"2vw", }}>近期討論</div>
+          <Menu mode="inline" defaultOpenKeys={['recent3']}>
           {recent.map((v, index)=>{
-              if(index < 3)
-              {return(
+              if(index < 3){
+                return(
                     <Menu.Item key={`recent_${index}`} style ={{height:"auto"}}
                           onClick={(e)=>{handleGroupClick(v.GID)}}>
                       <RecentGroups key={'r_'+index}
                                 UID={UID} GID={v.GID} GName={v.GName} 
                                 time_result={v.time_result} subject={v.subject} place={v.place}/>
                     </Menu.Item>)
-                  }
+              }
               if(recent.size > 3){
               <SubMenu key="recent>3" title="其他群組">
               {recent.map((r, index)=>{
@@ -325,13 +309,14 @@ const HomePage = ({sendData, mess}) =>{
                                   time_result={r.time_result} subject={r.subject} place={r.place}/>
                       </Menu.Item>)
                     }})}
-              </SubMenu> }})}
+              </SubMenu> }
+            })}
         </Menu>
         </Content>
-        </Else>
-      </If>
-            </Content>
-            <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        </>)}</>)}
+      </Content>
+            
+      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
           </Layout>
         </Layout>
     )

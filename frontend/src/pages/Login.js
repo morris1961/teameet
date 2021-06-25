@@ -7,8 +7,8 @@ const { Header, Content } = Layout;
 const Login = ({sendData, mess}) =>{
   const history = useHistory();
   const [UID, setUID] = useState("");
-  const [email, setEmail] = useState("winniew0824@gmail.com");
-  const [password, setPassword] = useState("123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const validemail= /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 
   useEffect(()=>{
@@ -32,19 +32,19 @@ const Login = ({sendData, mess}) =>{
           });
       }
     }else if(mess.api === "index"){
-      var datatoindex = mess.data;
-      datatoindex.UID=UID;
-      datatoindex.email=email;
-      datatoindex.password=password;
-      console.log("data in index push", datatoindex)
+      var data = mess.data;
+      data.UID=UID;
+      data.email=email;
+      data.password=password;
+      console.log("data in index push", data)
         var path = {
           pathname:"/index",
-          state:{datatoindex},
+          state:{data},
         }
         history.push(path);
       console.log()
     }
-  },[mess, UID, email, history, password]);
+  },[mess]);
   
   
 
@@ -96,7 +96,7 @@ const Login = ({sendData, mess}) =>{
       <div className="login_account" >
           <div className="login_account-title" > 帳號: </div>
           <div className="login_account-input" >
-              <Input 
+          <Input 
               className="login_searchbox"
               placeholder="                                                @gmail.com"
               onChange={(event)=>setEmail(()=>event.target.value)}

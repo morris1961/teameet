@@ -83,47 +83,41 @@ const Register = ({sendData, mess}) =>{
   return( 
     <React.Fragment>
     <Layout>
-      <If condition={isregistersuccess}>
-        <Then>
-          <Header style={{backgroundColor:"white"}}>
-            <div style={{float:"left",marginLeft:"-2vw", fontSize:"3vw", color:"#000099"}}>
-              TEAMEET
+    {isregistersuccess?(<>
+        <Header style={{backgroundColor:"white"}}>
+          <div style={{float:"left",marginLeft:"-2vw", fontSize:"3vw", color:"#000099"}}>
+            TEAMEET
+          </div>
+          <span style = {{float:"left", fontSize:"2vw", marginTop:"0.3vw", marginLeft:"0.8vw"}}>
+            註冊成功
+          </span>
+        </Header>
+        <Content style={{height:"40vw", backgroundSize:'cover',
+                    backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)'}}>
+        <div className="register_opacity">
+            <div className="registersuccess_txt">
+              Hi! {UName} 謝謝你決定加入 TEAMEET，
             </div>
-            <span style = {{float:"left", fontSize:"2vw", marginTop:"0.3vw", marginLeft:"0.8vw"}}>
-              註冊成功
-            </span>
-
-          </Header>
-
-          <Content style={{height:"40vw",
-                      backgroundSize:'cover',
-                      backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',
-                      }}>
-          <div className="register_opacity">
-          <div className="registersuccess_txt">
-            Hi! {UName} 謝謝你決定加入 TEAMEET，
-          </div>
-          <div className="registersuccess_midtxt">
-            希望你可以在這裡有良好的體驗，
-          </div>
-          <div className="registersuccess_midtxt">
-            有甚麼想說的也歡迎回饋給我們。
-          </div>
-          <div className="registersuccess_nametxt">
-          -- TEAMEET  團隊
-          </div>
-        
-          <div className="registersuccess_login">
-            <Button
-                className="registersuccess_login-button"
-                onClick = {()=>{history.push("/login")}}>
-              點此登入
-            </Button>
-          </div>
-          </div>
-          </Content>
-        </Then>
-        <Else>
+            <div className="registersuccess_midtxt">
+              希望你可以在這裡有良好的體驗，
+            </div>
+            <div className="registersuccess_midtxt">
+              有甚麼想說的也歡迎回饋給我們。
+            </div>
+            <div className="registersuccess_nametxt">
+            -- TEAMEET  團隊
+            </div>
+            <div className="registersuccess_login">
+              <Button
+                  className="registersuccess_login-button"
+                  onClick = {()=>{history.push("/login")}}>
+                點此登入
+              </Button>
+            </div>
+        </div>
+        </Content>
+        </>):(<>
+          
           <Header style={{backgroundColor:"white"}}>
               <div style={{marginLeft:"-2vw", fontSize:"3vw", color:"#000099"}}>
                 TEAMEET
@@ -133,65 +127,59 @@ const Register = ({sendData, mess}) =>{
               </span>
           </Header>
 
-          <Content style={{height:"40vw",
-                      backgroundSize:'cover',
-                      backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',
-                      }}
-                      >
+          <Content style={{height:"40vw", backgroundSize:'cover',
+                      backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)'}}>
             <div className="register_opacity">
-            <div className="register_account">
-                <div className="register_account-title">帳號: </div>
-                <div className="register_account-input">
-                <Input 
-                className="register_searchbox"
-                placeholder="                                          @gmail.com"
-                onChange={(event)=>setEmail(()=>event.target.value)}
-                value={email}/>
+                <div className="register_account">
+                    <div className="register_account-title">帳號: </div>
+                    <div className="register_account-input">
+                    <Input 
+                    className="register_searchbox"
+                    placeholder="                                          @gmail.com"
+                    onChange={(event)=>setEmail(()=>event.target.value)}
+                    value={email}/>
+                    </div>
                 </div>
-            </div>
 
-            <div className="register_name">
-                <div className="register_mid-title">暱稱: </div>
-                <div className="register_mid-input">
-                <Input 
-                className="register_searchbox"
-                onChange={(event)=>setUName(()=>event.target.value)}
-                value={UName}/>
+                <div className="register_name">
+                    <div className="register_mid-title">暱稱: </div>
+                    <div className="register_mid-input">
+                    <Input 
+                    className="register_searchbox"
+                    onChange={(event)=>setUName(()=>event.target.value)}
+                    value={UName}/>
+                    </div>
                 </div>
-            </div>
 
-            <div className="register_mid">
-                <div className="register_mid-title">密碼: </div>
-                <div className="register_mid-input">
+                <div className="register_mid">
+                    <div className="register_mid-title">密碼: </div>
+                    <div className="register_mid-input">
+                        <Input.Password 
+                        className="register_searchbox"
+                        onChange={(event)=>setPassword(()=>event.target.value)} 
+                        value={password} />
+                    </div>
+                </div>
+
+                <div className="register_pass">
+                    <div className="register_pass-title">再次輸入密碼: </div>
+                    <div className="register_pass-input">
                     <Input.Password 
-                    className="register_searchbox"
-                    onChange={(event)=>setPassword(()=>event.target.value)} 
-                    value={password} />
+                        className="register_searchbox"
+                        onChange={(event)=>setPass2(()=>event.target.value)} 
+                        value={pass2} />
+                    </div>
+                </div>
+
+                <div className="register_button">
+                <Button 
+                    className="register_button-button"
+                    onClick = {handleregister}>
+                    註冊
+                </Button>
                 </div>
             </div>
-
-            <div className="register_pass">
-                <div className="register_pass-title">再次輸入密碼: </div>
-                <div className="register_pass-input">
-                <Input.Password 
-                    className="register_searchbox"
-                    onChange={(event)=>setPass2(()=>event.target.value)} 
-                    value={pass2} />
-                </div>
-            </div>
-
-            <div className="register_button">
-            <Button 
-                className="register_button-button"
-                onClick = {handleregister}>
-                註冊
-            </Button>
-            </div>
-            </div>
-          </Content>
-        </Else>
-      </If>
-      
+          </Content></>)}
     </Layout>
     </React.Fragment>
     
