@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack -w",
+    "build": "webpack build",
     "start": "nodemon dist/bundle.js",
     "server": "nodemon --exec babel-node ./src/server.js"
   },
