@@ -2,7 +2,7 @@ import { useState } from "react";
 
 var HOST = `ws://localhost:4000/`;
 if (process.env.NODE_ENV === "production") {
-    HOST = `${window.location.origin.toString()}`.replace(/^http/, 'ws');
+    HOST = `${window.location.origin.toString()}`.replace(/^https/, 'ws');
 }
 const client = new WebSocket(HOST)
 
