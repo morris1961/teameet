@@ -1,9 +1,9 @@
 import { useState } from "react";
-import dotenv from 'dotenv-defaults';
-dotenv.config();
 
-const PORT = process.env.PORT || 4000
-const HOST = `ws://localhost:${PORT}/`;
+var HOST = `ws://localhost:4000/`;
+if (process.env.NODE_ENV === "production") {
+    HOST = `${window.location.origin.toString()}`.replace(/^http/, 'ws');
+}
 const client = new WebSocket(HOST)
 
 const useData = () => {
@@ -43,7 +43,7 @@ const useData = () => {
             }
             case "time": {
                 const { status } = data;
-                if (status === true){
+                if (status === true) {
                     setTimeOptions(data.time_options)
                     setIsDue(data.isDue)
                     setTimeVoted(data.voted)
@@ -54,7 +54,7 @@ const useData = () => {
             }
             case "place": {
                 const { status } = data;
-                if (status === true){
+                if (status === true) {
                     setPlaceOptions(data.place_options)
                     setIsDue(data.isDue)
                     setPlaceVoted(data.voted)
@@ -63,61 +63,61 @@ const useData = () => {
                 }
                 break
             }
-            case "addPlace":{
+            case "addPlace": {
                 const { status } = data;
-                if (status === true){
+                if (status === true) {
                     setPlaceOptions(data.place_options)
                 }
                 break
 
             }
-            case "votePlace":{
+            case "votePlace": {
                 const { status } = data;
-                if (status === true){
+                if (status === true) {
                     setPlaceOptions(data.place_options)
                     setPlaceVoted(data.status)
                 }
                 break
 
             }
-            case "voteTime":{
+            case "voteTime": {
                 const { status } = data;
-                if (status === true){
+                if (status === true) {
                     setTimeOptions(data.time_options)
                     setTimeVoted(data.status)
                 }
                 break
 
             }
-            case "confirmTime":{
+            case "confirmTime": {
                 const { status } = data;
-                if(status === true){
+                if (status === true) {
                     setTimeResult(data.time_result)
                     setIsSelectTime(data.status)
                 }
                 break
             }
-            case "confirmPlace":{
+            case "confirmPlace": {
                 const { status } = data;
-                if(status === true){
+                if (status === true) {
                     setPlaceResult(data.place_result)
                     setIsSelectPlace(data.status)
                 }
                 break
             }
-            case "chat":{
+            case "chat": {
                 const { status } = data;
-                if(status === true){
+                if (status === true) {
                     setMessages(data.messages)
                 }
                 break
             }
-            case "message":{
+            case "message": {
                 const { status } = data;
-                if(status === true){
-                    const {sender, body, time} = data
+                if (status === true) {
+                    const { sender, body, time } = data
                     let newMessages = [...messages]
-                    newMessages.push({sender, body, time})
+                    newMessages.push({ sender, body, time })
                     setMessages(newMessages)
                 }
                 break
@@ -139,7 +139,7 @@ const useData = () => {
         return new Promise((resolve, reject) => {
             const maxNumberOfAttempts = 10
             const intervalTime = 200 //ms
-    
+
             let currentAttempt = 0
             const interval = setInterval(() => {
                 if (currentAttempt > maxNumberOfAttempts - 1) {
@@ -155,7 +155,7 @@ const useData = () => {
     }
 
 
-    return { 
+    return {
         isDue,
         isSelectTime,
         isSelectPlace,

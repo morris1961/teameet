@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack build",
+    "start": "node --exec babel-node ./src/server.js",
     "server": "nodemon --exec babel-node ./src/server.js"
   },
   "keywords": [],

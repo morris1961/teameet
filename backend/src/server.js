@@ -33,11 +33,11 @@ import chat from './functions/chat.js';
 // init server
 const app = express();
 const server = http.createServer(app);
-if (process.env.MODE === "devlopment") {
+if (process.env.NODE_ENV === "devlopment") {
   console.log("devlopment mode");
   app.use(express.static("./public"));
 }
-else if (process.env.MODE === "production") {
+else if (process.env.NODE_ENV === "production") {
   console.log("production mode");
   app.use(express.static("../frontend/build"));
 }
