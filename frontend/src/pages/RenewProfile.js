@@ -28,7 +28,7 @@ const RegisterSuccess = ({sendData, mess}) =>{
         '伺服器出錯了, 麻煩你再嘗試一次',
       });
     }}
-  },[mess]);
+  },[mess, history]);
 
   const handlerenew = () =>{
 

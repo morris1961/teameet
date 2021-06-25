@@ -26,7 +26,7 @@ const HomePage = ({sendData, mess}) =>{
     const location = useLocation();
     var data = location.state.data;
     
-    var {UName, UID, password, email, group, recent, voting, email, password} = data;
+    var {UName, UID, password, email, group, recent, voting} = data;
     
     const [GID, setGID] = useState("");
     const onCollapse = collapsed => {
