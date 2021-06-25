@@ -24,14 +24,18 @@ const useData = () => {
 
     client.onopen = () => {
         console.log("client connected")
-        ping = setInterval(async function () {
-            // await waitForOpenSocket()
-            client.send(JSON.stringify("ping"))
-        }, 30 * 1000);
+        if (process.env.NODE_ENV === "production") {
+            ping = setInterval(async function () {
+                // await waitForOpenSocket()
+                client.send(JSON.stringify("ping"))
+            }, 30 * 1000);
+        }
     }
 
-    client.onclose = () =>{
-        clearInterval(ping);
+    if (process.env.NODE_ENV === "production") {
+        client.onclose = () => {
+            clearInterval(ping);
+        }
     }
 
     client.onmessage = (byteString) => {
