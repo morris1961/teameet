@@ -4,7 +4,7 @@ import '../style/RenewProfile.css'
 import {Button, Input, Layout, notification} from 'antd';
 import {useHistory, useLocation} from "react-router-dom";
 const { Header, Content } = Layout;
-const RegisterSuccess = ({sendData, message}) =>{
+const RegisterSuccess = ({sendData, mess}) =>{
   const location = useLocation();
   var data = location.state.data;
   var {UID, UName, password, email} = data;
@@ -12,33 +12,28 @@ const RegisterSuccess = ({sendData, message}) =>{
   const history = useHistory();
   const [newUName, setUName] = useState(UName);
   const [newpassword, setPassword] = useState(password);
-  const [click, setClick] = useState(false);
   useEffect(()=>{
-    if(click === true){
-      if(message.data.status === true){
-        console.log("tureeeeeeeeee")
+    if(mess.api === "renewProfile"){
+      if(mess.data.status === true){
       notification['success']({
         message: '更新成功',
         description:
         '已更新您的個人資料, 即將跳轉回去',
       });
       setTimeout(history.goBack(), 2000 )
-      setClick(false);
     }else{
       notification['error']({
         message: '更新失敗',
         description:
         '伺服器出錯了, 麻煩你再嘗試一次',
       });
-      setClick(false);
     }}
-  },[message]);
+  },[mess]);
 
   const handlerenew = () =>{
 
     var data = {UID:UID, UName:newUName, password:newpassword};
     sendData('renewProfile', data);
-    setClick(true);
   }
   return( 
     <React.Fragment>

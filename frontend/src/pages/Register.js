@@ -6,7 +6,7 @@ import { If, Then, Else } from 'react-if-elseif-else-render';
 import 'antd/dist/antd.css';
 import '../style/Register.css'
 const { Header, Content } = Layout;
-const Register = ({sendData, message}) =>{
+const Register = ({sendData, mess}) =>{
   const history = useHistory();
   const [UName, setUName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,24 +16,24 @@ const Register = ({sendData, message}) =>{
   const validemail= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 
   useEffect(()=>{
-    if(message.api === "register"){
-    if(message.data.status === true){
-      setIsregistersuccess(true);
-    }else if(message.data.status === false){
-      notification['error']({
-      message: '錯誤',
-      description:
-        '這個信箱已經註冊過了',
-      });
-    }else{
-      notification['error']({
+    if(mess.api === "register"){
+      if(mess.data.status === true){
+        setIsregistersuccess(true);
+      }else if(mess.data.status === false){
+        notification['error']({
         message: '錯誤',
         description:
-          '請稍後再試一次',
+          '這個信箱已經註冊過了',
         });
-    }
+      }else{
+        notification['error']({
+          message: '錯誤',
+          description:
+            '請稍後再試一次',
+          });
+      }
   } 
-},[message]);
+},[mess]);
  
   const handleregister = ()=>{
         if(email.length===0){
@@ -95,7 +95,11 @@ const Register = ({sendData, message}) =>{
 
           </Header>
 
-          <Content style={{backgroundColor:"white"}}>
+          <Content style={{height:"40vw",
+                      backgroundSize:'cover',
+                      backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',
+                      }}>
+          <div className="register_opacity">
           <div className="registersuccess_txt">
             Hi! {UName} 謝謝你決定加入 TEAMEET，
           </div>
@@ -116,6 +120,7 @@ const Register = ({sendData, message}) =>{
               點此登入
             </Button>
           </div>
+          </div>
           </Content>
         </Then>
         <Else>
@@ -128,13 +133,18 @@ const Register = ({sendData, message}) =>{
               </span>
           </Header>
 
-          <Content style={{backgroundColor:"white"}}>
+          <Content style={{height:"40vw",
+                      backgroundSize:'cover',
+                      backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',
+                      }}
+                      >
+            <div className="register_opacity">
             <div className="register_account">
                 <div className="register_account-title">帳號: </div>
                 <div className="register_account-input">
                 <Input 
                 className="register_searchbox"
-                placeholder="                                                @gmail.com"
+                placeholder="                                          @gmail.com"
                 onChange={(event)=>setEmail(()=>event.target.value)}
                 value={email}/>
                 </div>
@@ -176,6 +186,7 @@ const Register = ({sendData, message}) =>{
                 onClick = {handleregister}>
                 註冊
             </Button>
+            </div>
             </div>
           </Content>
         </Else>

@@ -4,17 +4,18 @@
     height: 1.8vw;
 }
 .register_searchbox{
-    width: 25vw;
+    width: 23vw;
     outline: none;
     padding: 14px 20px;
-    background: none;
+
     border: 2px solid gray;
     border-radius:25px;
     font-size: large; 
     text-align: left;
 }
+
 .register_account{
-    margin-top: 5vw;
+    margin-top: 2vw;
     /* margin-bottom: -0.7vw; */
     height: 5vw;
     width: 100%;
@@ -51,6 +52,7 @@
     height: 4.2vw;
     margin-left: 0.5vw;
     float: left;
+    background-color:transparent;
 }
 
 .register_pass{
@@ -72,6 +74,7 @@
     margin-left: 0.5vw;
     float: left;
     text-align: left;
+    background-color: transparent;
 }
 .register_check{
     margin-top: 0.2vw;
@@ -132,4 +135,12 @@
 .registersuccess_login-button{
     height: 3.3vw;
     font-Size: 1.5vw;
+}
+.register_opacity{
+    background-color:rgba(255, 255, 255,0.6);
+    width:100%;
+    margin:40px auto;
+    height: 28vw;
+    border: solid;
+    border-color: rgba(255, 255, 255,0.6);
 }

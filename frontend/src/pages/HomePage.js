@@ -26,10 +26,9 @@ const HomePage = ({sendData, mess}) =>{
     const history = useHistory();
     const location = useLocation();
     var data = location.state.data;
-    // console.log("data in homepage", location.state)
-    var {UName, postdata, group, recent, voting, email, password} = data;
-    var {UID, password, email} = postdata;
-    // console.log("indexxx",data)
+    
+    var {UName, UID, password, email, group, recent, voting, email, password} = data;
+    
     const [GID, setGID] = useState("");
     const onCollapse = collapsed => {
         console.log(collapsed);
@@ -42,14 +41,7 @@ const HomePage = ({sendData, mess}) =>{
     const [code, setCode]=useState("");
     const [GName, setGName]=useState("");
     const [file, setFile]=useState("");
-    const [click_join, setClick_join]=useState(false);
-    const [click_create, setClick_create]=useState(false);
 
-    // initialize
-    // useEffect(()=>{
-    //   let data = {UID}
-    //   sendData("index", data)
-    // }, [])
     const handleback = () =>{
       setIscreateclicked(false);
       setIsjoinclicked(false);
@@ -78,7 +70,6 @@ const HomePage = ({sendData, mess}) =>{
       }
       var data = {UID:UID, code:'#'+code};
       sendData('joinGroup', data);
-      setClick_join(true);  
     }
   
     const handlerenew = () => {
@@ -93,86 +84,66 @@ const HomePage = ({sendData, mess}) =>{
       setIsgearclicked(!isgearclicked);
     };
 
-    //history.push({pathname:`/${UID}/${GID}`, state:{UName, password, email}});
     const handleGroupClick = (GID) =>{
       let data = {UID, GID}
       setGID(GID);
       sendData("group", data)
-
     }
 
     useEffect(()=>{
-      if(mess.api === "index"){
-          console.log("index", mess)
-        // console.log("error_msg", message.error_msg)
-        // var error_msg = message.error_msg;
-        // if(error_msg === "The user has been in the group!" ){
-        //   notification['error']({
-        //     message: '錯誤',
-        //     description:
-        //       '你已經在該群組內',
-        //     });
-        //     setClick_join(false);
-        // }else if(error_msg === "The code is not valid!"){
-        //   notification['error']({
-        //     message: '錯誤',
-        //     description:
-        //       '請再確認一次 code 是否正確',
-        //     });
-        //     setClick_join(false);
-        //   }
-        // else if(error_msg === "Successed!"){
-        //   notification['success']({
-        //     message: '成功',
-        //     description:
-        //     '成功加入該群組, 為你跳轉頁面',
-        //   });
-          // var path_group = {
-          //   pathname:`/${UID}/${GID}`,
-          //   state:{UName},
-          // }
-          // setTimeout(history.push(path_group), 2000 )
-        
-     }
-    // else if(click_create === true){
-    //   if(message.status === false){
-    //         notification['error']({
-    //           message: '錯誤',
-    //           description:
-    //           '請稍後再重新登入一次, 並請你確認你的網路連接正常',
-    //         });
-    //         setClick_create(false);
-    //       }else if(message.status === true){
-    //         notification['success']({
-    //           message: '成功',
-    //           description:
-    //           '創建成功, 為你跳轉至群組畫面',
-    //         });
-    //         setGID(message.GID);
-    //         setGName(message.GName);
-    //         var path_creategroup = {
-    //           pathname:`/${UID}/${GID}`,
-    //           state:{UName},
-    //         }
-    //         // setTimeout(history.push(path_creategroup), 2000 )
-    //         setClick_create(false);
-
-    else if(mess.api === 'group'){
-      // var GID = GID;
-      // console.log("GID", {GID})
-      var data = mess.data;
-      data.UName = UName
-      data.postdata = {UName, postdata, group, recent, voting, email, password};
-      // console.log(data)
-      console.log("data in hp push", data)
-        var path = {
-          pathname:`/${UID}/${GID}`,
-          state:{data},
-        }
-        // history.push(path);
-        history.push(path);
-    }
-    },[mess])
+      if(mess.api === "joinGroup"){
+        var error_msg = mess.data.error_msg;
+        if(error_msg === "The user has been in the group!" ){
+          notification['error']({
+            message: '錯誤',
+            description:
+              '你已經在該群組內',
+            });
+        }else if(error_msg === "The code is not valid!"){
+          notification['error']({
+            message: '錯誤',
+            description:
+              '請再確認一次 code 是否正確',
+            });
+          }else if(error_msg === "Successed!"){
+          notification['success']({
+            message: '成功',
+            description:
+            '成功加入該群組, 為你跳轉頁面',
+            });
+            setGID(mess.data.GID)
+            let data = {UID, GID}
+            sendData("group", data)
+          }
+      }else if(mess.api === "createGroup"){
+      if(mess.data.status === false){
+            notification['error']({
+              message: '錯誤',
+              description:
+              '請稍後再重新登入一次, 並請你確認你的網路連接正常',
+            });
+          }else if(mess.data.status === true){
+            notification['success']({
+              message: '成功',
+              description:
+              '創建成功, 為你跳轉至群組畫面',
+            });
+            setGID(mess.data.GID);
+            setGName(mess.data.GName);
+            let data = {UID, GID}
+            sendData("group", data)
+          }
+        }else if(mess.api === 'group'){
+            var data = mess.data;
+            data.UName = UName
+            data.postdata = {UName, UID, password, email, group, recent, voting, email, password};
+            console.log("data in hp push", data)
+              var path = {
+                pathname:`/${UID}/${GID}`,
+                state:{data},
+              }
+              history.push(path);
+          }},[mess])
 
     return(
         <Layout style={{ minHeight: '100vh' }}>
@@ -181,7 +152,7 @@ const HomePage = ({sendData, mess}) =>{
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item key="1" icon={<UserOutlined />} title="User" style={{height: "60px"}} >
                 <div onClick={handleback} style={{float:"left"}}>{UName}</div>
-                <BsGear className="index_gear" onClick={handlegear} style={{fontSize:"1.5vw",marginTop:"0.5vw"}}/>
+                <BsGear className="index_gear" onClick={handlegear} style={{fontSize:"1.5vw",marginLeft:"0.5vw",marginTop:"0.5vw"}}/>
               </Menu.Item>
               {isgearclicked?(<>
                 <Menu.Item key="RenewProfile" icon={<FormOutlined />} title="RenewProdile" onClick={handlerenew}>
@@ -216,7 +187,6 @@ const HomePage = ({sendData, mess}) =>{
             </Menu>
           </Sider>
           <Layout className="site-layout">
-            {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>使用者</Breadcrumb.Item>
@@ -228,8 +198,6 @@ const HomePage = ({sendData, mess}) =>{
           <div style={{fontSize:"2vw", marginLeft:"2vw", height:"30vw"}}>
               創建群組
           </div>
-        
-        {/* <Content style={{paddingLeft:"1.2vw",backgroundColor:"white"}} > */}
         <div className="create_GName" >
           <div className="create_GName-title" > 群組名稱: </div>
           <div className="create_GName-input" >
@@ -295,18 +263,67 @@ const HomePage = ({sendData, mess}) =>{
         </ElseIf>
          {/* index */}
         <Else>
-        <Header style={{backgroundColor:"white"}}>
-            <div style={{fontSize:"2vw", marginLeft:"-2vw"}}>
+        <Content style={{paddingLeft:"1.2vw",width:"50%", float:"left", fontSize:"1vw"}} >
+        <div style={{fontSize:"2vw", marginLeft:"2vw", }}>
+                將要討論
+        </div>
+        <Menu mode="inline" defaultOpenKeys={['recent3']}>
+            {voting.map((v, index)=>{
+              if(index < 3)
+              {return(
+                    <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
+                          onClick={(e)=>{handleGroupClick(v.GID)}}>
+                      <RecentGroups key={'v_'+index}
+                                UID={UID} GID={v.GID} GName={v.GName} 
+                                time={v.time} subject={v.subject} place={v.place}/>
+                    </Menu.Item>)
+                  }
+              if(voting.size > 3){
+              <SubMenu key="recent>3" title="其他群組">
+              {voting.map((v, index)=>{
+                if(index >= 3)
+                {return(
+                      <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
+                                 onClick={(e)=>{handleGroupClick(v.GID)}}>
+                        <RecentGroups key={'v_'+index}
+                                  UID={UID} GID={v.GID} GName={v.GName} 
+                                  time={v.time} subject={v.subject} place={v.place}/>
+                      </Menu.Item>)
+                    }})}
+              </SubMenu> }})}
+        </Menu>
+        </Content>
+
+        <Content style={{paddingLeft:"1.2vw",width:"50%", float:"left"}} >
+        <div style={{fontSize:"2vw", marginLeft:"2vw", }}>
                 近期討論
-            </div>
-        </Header>
-        <Content style={{paddingLeft:"1.2vw",backgroundColor:"white"}} >
-            
-            {/* {recent.map((v, i)=><RecentGroups key={'r_'+i}
-                                      UID={UID} GID={v.GID} GName={v.GName} 
-                                      time={v.time} subject={v.subject} place={v.place}/>)} */}
-            
-          </Content>
+        </div>
+        <Menu mode="inline" defaultOpenKeys={['recent3']}>
+          {recent.map((v, index)=>{
+              if(index < 3)
+              {return(
+                    <Menu.Item key={`recent_${index}`} style ={{height:"auto"}}
+                          onClick={(e)=>{handleGroupClick(v.GID)}}>
+                      <RecentGroups key={'r_'+index}
+                                UID={UID} GID={v.GID} GName={v.GName} 
+                                time={v.time} subject={v.subject} place={v.place}/>
+                    </Menu.Item>)
+                  }
+              if(recent.size > 3){
+              <SubMenu key="recent>3" title="其他群組">
+              {recent.map((r, index)=>{
+                if(index >= 3)
+                {return(
+                      <Menu.Item key={`recent_${index}`} style ={{height:"auto"}}
+                                 onClick={(e)=>{handleGroupClick(r.GID)}}>
+                        <RecentGroups key={'r_'+index}
+                                  UID={UID} GID={r.GID} GName={r.GName} 
+                                  time={r.time} subject={r.subject} place={r.place}/>
+                      </Menu.Item>)
+                    }})}
+              </SubMenu> }})}
+        </Menu>
+        </Content>
         </Else>
       </If>
             </Content>

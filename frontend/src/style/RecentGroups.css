@@ -1,14 +1,10 @@
 .recentgroups_button{
-    /* border:solid; */
-    width: 90%;
-    margin-left: 5vw;
-    height: auto;
+    border:solid;
+    width: 100%;
+    /* margin-left: 5vw; */
+    /* height: 10vw; */
     text-align: left;
-    font-size: 1.7vw;
+    font-size: 1.2vw;
     border-radius: 0.7vw;
-    margin-top: 0.7vw;
-}
-.recentgroups_txt{
-    font-size: 1.5vw;
-    margin-left: 1.3vw;
+    /* margin-top: 0.7vw; */
 }

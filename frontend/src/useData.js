@@ -12,11 +12,6 @@ const useData = () => {
     const [isSelectTime, setIsSelectTime] = useState(false)
     const [time_result, setTimeResult] = useState('')
     const [place_result, setPlaceResult] = useState('')
-    const [status, setStatus] = useState();
-    const [error_msg, setError_msg] = useState("");
-    const [recent, setRecent] = useState([{}]);
-    const [voting, setVoting] = useState([{}]);
-    const [admin, setAdmin] = useState("");
     const [mess, setMess] = useState("");
     const [messages, setMessages] = useState([])
 
@@ -30,30 +25,6 @@ const useData = () => {
         const { api, data } = message
         console.log(message)
         switch (api) {
-            case "register": {
-                setMess(data);
-                break
-            }
-            case "login": {
-                setMess(data);
-                break
-            }
-            case "index": {
-                setMess(data);
-                break
-            }
-            case "createGroup": {
-                setMess(data);
-                break
-            }
-            case "joinGroup": {
-                setMess(data);
-                break
-            }
-            case "renewProfile": {
-                setMess(data);
-                break
-            }
             case "group": {
                 const { status } = data;
                 if (status === true) {
@@ -139,9 +110,9 @@ const useData = () => {
             case "message":{
                 const { status } = data;
                 if(status === true){
-                    const {sender, body} = data
+                    const {sender, body, time} = data
                     let newMessages = [...messages]
-                    newMessages.push({sender, body})
+                    newMessages.push({sender, body, time})
                     setMessages(newMessages)
                 }
                 break
@@ -180,12 +151,6 @@ const useData = () => {
 
 
     return { 
-        status,
-        error_msg,
-        recent,
-        voting,
-        admin,
-        /// 下半部是我會用到的
         isDue,
         isSelectTime,
         isSelectPlace,
