@@ -53,6 +53,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
           UName:location.state.data.UName, 
           file:location.state.data.file, 
           GName: location.state.data.GName, 
+          code: location.state.data.code,
           subject: message.data.subject, 
           content: message.data.content,
           isAdmin: message.data.isAdmin,
@@ -153,7 +154,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
                 <Breadcrumb.Item>群組</Breadcrumb.Item>
-                <Breadcrumb.Item>{location.state.data.GName}</Breadcrumb.Item>
+                <Breadcrumb.Item>{location.state.data.GName}:{location.state.data.code}</Breadcrumb.Item>
               </Breadcrumb>
               <Row>
                 <Col span={4}></Col>
