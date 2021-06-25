@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import ChatModal from '../Components/Modal/URLModal'
 import DiscussionSet from './DiscussionSet'
 import ChatRoom from '../Components/ChatRoom'
+import logo from '../image/logo.png';
 ///// react-router-dom /////
 import { useParams, useHistory, useLocation } from "react-router-dom";
 ///// antd /////
@@ -110,7 +111,9 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
       <>
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-            <div className="logo" />
+            <div className="logo">
+              <img src={logo} width="90%" alt="logo"/>
+            </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}} onClick={()=>{handleBack()}}>
                 {location.state.data.UName}

@@ -14,6 +14,7 @@ import {useHistory, useLocation } from "react-router-dom";
 import  {BsGear}  from "react-icons/bs";
 import RecentGroups from "../Components/RecentGroups";
 import VotingGroups from "../Components/VotingGroups";
+import logo from '../image/logo.png';
 const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -149,7 +150,9 @@ const HomePage = ({sendData, mess}) =>{
     return(
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-            <div className="logo" />
+            <div className="logo">
+              <img src={logo} width="90%" alt="logo"/>
+            </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
               <Menu.Item key="1" icon={<UserOutlined />} title="User" style={{height: "60px"}} >
                 <div onClick={handleback} style={{float:"left"}}>{UName}</div>
