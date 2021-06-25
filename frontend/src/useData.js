@@ -20,8 +20,18 @@ const useData = () => {
     const [mess, setMess] = useState("");
     const [messages, setMessages] = useState([])
 
+    var ping = null;
+
     client.onopen = () => {
         console.log("client connected")
+        ping = setInterval(async function () {
+            // await waitForOpenSocket()
+            client.send(JSON.stringify("ping"))
+        }, 30 * 1000);
+    }
+
+    client.onclose = () =>{
+        clearInterval(ping);
     }
 
     client.onmessage = (byteString) => {
