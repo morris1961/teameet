@@ -41,14 +41,15 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
                             </Divider>):(null)}
                             <div id={index} style={{display: "flex", justifyContent: "flex-end"}} ref={index === messages.length - 1?endMsg:null}>
                                 <p className="time"> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
-                                <p className="wrap">{body}</p>
+                                <p className="wrap" style={{marginRight: "5px"}}>{body}</p>
                                 <p style={{fontStyle:"italic"}}>{sender}  &ensp;</p> 
                             </div> 
                         </>
                     ):(
-                        <div id={index} style={{display: "flex", justifyContent: "flex-start"}}>
-                            <p style={{fontStyle:"italic"}}>{sender}  &ensp;</p> 
+                        <div id={index} style={{display: "flex", justifyContent: "flex-start"}} ref={index === messages.length - 1?endMsg:null}>
+                            <p style={{fontStyle:"italic", marginLeft: "5px"}}> {sender}  &ensp;</p> 
                             <p className="wrap">{body}</p>
+                            <p className="time"> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
                         </div>
                     )})))}
             </div>
