@@ -3,11 +3,15 @@ import 'antd/dist/antd.css';
 import '../style/Login.css'
 import {Button, Input, Layout, notification} from 'antd';
 import {useHistory} from "react-router-dom";
-import { SettingOutlined } from '@ant-design/icons';
-const { Header, Footer, Content } = Layout;
+const { Header, Content } = Layout;
 const Login = ({sendData, mess}) =>{
-  useEffect(()=>{
+  const history = useHistory();
+  const [UID, setUID] = useState("");
+  const [email, setEmail] = useState("winniew0824@gmail.com");
+  const [password, setPassword] = useState("123");
+  const validemail= /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 
+  useEffect(()=>{
     if(mess.api === "login"){
       if(mess.data.status === true){
         var data ={UID: mess.data.UID}
@@ -28,24 +32,21 @@ const Login = ({sendData, mess}) =>{
           });
       }
     }else if(mess.api === "index"){
-      var data = mess.data;
-      data.UID=UID;
-      data.email=email;
-      data.password=password;
-      console.log("data in index push", data)
+      var datatoindex = mess.data;
+      datatoindex.UID=UID;
+      datatoindex.email=email;
+      datatoindex.password=password;
+      console.log("data in index push", datatoindex)
         var path = {
           pathname:"/index",
-          state:{data},
+          state:{datatoindex},
         }
         history.push(path);
+      console.log()
     }
-  },[mess]);
+  },[mess, UID, email, history, password]);
   
-  const history = useHistory();
-  const [UID, setUID] = useState("");
-  const [email, setEmail] = useState("winniew0824@gmail.com");
-  const [password, setPassword] = useState("123");
-  const validemail= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
+  
 
   const handlelogin = () =>{
     if(email.length===0){

@@ -1,22 +1,19 @@
-import React, {useCallback} from 'react'
-import '../style/VotingGroups.css';
-import { useHistory } from "react-router-dom";
-import { Button } from 'antd';
+import React, { useEffect } from 'react';
+import '../style/RecentGroups.css';
+import moment from 'moment';
+import 'moment-timezone';
 
 const VotingGroups = (props) =>{
-  const history = useHistory();
-  var data = {GID: props.GId, UID: props.UID};
-  var path = {
-    pathname:"/:UID/:GID",
-    state:{data},
-  }
-  const handleOnClick = (() => {history.push('/:UID/:GID')});
     return( 
         <React.Fragment>
-          <Button className="votinggroups_button" 
-                onClick={handleOnClick} >
-            {props.GName}
-          </Button>
+          <div className="recentgroups_button">
+          {props.GName}
+            <div >
+                <div>投票截止時間: {moment(props.deadline).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')} </div>
+                <div>地點: {props.place}</div>
+                <div>主題: {props.subject}</div>
+            </div>
+          </div>
         </React.Fragment>  
     
       );

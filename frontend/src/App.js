@@ -27,7 +27,6 @@ const App = () => {
     isSelectPlace,
     time_result,
     place_result,
-    status,
     mess,
     messages,
 
@@ -47,6 +46,8 @@ const App = () => {
           break
         case "error":
           message.error(content)
+          break
+        default:
           break
       }
     }

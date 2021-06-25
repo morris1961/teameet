@@ -10,24 +10,23 @@ import {
   RollbackOutlined,
 } from '@ant-design/icons';
 import '../style/Index.css';
-import { useParams, useHistory, useLocation } from "react-router-dom";
+import {useHistory, useLocation } from "react-router-dom";
 import  {BsGear}  from "react-icons/bs";
-import VotingGroups from "../Components/VotingGroups";
 import { If, Then, ElseIf, Else } from 'react-if-elseif-else-render';
 import RecentGroups from "../Components/RecentGroups";
-const { Header, Content, Footer, Sider } = Layout;
+import VotingGroups from "../Components/VotingGroups";
+const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
 const HomePage = ({sendData, mess}) =>{
 
     const [collapsed, setCollapsed] = useState(false)
-    const [activeKey, setActiveKey] = useState("")
     const history = useHistory();
     const location = useLocation();
     var data = location.state.data;
     
-    var {UName, UID, password, email, group, recent, voting, email, password} = data;
+    var {UName, UID, password, email, group, recent, voting} = data;
     
     const [GID, setGID] = useState("");
     const onCollapse = collapsed => {
@@ -278,9 +277,9 @@ const HomePage = ({sendData, mess}) =>{
               {return(
                     <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
                           onClick={(e)=>{handleGroupClick(v.GID)}}>
-                      <RecentGroups key={'v_'+index}
+                      <VotingGroups key={'v_'+index}
                                 UID={UID} GID={v.GID} GName={v.GName} 
-                                time={v.time} subject={v.subject} place={v.place}/>
+                                deadline={v.deadline} subject={v.subject} place={v.place}/>
                     </Menu.Item>)
                   }
               if(voting.size > 3){
@@ -290,9 +289,9 @@ const HomePage = ({sendData, mess}) =>{
                 {return(
                       <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
                                  onClick={(e)=>{handleGroupClick(v.GID)}}>
-                        <RecentGroups key={'v_'+index}
+                        <VotingGroups key={'v_'+index}
                                   UID={UID} GID={v.GID} GName={v.GName} 
-                                  time={v.time} subject={v.subject} place={v.place}/>
+                                  deadline={v.deadline} subject={v.subject} place={v.place}/>
                       </Menu.Item>)
                     }})}
               </SubMenu> }})}
@@ -311,7 +310,7 @@ const HomePage = ({sendData, mess}) =>{
                           onClick={(e)=>{handleGroupClick(v.GID)}}>
                       <RecentGroups key={'r_'+index}
                                 UID={UID} GID={v.GID} GName={v.GName} 
-                                time={v.time} subject={v.subject} place={v.place}/>
+                                time_result={v.time_result} subject={v.subject} place={v.place}/>
                     </Menu.Item>)
                   }
               if(recent.size > 3){
@@ -323,7 +322,7 @@ const HomePage = ({sendData, mess}) =>{
                                  onClick={(e)=>{handleGroupClick(r.GID)}}>
                         <RecentGroups key={'r_'+index}
                                   UID={UID} GID={r.GID} GName={r.GName} 
-                                  time={r.time} subject={r.subject} place={r.place}/>
+                                  time_result={r.time_result} subject={r.subject} place={r.place}/>
                       </Menu.Item>)
                     }})}
               </SubMenu> }})}

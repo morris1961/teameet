@@ -1,11 +1,11 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import ChatModal from '../Components/Modal/URLModal'
 import DiscussionSet from './DiscussionSet'
 import ChatRoom from '../Components/ChatRoom'
 ///// react-router-dom /////
 import { useParams, useHistory, useLocation } from "react-router-dom";
 ///// antd /////
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb, Row, Col } from 'antd';
 import {
   FileOutlined,
   TeamOutlined,
@@ -70,7 +70,23 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
           displayStatus({type: 'error', msg: '資料集連結更新失敗'})
         }
       }
+      else if(message.api === 'index'){
+        var {UID, email, password} =  location.state.data;
+        var data = message.data;
+        data.UID=UID;
+        data.email=email;
+        data.password=password;
+        console.log("data in index push", data)
+          var path = {
+            pathname:"/index",
+            state:{data},
+          }
+          history.push(path);
+      }
     }, [message])
+
+    
+    
 
 
     const handleDiscussionClick = (DID) =>{
@@ -80,13 +96,8 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
     }
 
     const handleBack = () =>{
-      var data = location.state.data;
-      var path = {
-        pathname:"/index",
-        state:{data},
-      }
-      console.log(data)
-      history.push(path);
+      var data ={UID}
+      sendData('index', data);
     }
 
     const handleChatRoom = () =>{
@@ -127,7 +138,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
                 來約討論
               </Menu.Item>
               <SubMenu key="Discussions" icon={<TeamOutlined />} title="討論">
-                {discussions.map((d, index)=>{
+                {discussions.map((d)=>{
                   return(
                     <Menu.Item key={`Discussions_${d.DID}`} onClick={(e)=>{handleDiscussionClick(d.DID);}}>{d.subject}</Menu.Item>
                   )
@@ -144,9 +155,15 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
                 <Breadcrumb.Item>群組</Breadcrumb.Item>
                 <Breadcrumb.Item>{location.state.data.GName}</Breadcrumb.Item>
               </Breadcrumb>
-              <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} messages={messages} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
-              </div>
+              <Row>
+                <Col span={4}></Col>
+                <Col span={16}>
+                  <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                    {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} messages={messages} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
+                  </div>
+                </Col>
+                <Col span={4}></Col>
+              </Row>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
           </Layout>
