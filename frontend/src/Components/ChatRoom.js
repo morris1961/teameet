@@ -17,7 +17,9 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
 
     // 滾輪自動滑到最新訊息
     useEffect(()=>{
-        endMsg.current.scrollIntoView({behavior: "smooth"})
+        if(messages.length !== 0){
+            endMsg.current.scrollIntoView({behavior: "smooth"})
+        }
     }, [messages])
     
     let lastDate = ''
