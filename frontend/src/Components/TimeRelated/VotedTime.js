@@ -6,21 +6,19 @@ import 'moment-timezone';
 const VotedTime = ({time_options, UID}) =>{
     const [show_options, setShowOptions] = useState([])
 
-    console.log(time_options)
-
     useEffect(()=>{
         if(time_options){
             let options = []
             options = Object.keys(time_options)
             let newShowOptions = []
-            options.map((e)=>{
+            options.forEach((e)=>{
                 if(time_options[e].indexOf(UID) !== -1){
                     newShowOptions.push(e)
                 }
             }) 
             setShowOptions(newShowOptions)
         }
-    }, [])
+    }, [time_options])
 
     return(
         <>

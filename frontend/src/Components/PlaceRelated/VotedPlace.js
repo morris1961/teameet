@@ -8,14 +8,14 @@ const VotedTime = ({place_options, UID}) =>{
         if(place_options){
             const options = Object.keys(place_options)
             let newShowOptions = []
-            options.map((e)=>{
+            options.forEach((e)=>{
                 if(place_options[e].indexOf(UID) !== -1){
                     newShowOptions.push(e)
                 }
             })
             setShowOptions(newShowOptions)
         }
-    }, [])
+    }, [place_options])
 
     return(
         <>

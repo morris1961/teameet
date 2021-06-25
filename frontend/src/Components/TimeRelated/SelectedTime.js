@@ -11,7 +11,7 @@ const SelectedTime = ({time_options, time_result}) =>{
         const options = Object.keys(time_options)
         let newShowOptions = [] // 這裡改 show_options 會出 error
         let newMax = 0
-        options.map((e)=>{
+        options.forEach((e)=>{
             let cnt = time_options[e].length
             if(cnt > newMax){
                 newMax = cnt
@@ -20,7 +20,7 @@ const SelectedTime = ({time_options, time_result}) =>{
             newShowOptions.push({option:formated, cnt})
         }) 
         setShowOptions(newShowOptions)
-    }, [])
+    }, [time_options])
 
     return(
         <>

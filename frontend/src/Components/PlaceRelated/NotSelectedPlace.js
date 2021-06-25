@@ -14,7 +14,7 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
             options = Object.keys(place_options)
             let newShowOptions = [] // 這裡改 show_options 會出 error
             let newMax = 0
-            options.map((e)=>{
+            options.forEach((e)=>{
                 let cnt = place_options[e].length
                 if(cnt > newMax){
                     newMax = cnt
