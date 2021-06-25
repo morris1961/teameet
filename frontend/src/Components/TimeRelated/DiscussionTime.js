@@ -61,8 +61,8 @@ const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_res
           {options.map((option, index)=>{
             return(
             <>
-              <Col span={2}></Col>
-              <Col span={22}>
+              <Col key={index} span={2}></Col>
+              <Col key={index} span={22}>
                 <Checkbox key={index} style={{margin: "1%"}} onChange={(e)=>{handleCheck(e, option)}}>{moment(option).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')}</Checkbox>
               </Col>
               {index === options.length-1?(

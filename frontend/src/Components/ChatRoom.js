@@ -25,7 +25,7 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
     let lastDate = ''
     return(
         <>
-            <div className="App-message">
+            <div className="ChatRoom">
                 {messages === undefined ? null:(messages === []? (<p>loading...</p>): (messages.map(({sender, body, time}, index)=>{
                     let renderDate = false
                     let date = moment(time).tz('Asia/Taipei').format('YYYY/MM/DD')
@@ -58,7 +58,7 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
             value={messageInput}
             enterButton="Send"
             onChange={(e)=>{setMessageInput(e.target.value)}}
-            style={{width: "300px", margin: "50px"}}
+            style={{maxWidth: "400px", margin: "20px"}}
             onSearch={(msg)=>{
                 if(!msg){
                     displayStatus({

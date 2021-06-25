@@ -1,11 +1,11 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import ChatModal from '../Components/Modal/URLModal'
 import DiscussionSet from './DiscussionSet'
 import ChatRoom from '../Components/ChatRoom'
 ///// react-router-dom /////
 import { useParams, useHistory, useLocation } from "react-router-dom";
 ///// antd /////
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb, Row, Col } from 'antd';
 import {
   FileOutlined,
   TeamOutlined,
@@ -127,7 +127,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
                 來約討論
               </Menu.Item>
               <SubMenu key="Discussions" icon={<TeamOutlined />} title="討論">
-                {discussions.map((d, index)=>{
+                {discussions.map((d)=>{
                   return(
                     <Menu.Item key={`Discussions_${d.DID}`} onClick={(e)=>{handleDiscussionClick(d.DID);}}>{d.subject}</Menu.Item>
                   )
@@ -144,9 +144,15 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
                 <Breadcrumb.Item>群組</Breadcrumb.Item>
                 <Breadcrumb.Item>{location.state.data.GName}</Breadcrumb.Item>
               </Breadcrumb>
-              <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} messages={messages} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
-              </div>
+              <Row>
+                <Col span={4}></Col>
+                <Col span={16}>
+                  <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                    {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} messages={messages} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
+                  </div>
+                </Col>
+                <Col span={4}></Col>
+              </Row>
             </Content>
             <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
           </Layout>
