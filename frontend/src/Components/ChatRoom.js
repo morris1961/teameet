@@ -41,7 +41,7 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
                                 {date}
                             </Divider>):(null)}
                             <div id={index} style={{display: "flex", justifyContent: "flex-end"}} ref={index === messages.length - 1?endMsg:null}>
-                                <p className="time"> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
+                                <p className="time" style={{marginRight: "5px"}}> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
                                 <p className="wrap" style={{marginRight: "5px"}}>{body}</p>
                                 <p style={{fontStyle:"italic"}}>{sender}  &ensp;</p> 
                             </div> 
@@ -53,9 +53,9 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
                                 {date}
                             </Divider>):(null)}
                             <div id={index} style={{display: "flex", justifyContent: "flex-start"}} ref={index === messages.length - 1?endMsg:null}>
-                                <p style={{fontStyle:"italic", marginLeft: "5px"}}> {sender}  &ensp;</p> 
-                                <p className="wrap">{body}</p>
-                                <p className="time"> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
+                                <p style={{fontStyle:"italic", marginLeft: "5px"}}>&ensp; {sender}  </p> 
+                                <p className="wrap" style={{marginLeft: "5px"}}>{body}</p>
+                                <p className="time" style={{marginLeft: "5px"}}> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
                             </div>
                         </>
                     )})))}

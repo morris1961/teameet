@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import { Layout, Menu, Breadcrumb, BackTop } from 'antd';
 import DiscussionContent from '../Components/DiscussionContent'
 import DiscussionTime from '../Components/TimeRelated/DiscussionTime'
