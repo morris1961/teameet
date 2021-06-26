@@ -22,12 +22,12 @@ const VotedTime = ({place_options, UID}) =>{
             <Row>
                 <Col span={2}></Col>
                 <Col span={18}>
-                    <Divider orientation="center" plain>
+                    <Divider style={{ borderColor: "#d8d8d8", color: "#D0D0D0"}} orientation="center" plain>
                         你已經投票囉！
                     </Divider>
                     <h2>地點如下：</h2>
                     <div>
-                        {show_options?(show_options.map((e, index)=>(<p key={index}>{e}</p>))):(null)}
+                        {show_options?(show_options.map((e, index)=>(<p className='content' key={index}>{e}</p>))):(null)}
                     </div>
                 </Col>
             </Row>

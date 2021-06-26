@@ -40,7 +40,7 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
                             <Divider orientation="center" plain style={{color: "#ADADAD", fontStyle:"italic", fontSize: "10px"}}>
                                 {date}
                             </Divider>):(null)}
-                            <div id={index} style={{display: "flex", justifyContent: "flex-end"}} ref={index === messages.length - 1?endMsg:null}>
+                            <div key={index} style={{display: "flex", justifyContent: "flex-end"}} ref={index === messages.length - 1?endMsg:null}>
                                 <p className="time" style={{marginRight: "5px"}}> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
                                 <p className="wrap" style={{marginRight: "5px"}}>{body}</p>
                                 <p style={{fontStyle:"italic", fontWeight: "bold"}}>{sender}  &ensp;</p> 
@@ -52,7 +52,7 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
                             <Divider orientation="center" plain style={{color: "#ADADAD", fontStyle:"italic", fontSize: "10px"}}>
                                 {date}
                             </Divider>):(null)}
-                            <div id={index} style={{display: "flex", justifyContent: "flex-start"}} ref={index === messages.length - 1?endMsg:null}>
+                            <div key={index} style={{display: "flex", justifyContent: "flex-start"}} ref={index === messages.length - 1?endMsg:null}>
                                 <p style={{fontStyle:"italic", fontWeight: "bold", marginLeft: "5px"}}>&ensp; {sender}  </p> 
                                 <p className="wrap" style={{marginLeft: "5px"}}>{body}</p>
                                 <p className="time" style={{marginLeft: "5px"}}> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>

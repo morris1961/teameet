@@ -134,6 +134,7 @@ const HomePage = ({sendData, mess}) =>{
         }else if(mess.api === 'group'){
             var data = mess.data;
             data.UName = UName
+            console.log(UID)
             data.UID = UID
             data.password=password
             data.email=email
@@ -152,11 +153,11 @@ const HomePage = ({sendData, mess}) =>{
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo">
-              <img src={logo} width="90%" alt="logo"/>
+              {collapsed?null:(<img src={logo} width="90%" alt="logo"/>)}
             </div>
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="1" icon={<UserOutlined  style={{fontSize: "20px", display: "flex", justifyContent: "space-between"}}/>} title="User" className='user' style={{height: "60px"}} >
-                <div onClick={handleback} style={{float:"left"}}>{UName}</div>
+            <Menu theme="dark" mode="inline">
+              <Menu.Item key="User" icon={<UserOutlined  style={{fontSize: "20px"}}/>} title="User" className="user" >
+                <div onClick={handleback}>{UName}</div>
                 <BsGear className="index_gear" onClick={handlegear} style={{fontSize:"20px"}}/>
               </Menu.Item>
               {isgearclicked?(<>

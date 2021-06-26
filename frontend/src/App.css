@@ -102,7 +102,6 @@ input {
 }
 
 .user {
-  height: 60px;
   background-color: #66B3FF;
   font-size: 20px;
   color: #FBFBFF;
@@ -133,3 +132,9 @@ input {
   color: 	#46A3FF;
   font-weight: bold;
 }
+
+
+.content {
+  color: #E0E0E0;
+}
+

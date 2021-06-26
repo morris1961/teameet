@@ -30,10 +30,12 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
 
     // 回上一頁
     const back = () =>{
+      console.log("back")
       let data = {
         UName:location.state.data.UName, 
         file: location.state.data.file, 
-        GName: location.state.data.GName}
+        GName: location.state.data.GName,
+        code: location.state.data.code,}
       history.push({pathname:`/${UID}/${GID}`, state:{data}});
     }
 
@@ -75,10 +77,10 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo">
-              <img src={logo} width="90%" alt="logo"/>
+              {collapsed?null:(<img src={logo} width="90%" alt="logo"/>)}
             </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}} onClick={backToIndex()}>
+              <Menu.Item key="User" icon={<UserOutlined style={{fontSize: "20px"}} />} title="User" className='user' style={{height: "60px"}} onClick={backToIndex()}>
                 {location.state.data.UName}
               </Menu.Item>
               <Menu.Item key="content" icon={<BookOutlined />} title="內容" onClick={(e)=>{setActiveKey(e.key)}}>
@@ -97,12 +99,9 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
           </Sider>
           <Layout className="site-layout">
             <Content style={{ margin: '0 16px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>群組</Breadcrumb.Item>
-                <Breadcrumb.Item>{location.state.data.GName}</Breadcrumb.Item>
-                <Breadcrumb.Item>討論</Breadcrumb.Item>
-                <Breadcrumb.Item>{location.state.data.subject}</Breadcrumb.Item>
-              </Breadcrumb>
+              <div className="title">
+                <p style={{fontSize: "25px", marginBottom: "0px"}}>{location.state.data.subject}</p> 
+              </div>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                 {activeKey === "content"?(<DiscussionContent subject={location.state.data.subject} content={location.state.data.content}/>):
                 (activeKey === "time"?(

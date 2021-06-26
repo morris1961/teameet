@@ -8,14 +8,14 @@ const DiscussionContent = ({subject, content}) =>{
             <Row>
                 <Col span={2}></Col>
                 <Col span={18}>
-                    <Divider orientation="left" plain>
+                    <Divider style={{ borderColor: "#d8d8d8", color: "#D0D0D0"}}  orientation="left" plain>
                         主題
                     </Divider>
-                    <p>{subject}</p>
-                    <Divider orientation="left" plain>
+                    <p className="content">{subject}</p>
+                    <Divider style={{ borderColor: "#d8d8d8", color: "#D0D0D0"}} orientation="left" plain>
                         內容
                     </Divider>
-                    <p>{content}</p>
+                    <p className="content">{content}</p>
                 </Col>
             </Row>
             

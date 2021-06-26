@@ -20,22 +20,22 @@ const SelectedPlace = ({place_options, place_result}) =>{
             <Row>
                 <Col span={2}></Col>
                 <Col span={18}>
-                    <Divider orientation="center" plain>
+                    <Divider style={{ borderColor: "#d8d8d8", color: "#D0D0D0"}} orientation="center" plain>
                         投票結果！（藍底白字為最終結果）
                     </Divider>
-                    <h2>如下：</h2>
+                    <h3 className='content'>如下：</h3>
                     <div>
                         {show_options.map(({option, cnt}, index)=>{
                         if(option === place_result){
                             return (
-                                <p key={index}>{option}：
+                                <p className='content' key={index}>{option}：
                                     <Tag color="#0066CC">{cnt} 票</Tag>
                                 </p>
                             )
                         }
                         else{
                             return (
-                                <p key={index}>{option}：
+                                <p className='content' key={index}>{option}：
                                     <Tag color="blue">{cnt} 票</Tag>
                                 </p>
                             )

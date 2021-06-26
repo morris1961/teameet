@@ -60,6 +60,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
           content: message.data.content,
           isAdmin: message.data.isAdmin,
         }
+        console.log(UID)
         history.push({pathname:`/${UID}/${GID}/${message.data.DID}`, state:{data}});
       }
       else if(message.api === 'chat'){
@@ -74,7 +75,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
         }
       }
       else if(message.api === 'index'){
-        var {UID, email, password} =  location.state.data;
+        var { email, password } =  location.state.data;
         var data = message.data;
         data.UID=UID;
         data.email=email;
@@ -89,7 +90,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
       else if(message.api === 'leaveGroup'){
         let { status } = message.data
         if(status){
-          var {UID, email, password} =  location.state.data;
+          var { email, password } =  location.state.data;
           var data = message.data;
           data.UID=UID;
           data.email=email;
@@ -113,7 +114,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
 
     const handleDiscussionClick = (DID) =>{
       /// get data for DiscussionPage
-      let data = {UID, DID}  
+      let data = {UID, DID}
       sendData("discussion", data)
     }
 
@@ -139,7 +140,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
             <div className="logo">
               {collapsed?null:(<img src={logo} width="90%" alt="logo"/>)}
             </div>
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+            <Menu theme="dark" defaultSelectedKeys={['ChatRoom']} mode="inline">
               <Menu.Item key="User" icon={<UserOutlined style={{fontSize: "20px"}} />} title={location.state.data.Name} className="user" onClick={()=>{handleBack()}}>
                 {location.state.data.UName}
               </Menu.Item>

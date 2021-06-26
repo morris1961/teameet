@@ -41,49 +41,59 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
                 <Col span={2}></Col>
                 <Col span={18}>
                 {isAdmin?
-                    (<Divider orientation="center" plain>
+                    (<Divider style={{ borderColor: "#d8d8d8", color: "#D0D0D0"}} orientation="center" plain>
                         投票結果！（您還未選擇最終結果）
                     </Divider>):(
-                    <Divider orientation="center" plain>
-                        投票結果！（您還未選擇最終結果）
+                    <Divider style={{ borderColor: "#d8d8d8", color: "#D0D0D0"}} orientation="center" plain>
+                        投票結果！（創建者還未選擇最終結果）
                     </Divider>
                 )}
-                    <h2>如下：</h2>
+                    <h3 className='content'>如下：</h3>
                     {isAdmin?(
                         <>
                         <Radio.Group name="radiogroup" onChange={(e)=>{setPlaceResult(e.target.value)}}>
                             {show_options.map(({option, cnt}, index)=>{
                                 if(cnt === max){
-                                    return(<Radio key={index} value={option} style={{margin:'3px'}}>{option}： 
+                                    return(<Radio key={index} value={option} style={{margin:'3px'}}>
+                                    <div style={{display: "flex", height: "23px"}}>
+                                        <p className='content'>{option}： </p>
                                         <Tag color="cyan">{cnt} 票</Tag>
-                                    </Radio>)
+                                    </div>
+                                </Radio>)
                                 }
                                 else{
-                                    return(<Radio key={index} value={option} style={{margin:'3px'}} disabled={true}>{option}： 
+                                    return(<Radio key={index} value={option} style={{margin:'3px'}} disabled={true}>
+                                    <div style={{display: "flex", height: "23px"}}>
+                                        <p className='content'>{option}： </p>
                                         <Tag color="blue">{cnt} 票</Tag>
-                                    </Radio>)
+                                    </div>
+                                </Radio>)
                                 }
                             })}
                         </Radio.Group>
-                        <Button type="primary" htmlType="submit"  style={{marginTop: "10px"}} onClick={handleSubmit}>
-                            確認地點
-                        </Button>
+                        <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
+                            <Button type="primary" htmlType="submit"  style={{marginTop: "10px"}} onClick={handleSubmit}>
+                                確認地點
+                            </Button>
+                        </div>
                         </>
                     ):(
                     <div>
                         {show_options.map(({option, cnt}, index)=>{
                             if(cnt === max){
                                 return(
-                                    <p key={index} value={option} style={{margin:'3px'}}>{option}： 
+                                    <div key={index} style={{display: "flex", height: "23px", margin:'3px'}}>
+                                        <p className='content'>{option}： </p>
                                         <Tag color="cyan">{cnt} 票</Tag>
-                                    </p>
+                                    </div>
                                 )
                             }
                             else{
                                 return (
-                                    <p key={index} value={option} style={{margin:'3px'}}>{option}： 
+                                    <div key={index} style={{display: "flex", height: "23px", margin:'3px'}}>
+                                        <p className='content'>{option}： </p>
                                         <Tag color="blue">{cnt} 票</Tag>
-                                    </p>)
+                                    </div>)
                             }
                             
                         })}
