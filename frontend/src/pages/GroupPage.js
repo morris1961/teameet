@@ -90,17 +90,8 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
       else if(message.api === 'leaveGroup'){
         let { status } = message.data
         if(status){
-          var { email, password } =  location.state.data;
-          var data = message.data;
-          data.UID=UID;
-          data.email=email;
-          data.password=password;
-          console.log("data in index push", data)
-            var path = {
-              pathname:"/index",
-              state:{data},
-            }
-          history.push(path);
+          let data = {UID}
+          sendData('index', data)
         }
         else{
           displayStatus({type:"error", msg:"退出群組失敗"})

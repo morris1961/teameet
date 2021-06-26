@@ -9,7 +9,7 @@ import {
   UsergroupAddOutlined,
   RollbackOutlined,
 } from '@ant-design/icons';
-import '../style/Index.css';
+// import '../style/Index.css';
 import {useHistory, useLocation } from "react-router-dom";
 import  {BsGear}  from "react-icons/bs";
 import RecentGroups from "../Components/RecentGroups";
@@ -167,8 +167,8 @@ const HomePage = ({sendData, mess}) =>{
                 <Menu.Item key="logout" icon={<LogoutOutlined />} title="Logout" onClick={()=>{history.push('/')}}>
                     登出
                 </Menu.Item>
-                <Menu.Item key="Back" icon={<RollbackOutlined />} title="回上一頁" onClick={handlegear}>
-                    回上一頁
+                <Menu.Item key="Back" icon={<RollbackOutlined />} title="返回" onClick={handlegear}>
+                    返回
                 </Menu.Item>
                 </>
                 ):(
@@ -195,59 +195,63 @@ const HomePage = ({sendData, mess}) =>{
           <Layout className="site-layout">
             <Content style={{ margin: '0 16px' }}>
             {iscreateclicked?(<>
-                  <div style={{fontSize:"2vw", marginLeft:"2vw", height:"30vw"}}>創建群組</div>
-                  <div className="create_GName" >
-                    <div className="create_GName-title" > 群組名稱: </div>
-                    <div className="create_GName-input" >
-                        <Input 
-                        className="create_searchbox"
-                        placeholder="請輸入 群組名稱"
-                        onChange={(event)=>setGName(()=>event.target.value)}
-                        value={GName}
-                      />
-                      </div>
+                  <div className="title">
+                    <p style={{fontSize: "25px", marginBottom: "0px"}}>創建群組</p> 
                   </div>
-
-                  <div className="create_datalink" >
-                    <div className="create_datalink-title" > 資料集連結: </div>
-                    <div className="create_datalink-input" >
-                        <Input 
-                        className="create_searchbox"
-                        placeholder="請輸入 資料集連結"
-                        onChange={(event)=>setFile(()=>event.target.value)}
-                        value={file}/>
+                  <div className="site-layout-background" style={{ padding: 24, minHeight: 360, display: "flex", justifyContent: "center", alignItems: "center"}}>
+                    <div>
+                    <div style={{display: "flex"}}>
+                      <h3 className='content'> 群組名稱：</h3>
+                      <div>
+                          <Input 
+                          className="create_searchbox"
+                          placeholder="請輸入 群組名稱"
+                          onChange={(event)=>setGName(()=>event.target.value)}
+                          value={GName}
+                        />
                       </div>
+                    </div>
+                    <div style={{display: "flex", marginTop: "5%"}}>
+                      <h3 className='content'> 資料集連結： </h3>
+                      <div>
+                          <Input 
+                          className="create_searchbox"
+                          placeholder="請輸入 資料集連結"
+                          onChange={(event)=>setFile(()=>event.target.value)}
+                          value={file}/>
+                      </div>
+                    </div>
                   </div>
-
-                  <div className="create_create">
-                  <Button
-                      className="create_create-button"
-                      onClick = {handlecreate}>
-                    創建
-                  </Button>
+                  </div>
+                  <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
+                    <Button
+                        type='primary'
+                        onClick = {handlecreate}>
+                      創建
+                    </Button>
                   </div>
                   </>):(<>
           {isjoinclicked?(<>
-                <div style={{fontSize:"2vw", marginLeft:"2vw"}}>加入群組</div>
-              
-                <div style={{marginTop:"4vw"}} >
-                  <div style={{marginLeft:"25vw",height:"4.2vw",marginRight:"0.5vw",float:"left", textAlign:"left",fontSize:"2vw"}} > code: </div>
+                <div className="title">
+                  <p style={{fontSize: "25px", marginBottom: "0px"}}>加入群組</p> 
+                </div>
+                <div className="site-layout-background" style={{ padding: 24, minHeight: 360, display: "flex", justifyContent: "center", alignItems: "center"}}>
+                  <h2 className='content'> 群組代碼：</h2>
                   <div className="create_GName-input" >
                       <Input 
                       prefix="#"
                       className="create_searchbox"
-                      placeholder="請輸入 code"
+                      placeholder="請輸入群組代碼"
                       onChange={(event)=>setCode(()=>event.target.value)}
                       value={code}/>
                     </div>
                 </div>
-
-                <div className="create_create">
-                <Button
-                    className="create_create-button"
-                    onClick = {handlejoin}>
-                  加入
-                </Button>
+                <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
+                  <Button 
+                      type="primary"
+                      onClick = {handlejoin}>
+                    加入
+                  </Button>
                 </div></>):(<>
                 <div className="homePageContent">
                   <div style={{fontSize:"2vw", marginLeft:"2vw", color: "#F0F0F0"}}>將要討論</div>  
