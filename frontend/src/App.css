@@ -47,19 +47,89 @@
 }
 
 .ChatRoom {
-  max-width: 500px;
-  height: 300px;
-  background: 	#FCFCFC;
+  max-width: 1400px;
+  height: 450px;
+  background: #F0F0F0;
   border-radius: 10px;
   overflow: auto;
+  opacity: 0.9;
 }
 
 .time {
+  display: flex;
+  align-items: flex-end;
   color: gray;
   font-size: 1px;
-  margin-top: 10px;
+  margin-bottom: 14px;
 }
 
 .logo {
   width: 200px;
+}
+
+.site-layout {
+  background-color: #272727;
+  /* background-image: url('https://png.pngtree.com/thumb_back/fw800/back_our/20190621/ourmid/pngtree-fresh-literary-watercolor-blooming-psd-layered-advertising-image_183159.jpg');
+  background-repeat : no-repeat ;
+  background-size: 100%; */
+}
+
+.title {
+  color: 	#FCFCFC;
+  margin-top: 4%;
+  margin-left: 3%;
+}
+
+.footer {
+  text-align: center;
+  background-color: #4F4F4F;
+  height: 48px;
+  color: #ADADAD;
+  font-size: 10px;
+}
+
+/*DiscussionSet*/
+.ant-legacy-form-item-label > label {
+  color: 	#FCFCFC;
+}
+
+input {
+  background-color: #F0F0F0;
+}
+
+.shadow {
+  box-shadow: 0 5px 15px rgba(74, 134, 186, 0.544);
+}
+
+.user {
+  height: 60px;
+  background-color: #66B3FF;
+  font-size: 20px;
+  color: #FBFBFF;
+}
+
+.ant-menu-title-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.homePageContent {
+  display: flex;
+  justify-content: space-around;
+  margin: 5% 3%;
+  background-color: #4F4F4F;
+  border-radius: 7px;
+}
+
+.recentgroups_button {
+  background-color: #FCFCFC;
+  border: 0px;
+  padding: 3%;
+}
+
+.recentgroups_button:hover {
+  background-color: #D2E9FF;
+  color: 	#46A3FF;
+  font-weight: bold;
 }

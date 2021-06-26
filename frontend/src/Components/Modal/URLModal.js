@@ -8,8 +8,8 @@ const ChatModal = ({visible, onCreate, onCancel}) =>{
         <Modal
             visible={visible}
             title="請在下方輸入新的資料集連結"
-            okText="Renew"
-            cancelText="Cancel"
+            okText="更新"
+            cancelText="取消"
             onCancel={onCancel}
             onOk={() => {
             form.validateFields().then((values) => {

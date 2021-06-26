@@ -1,7 +1,4 @@
-
-import './App.css';
 import { Route, BrowserRouter, Switch } from "react-router-dom";
-
 import Beforelogin from "./pages/Beforelogin";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -12,6 +9,7 @@ import DiscussionPage from "./pages/DiscussionPage"
 import useData from "./useData"
 import { message } from 'antd'
 import 'antd/dist/antd.css';
+import './App.css';
 
 const App = () => {
 

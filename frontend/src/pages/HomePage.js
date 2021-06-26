@@ -155,9 +155,9 @@ const HomePage = ({sendData, mess}) =>{
               <img src={logo} width="90%" alt="logo"/>
             </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="1" icon={<UserOutlined />} title="User" style={{height: "60px"}} >
+              <Menu.Item key="1" icon={<UserOutlined  style={{fontSize: "20px", display: "flex", justifyContent: "space-between"}}/>} title="User" className='user' style={{height: "60px"}} >
                 <div onClick={handleback} style={{float:"left"}}>{UName}</div>
-                <BsGear className="index_gear" onClick={handlegear} style={{fontSize:"1.5vw",marginLeft:"0.5vw",marginTop:"0.5vw"}}/>
+                <BsGear className="index_gear" onClick={handlegear} style={{fontSize:"20px"}}/>
               </Menu.Item>
               {isgearclicked?(<>
                 <Menu.Item key="RenewProfile" icon={<FormOutlined />} title="RenewProdile" onClick={handlerenew}>
@@ -193,12 +193,7 @@ const HomePage = ({sendData, mess}) =>{
 
           <Layout className="site-layout">
             <Content style={{ margin: '0 16px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>使用者</Breadcrumb.Item>
-                <Breadcrumb.Item>{UName}</Breadcrumb.Item>
-              </Breadcrumb>
             {iscreateclicked?(<>
-            <Content>
                   <div style={{fontSize:"2vw", marginLeft:"2vw", height:"30vw"}}>創建群組</div>
                   <div className="create_GName" >
                     <div className="create_GName-title" > 群組名稱: </div>
@@ -230,9 +225,8 @@ const HomePage = ({sendData, mess}) =>{
                     創建
                   </Button>
                   </div>
-          </Content></>):(<>
+                  </>):(<>
           {isjoinclicked?(<>
-          <Content>
                 <div style={{fontSize:"2vw", marginLeft:"2vw"}}>加入群組</div>
               
                 <div style={{marginTop:"4vw"}} >
@@ -253,11 +247,10 @@ const HomePage = ({sendData, mess}) =>{
                     onClick = {handlejoin}>
                   加入
                 </Button>
-                </div>
-          </Content></>):(<>
-          <Content style={{paddingLeft:"1.2vw",width:"50%", float:"left", fontSize:"1vw"}} >
-                  <div style={{fontSize:"2vw", marginLeft:"2vw", }}>將要討論</div>  
-                  <Menu mode="inline" defaultOpenKeys={['recent3']}>
+                </div></>):(<>
+                <div className="homePageContent">
+                  <div style={{fontSize:"2vw", marginLeft:"2vw", color: "#F0F0F0"}}>將要討論</div>  
+                  <Menu style={{backgroundColor: "#E0E0E0"}} mode="inline" defaultOpenKeys={['recent3']}>
                       {voting.map((v, index)=>{
                         if(index < 3){
                           return(
@@ -265,11 +258,11 @@ const HomePage = ({sendData, mess}) =>{
                                     onClick={(e)=>{handleGroupClick(v.GID)}}>
                                 <VotingGroups key={'v_'+index}
                                           UID={UID} GID={v.GID} GName={v.GName} 
-                                          deadline={v.deadline} subject={v.subject} place={v.place}/>
+                                          deadline={v.deadline} subject={v.subject} place={v.place} />
                               </Menu.Item>)
                         }
                         if(voting.size > 3){
-                          <SubMenu key="recent>3" title="其他群組">
+                          <SubMenu key="recent>3" title="其他群組" >
                           {voting.map((v, index)=>{
                           if(index >= 3){
                             return(
@@ -283,11 +276,9 @@ const HomePage = ({sendData, mess}) =>{
                           </SubMenu> }
                       })}
                   </Menu>
-          </Content>
-
-          <Content style={{paddingLeft:"1.2vw",width:"50%", float:"left"}} >
-          <div style={{fontSize:"2vw", marginLeft:"2vw", }}>近期討論</div>
-          <Menu mode="inline" defaultOpenKeys={['recent3']}>
+          
+          <div style={{fontSize:"2vw", marginLeft:"2vw", color: "#F0F0F0"}}>近期討論</div>
+          <Menu style={{backgroundColor: "#E0E0E0"}} mode="inline" defaultOpenKeys={['recent3']}>
           {recent.map((v, index)=>{
               if(index < 3){
                 return(
@@ -313,11 +304,11 @@ const HomePage = ({sendData, mess}) =>{
               </SubMenu> }
             })}
         </Menu>
-        </Content>
+        </div>
         </>)}</>)}
       </Content>
             
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+      <Footer className="footer">Created by NTUIM | TEAMEET team @2021</Footer>
           </Layout>
         </Layout>
     )

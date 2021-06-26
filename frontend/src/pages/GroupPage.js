@@ -9,7 +9,7 @@ import { useParams, useHistory, useLocation } from "react-router-dom";
 import { Layout, Menu, Breadcrumb, Row, Col, Popconfirm } from 'antd';
 import {
   FileOutlined,
-  TeamOutlined,
+  BarsOutlined,
   UserOutlined,
   WechatOutlined,
   SmileOutlined,
@@ -137,10 +137,10 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
         <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo">
-              <img src={logo} width="90%" alt="logo"/>
+              {collapsed?null:(<img src={logo} width="90%" alt="logo"/>)}
             </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="User" icon={<UserOutlined />} title="User" style={{height: "60px"}} onClick={()=>{handleBack()}}>
+              <Menu.Item key="User" icon={<UserOutlined style={{fontSize: "20px"}} />} title={location.state.data.Name} className="user" onClick={()=>{handleBack()}}>
                 {location.state.data.UName}
               </Menu.Item>
               <Menu.Item key="ChatRoom" icon={<WechatOutlined />} title="聊天室" onClick={()=>{handleChatRoom()}}>
@@ -154,19 +154,17 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
               <URLModal 
                 visible={modalVisible}
                 onCreate={({url})=>{
-                    setActiveKey("")
                     setModalVisible(false) 
                     renewURL(url)
                 }}
                 onCancel={()=>{
-                    setActiveKey("")
                     setModalVisible(false)
                 }}/>
 
               <Menu.Item key="Discussion" icon={<SmileOutlined />} title="來約討論" onClick={(e)=>{setActiveKey("Discussion")}}>
                 來約討論
               </Menu.Item>
-              <SubMenu key="Discussions" icon={<TeamOutlined />} title="討論">
+              <SubMenu key="Discussions" icon={<BarsOutlined />} title="討論">
                 {discussions.map((d)=>{
                   return(
                     <Menu.Item key={`Discussions_${d.DID}`} onClick={(e)=>{handleDiscussionClick(d.DID);}}>{d.subject}</Menu.Item>
@@ -189,22 +187,16 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
             </Menu>
           </Sider>
           <Layout className="site-layout">
-            <Content style={{ margin: '0 16px' }}>
-              <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>群組</Breadcrumb.Item>
-                <Breadcrumb.Item>{location.state.data.GName}:{location.state.data.code}</Breadcrumb.Item>
-              </Breadcrumb>
-              <Row>
-                <Col span={4}></Col>
-                <Col span={16}>
-                  <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                    {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} messages={messages} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
-                  </div>
-                </Col>
-                <Col span={4}></Col>
-              </Row>
+            <Content style={{ margin: '0 16px' }} >
+                <div className="title">
+                  <p style={{fontSize: "25px", marginBottom: "0px"}}>{location.state.data.GName}</p> 
+                  <p style={{marginBottom: "0px"}}>{location.state.data.code}</p>
+                </div>
+                <div className="site-layout-background" style={{ padding: 24, minHeight: 360}}>
+                  {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} messages={messages} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
+                </div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+            <Footer className="footer">Created by NTUIM | TEAMEET team @2021</Footer>
           </Layout>
         </Layout>
       </>

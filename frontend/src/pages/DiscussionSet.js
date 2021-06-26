@@ -76,11 +76,9 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
             <Form
             {...formItemLayoutWithOutLabel}
             name="dynamic_form_item"
-            // rules={[{ required: true }]}
-            // onFinish={onFinish} // 通過驗證時觸發 (rules)
             autoComplete="off"
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 14 }}
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 13 }}
             layout="horizontal"
             >
                 <Form.Item label="主題">
@@ -92,23 +90,26 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
                 <Form.Item label="地點">
                     <Input onChange={(e)=>{setPlace(e.target.value)}} />
                 </Form.Item>
-                <Form.Item name="range-time-picker" label="討論時間範圍">
+                <Form.Item name="range-time-picker" label="討論時間範圍:">
                     <RangePicker showTime format="YYYY-MM-DD HH:mm" disabledDate={disabledDate} minuteStep={30} onChange={onChangeRangePicker}/>
                 </Form.Item>
-                <Form.Item label="討論時間間隔" name="size" >
+                <Form.Item label="討論時間間隔:" name="size" >
                     <Radio.Group onChange={(e)=>{setTimeSpan(e.target.value)}} defaultValue="60">
                         <Radio.Button value="30">30 分鐘</Radio.Button>
                         <Radio.Button value="60">1 小時</Radio.Button>
                         <Radio.Button value="120">2 小時</Radio.Button>
                     </Radio.Group>
                 </Form.Item>
-                <Form.Item name="date-time-picker" label="投票截止時間">
+                <Form.Item name="date-time-picker" label="投票截止時間:">
                     <DatePicker showTime format="YYYY-MM-DD HH"  disabledDate={disabledDate} onChange={onChangeDatePicker}/>
                 </Form.Item>
             </Form>
-            <Button type="primary" htmlType="submit" onClick={handleSubmit}>
-                創建討論
-            </Button>
+            <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
+                <Button type="primary" htmlType="submit" onClick={handleSubmit}>
+                    創建討論
+                </Button>
+            </div>
+            
         </>
 
     )

@@ -37,23 +37,23 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
                     return sender === UName?(
                         <>
                             {renderDate?(
-                            <Divider orientation="center" plain style={{color: "gray"}}>
+                            <Divider orientation="center" plain style={{color: "#ADADAD", fontStyle:"italic", fontSize: "10px"}}>
                                 {date}
                             </Divider>):(null)}
                             <div id={index} style={{display: "flex", justifyContent: "flex-end"}} ref={index === messages.length - 1?endMsg:null}>
                                 <p className="time" style={{marginRight: "5px"}}> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
                                 <p className="wrap" style={{marginRight: "5px"}}>{body}</p>
-                                <p style={{fontStyle:"italic"}}>{sender}  &ensp;</p> 
+                                <p style={{fontStyle:"italic", fontWeight: "bold"}}>{sender}  &ensp;</p> 
                             </div> 
                         </>
                     ):(
                         <>
                             {renderDate?(
-                            <Divider orientation="center" plain style={{color: "gray"}}>
+                            <Divider orientation="center" plain style={{color: "#ADADAD", fontStyle:"italic", fontSize: "10px"}}>
                                 {date}
                             </Divider>):(null)}
                             <div id={index} style={{display: "flex", justifyContent: "flex-start"}} ref={index === messages.length - 1?endMsg:null}>
-                                <p style={{fontStyle:"italic", marginLeft: "5px"}}>&ensp; {sender}  </p> 
+                                <p style={{fontStyle:"italic", fontWeight: "bold", marginLeft: "5px"}}>&ensp; {sender}  </p> 
                                 <p className="wrap" style={{marginLeft: "5px"}}>{body}</p>
                                 <p className="time" style={{marginLeft: "5px"}}> {moment(time).tz('Asia/Taipei').format('HH:mm')} </p>
                             </div>
@@ -62,11 +62,11 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
             </div>
             
             <Input.Search
-            placeholder="Please enter message here..."
+            placeholder="請在這裡輸入文字..."
             value={messageInput}
             enterButton="Send"
             onChange={(e)=>{setMessageInput(e.target.value)}}
-            style={{maxWidth: "400px", margin: "20px"}}
+            style={{maxWidth: "500px", margin: "2% 0", color: "#E0E0E0", borderRadius: "2px"}}
             onSearch={(msg)=>{
                 if(!msg){
                     displayStatus({

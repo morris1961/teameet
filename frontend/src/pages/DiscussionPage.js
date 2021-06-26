@@ -128,7 +128,7 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
                  />))}
               </div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+            <Footer className="footer">Created by NTUIM | TEAMEET team @2021</Footer>
           </Layout>
         </Layout>
     )
