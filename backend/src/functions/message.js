@@ -5,6 +5,7 @@ import Message from "../models/message.js";
 
 async function message({ UID, GID, body }) {
   var status = false;
+  var GName = "";
   var UName = "";
   var messages = [];
   var error_msg = "Something wrong...";
@@ -29,6 +30,7 @@ async function message({ UID, GID, body }) {
       error_msg = "The group is not valid!"
       return { status, error_msg };
     }
+    GName = group.GName;
 
     const newMessage = new Message({ time: nowTime, sender: UID, body });
     await newMessage.save();
@@ -45,7 +47,7 @@ async function message({ UID, GID, body }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, time: nowTime, sender: UName, body, error_msg };
+  return { status, GID, GName, time: nowTime, sender: UName, body, error_msg };
 }
 
 export default message;

@@ -45,7 +45,11 @@ const wss = new WebSocket.Server({
   server,
 });
 
+const onlineGroups = {};
+
 wss.on('connection', async function connection(ws) {
+
+  ws.groups = [];
 
   // init ws
   console.log('server connected!')
@@ -70,9 +74,15 @@ wss.on('connection', async function connection(ws) {
       case "login":
         login(data).then(
           (ret) => {
+            ws.groups = ret.groups;
+            ws.groups.forEach((e) => {
+              if (!onlineGroups[e]) {
+                onlineGroups[e] = new Set();
+              }
+              onlineGroups[e].add(ws)
+            })
             msg.data = ret;
             ws.sendEvent(msg);
-            console.log("login_msg", msg)
           }
         );
         break;
@@ -208,7 +218,7 @@ wss.on('connection', async function connection(ws) {
         send(data).then(
           (ret) => {
             msg.data = ret;
-            wss.clients.forEach((client) => {
+            onlineGroups[data.GID].forEach((client) => {
               client.send(JSON.stringify(msg));
             });
           }
@@ -218,6 +228,13 @@ wss.on('connection', async function connection(ws) {
         console.log(message);
         break;
     }
+    // disconnected
+    ws.onclose = (() => {
+      ws.groups.forEach((e)=>{
+        onlineGroups[e].delete(ws);
+      })
+    });
+
   });
 });
 
