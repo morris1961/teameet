@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import ChatModal from '../Components/Modal/URLModal'
+import URLModal from '../Components/Modal/URLModal'
 import DiscussionSet from './DiscussionSet'
 import ChatRoom from '../Components/ChatRoom'
 import logo from '../image/logo.png';
 ///// react-router-dom /////
 import { useParams, useHistory, useLocation } from "react-router-dom";
 ///// antd /////
-import { Layout, Menu, Breadcrumb, Row, Col } from 'antd';
+import { Layout, Menu, Breadcrumb, Row, Col, Popconfirm } from 'antd';
 import {
   FileOutlined,
   TeamOutlined,
@@ -14,6 +14,7 @@ import {
   WechatOutlined,
   SmileOutlined,
   RollbackOutlined,
+  UserDeleteOutlined,
 } from '@ant-design/icons';
 const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -85,6 +86,25 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
           }
           history.push(path);
       }
+      else if(message.api === 'leaveGroup'){
+        let { status } = message.data
+        if(status){
+          var {UID, email, password} =  location.state.data;
+          var data = message.data;
+          data.UID=UID;
+          data.email=email;
+          data.password=password;
+          console.log("data in index push", data)
+            var path = {
+              pathname:"/index",
+              state:{data},
+            }
+          history.push(path);
+        }
+        else{
+          displayStatus({type:"error", msg:"退出群組失敗"})
+        }
+      }
     }, [message])
 
     
@@ -107,6 +127,11 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
       sendData('chat', data)
     }
 
+    const handleWithdraw = () =>{
+      let data = {UID, GID}
+      sendData('leaveGroup', data)
+    }
+
     return(
       <>
         <Layout style={{ minHeight: '100vh' }}>
@@ -126,7 +151,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
                 <Menu.Item key="renewURL" onClick={()=>{setModalVisible(true)}}>更新連結</Menu.Item>
               </SubMenu>
 
-              <ChatModal 
+              <URLModal 
                 visible={modalVisible}
                 onCreate={({url})=>{
                     setActiveKey("")
@@ -148,6 +173,16 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
                   )
                 })}
               </SubMenu>
+              <Menu.Item key="LeaveGroup" icon={<UserDeleteOutlined />} title="退出群組" >
+                <Popconfirm 
+                title="確定要退出嗎？" 
+                okText="Yes" 
+                cancelText="No"
+                onConfirm={handleWithdraw}
+                >
+                  <a href="#">退出群組</a>
+                </Popconfirm>
+              </Menu.Item>
               <Menu.Item key="Back" icon={<RollbackOutlined />} title="回上一頁" onClick={(e)=>{handleBack()}}>
                 回上一頁
               </Menu.Item>
