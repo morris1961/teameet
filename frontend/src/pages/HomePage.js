@@ -109,6 +109,7 @@ const HomePage = ({sendData, mess}) =>{
             description:
             '成功加入該群組, 為你跳轉頁面',
             });
+            setGID(mess.data.GID);
             let data = {UID, GID:mess.data.GID}
             sendData("group", data)
           }
