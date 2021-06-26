@@ -29,6 +29,7 @@ import confirmTime from './functions/confirmTime.js';
 import confirmPlace from './functions/confirmPlace.js';
 import send from './functions/message.js';
 import chat from './functions/chat.js';
+import leaveGroup from './functions/leaveGroup.js';
 
 // init server
 const app = express();
@@ -224,13 +225,21 @@ wss.on('connection', async function connection(ws) {
           }
         );
         break;
+      case "leaveGroup":
+        leaveGroup(data).then(
+          (ret) => {
+            msg.data = ret;
+            ws.sendEvent(msg);
+          }
+        );
+        break;
       default:
         console.log(message);
         break;
     }
     // disconnected
     ws.onclose = (() => {
-      ws.groups.forEach((e)=>{
+      ws.groups.forEach((e) => {
         onlineGroups[e].delete(ws);
       })
     });

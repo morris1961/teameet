@@ -161,6 +161,13 @@
         <button onclick="sendMessage('message')">message</button>
       </div>
     </li>
+    <li>
+      <div>
+        <input id="UIDLG" placeholder="UID" value="60af1e6cee0d0006dc01a851" />
+        <input id="GIDLG" placeholder="DID" value="60af1e7eee0d0006dc01a852" />
+        <button onclick="sendMessage('leaveGroup')">leaveGroup</button>
+      </div>
+    </li>
   </ul>
   <script>
     const HOST = location.origin.replace(/^http/, 'ws')
@@ -398,6 +405,17 @@
           server.sendEvent({
             api: api,
             data: { UID: UIDMDOM.value, GID: GIDMDOM.value, body: bodyMDOM.value },
+          });
+          break;
+        case 'leaveGroup':
+          const UIDLGDOM = document.getElementById('UIDLG');
+          const GIDLGDOM = document.getElementById('GIDLG');
+          if (!UIDLGDOM.value || !GIDLGDOM.value) {
+            throw new Error('Empty input!');
+          }
+          server.sendEvent({
+            api: api,
+            data: { UID: UIDLGDOM.value, GID: GIDLGDOM.value },
           });
           break;
         default:
