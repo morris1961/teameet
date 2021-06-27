@@ -75,13 +75,15 @@ wss.on('connection', async function connection(ws) {
       case "login":
         login(data).then(
           (ret) => {
-            ws.groups = ret.groups;
-            ws.groups.forEach((e) => {
-              if (!onlineGroups[e]) {
-                onlineGroups[e] = new Set();
-              }
-              onlineGroups[e].add(ws)
-            })
+            if (ret.status) {
+              ws.groups = ret.groups;
+              ws.groups.forEach((e) => {
+                if (!onlineGroups[e]) {
+                  onlineGroups[e] = new Set();
+                }
+                onlineGroups[e].add(ws)
+              })
+            }
             msg.data = ret;
             ws.sendEvent(msg);
           }
