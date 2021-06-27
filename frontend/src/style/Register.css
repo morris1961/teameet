@@ -6,17 +6,37 @@
 .register_searchbox{
     width: 23vw;
     outline: none;
-    padding: 14px 20px;
-
+    /* padding: 14px 20px; */
     border: 2px solid gray;
     border-radius:25px;
-    font-size: large; 
+    /* font-size: large;  */
     text-align: left;
 }
 
-.register_account{
+.register {
+    font-size: 3vw;
+    text-align: center;
+    text-shadow: 0.1em 0.1em 0.25em black;
+    color: #FCFCFC;
+    display: flex;
+    justify-content: center;
+}
+
+.register_input {
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}
+
+.register_title {
+    margin-right: 5px;
+    font-size: 1.5vw;
+    text-shadow: 0.3em 0.3em 1em black;
+}
+
+/* .register_account{
     margin-top: 2vw;
-    /* margin-bottom: -0.7vw; */
     height: 5vw;
     width: 100%;
 }
@@ -75,7 +95,7 @@
     float: left;
     text-align: left;
     background-color: transparent;
-}
+} */
 .register_check{
     margin-top: 0.2vw;
     height: 5vw;
@@ -101,14 +121,10 @@
     color: rgb(39, 39, 161);
 }
 
-.register_button{
-    width: 100%;
-    margin-top: 2vw;
-    text-align: center;
-}
 .register_button-button{
     height: 3.3vw;
     font-Size: 1.5vw;
+    margin-top: 1%;
 }
 .registersuccess_txt{
     font-size: 2vw;
@@ -137,10 +153,10 @@
     font-Size: 1.5vw;
 }
 .register_opacity{
+    text-align: center;
     background-color:rgba(255, 255, 255,0.6);
     width:100%;
     margin:40px auto;
-    height: 28vw;
-    border: solid;
+    height: 30vw;
     border-color: rgba(255, 255, 255,0.6);
 }

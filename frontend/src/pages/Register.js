@@ -4,7 +4,7 @@ import { Button, notification, Input, Layout } from 'antd';
 import { useHistory } from "react-router-dom";
 import 'antd/dist/antd.css';
 import '../style/Register.css'
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 const Register = ({sendData, mess}) =>{
   const history = useHistory();
   const [UName, setUName] = useState("");
@@ -81,7 +81,7 @@ const Register = ({sendData, mess}) =>{
       };
   return( 
     <React.Fragment>
-    <Layout>
+    <Layout style={{backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',  backgroundSize: "cover"}}>
     {isregistersuccess?(<>
         <Header style={{backgroundColor:"white"}}>
           <div style={{float:"left",marginLeft:"-2vw", fontSize:"3vw", color:"#000099"}}>
@@ -101,7 +101,7 @@ const Register = ({sendData, mess}) =>{
               希望你可以在這裡有良好的體驗，
             </div>
             <div className="registersuccess_midtxt">
-              有甚麼想說的也歡迎回饋給我們。
+              有什麼想說的也歡迎回饋給我們。
             </div>
             <div className="registersuccess_nametxt">
             -- TEAMEET  團隊
@@ -117,31 +117,31 @@ const Register = ({sendData, mess}) =>{
         </Content>
         </>):(<>
           
-          <Header style={{backgroundColor:"white"}}>
-              <div style={{marginLeft:"-2vw", fontSize:"3vw", color:"#000099"}}>
-                TEAMEET
-              </div>
-              <span style = {{float:"left", fontSize:"2vw", marginTop:"0.3vw", marginLeft:"0.8vw"}}>
-                註冊
-              </span>
-          </Header>
+          <Header style={{backgroundColor:"rgba(0, 0, 0, 0.3)", height: "100px"}} />
 
-          <Content style={{height:"40vw", backgroundSize:'cover',
-                      backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)'}}>
+          <Content style={{height:"40vw",
+                      backgroundSize:'cover',
+                      backgroundColor:"rgba(0, 0, 0, 0.3)",
+                      display: "flex",
+                      justifyContent: "center",
+                      }}>
             <div className="register_opacity">
-                <div className="register_account">
-                    <div className="register_account-title">帳號: </div>
+                <h1 className="register">
+                  註冊帳號
+                </h1>
+                <div className="register_account register_input">
+                    <div className="register_account-title register_title">帳號： </div>
                     <div className="register_account-input">
                     <Input 
                     className="register_searchbox"
-                    placeholder="                                          @gmail.com"
+                    placeholder="                                                 @gmail.com"
                     onChange={(event)=>setEmail(()=>event.target.value)}
                     value={email}/>
                     </div>
                 </div>
 
-                <div className="register_name">
-                    <div className="register_mid-title">暱稱: </div>
+                <div className="register_mid register_input">
+                    <div className="register_mid-title register_title">暱稱： </div>
                     <div className="register_mid-input">
                     <Input 
                     className="register_searchbox"
@@ -150,8 +150,8 @@ const Register = ({sendData, mess}) =>{
                     </div>
                 </div>
 
-                <div className="register_mid">
-                    <div className="register_mid-title">密碼: </div>
+                <div className="register_mid register_input">
+                    <div className="register_mid-title register_title">密碼： </div>
                     <div className="register_mid-input">
                         <Input.Password 
                         className="register_searchbox"
@@ -160,8 +160,8 @@ const Register = ({sendData, mess}) =>{
                     </div>
                 </div>
 
-                <div className="register_pass">
-                    <div className="register_pass-title">再次輸入密碼: </div>
+                <div className="register_pass register_input">
+                    <div className="register_pass-title register_title">再次輸入密碼： </div>
                     <div className="register_pass-input">
                     <Input.Password 
                         className="register_searchbox"
@@ -170,15 +170,15 @@ const Register = ({sendData, mess}) =>{
                     </div>
                 </div>
 
-                <div className="register_button">
                 <Button 
                     className="register_button-button"
-                    onClick = {handleregister}>
+                    onClick = {handleregister}
+                    type = 'primary'>
                     註冊
                 </Button>
-                </div>
             </div>
           </Content></>)}
+    <Footer className="footer" style={{backgroundColor:"rgba(0, 0, 0, 0.7)", height: "10%"}}>Created by NTUIM | TEAMEET team @2021</Footer>
     </Layout>
     </React.Fragment>
     
