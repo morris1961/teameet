@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import {Button,Layout, Menu, Breadcrumb,Input, notification } from 'antd';
+import {Button,Layout, Menu, Input, notification } from 'antd';
 import {
   TeamOutlined,
   UserOutlined,
@@ -9,7 +9,7 @@ import {
   UsergroupAddOutlined,
   RollbackOutlined,
 } from '@ant-design/icons';
-// import '../style/Index.css';
+import '../style/Index.css';
 import {useHistory, useLocation } from "react-router-dom";
 import  {BsGear}  from "react-icons/bs";
 import RecentGroups from "../Components/RecentGroups";
@@ -33,13 +33,21 @@ const HomePage = ({sendData, mess}) =>{
         setCollapsed(collapsed);
     };
 
+
     const [iscreateclicked, setIscreateclicked] = useState(false);
     const [isjoinclicked, setIsjoinclicked] = useState(false);
-  
+    const [Isvotingnull, setIsvotingnull] = useState(true);
+    const [Isrecentnull, setIsrecentnull] = useState(true);
     const [code, setCode]=useState("");
     const [GName, setGName]=useState("");
     const [file, setFile]=useState("");
-
+    if(recent.size > 0){
+      console.log("size")
+      setIsrecentnull(false)
+    }
+    if(voting.size > 0){
+      setIsvotingnull(false)
+    }
     const handleback = () =>{
       setIscreateclicked(false);
       setIsjoinclicked(false);
@@ -157,8 +165,8 @@ const HomePage = ({sendData, mess}) =>{
             </div>
             <Menu theme="dark" mode="inline">
               <Menu.Item key="User" icon={<UserOutlined  style={{fontSize: "20px"}}/>} title="User" className="user" >
-                <div onClick={handleback}>{UName}</div>
-                <BsGear className="index_gear" onClick={handlegear} style={{fontSize:"20px"}}/>
+                <div onClick={handlegear}>{UName}</div>
+                <BsGear className="index_gear" onClick={handlegear} />
               </Menu.Item>
               {isgearclicked?(<>
                 <Menu.Item key="RenewProfile" icon={<FormOutlined />} title="RenewProdile" onClick={handlerenew}>
@@ -254,10 +262,15 @@ const HomePage = ({sendData, mess}) =>{
                   </Button>
                 </div></>):(<>
                 <div className="homePageContent">
-                  <div style={{fontSize:"2vw", marginLeft:"2vw", color: "#F0F0F0"}}>將要討論</div>  
+                  <div style={{fontSize:"2vw", marginLeft:"2vw", color: "#F0F0F0"}}>投票中</div>  
                   <Menu style={{backgroundColor: "#E0E0E0"}} mode="inline" defaultOpenKeys={['recent3']}>
+                      {(voting.length < 1)?(<>
+                        <div style={{fontSize:"2vw", marginTop:"4vw", paddingTop:"2vw",height:"5vw", textAlign:"center"}}>
+                          目前沒有投票中的群組
+                      </div>
+                    </>):(<>
+                      
                       {voting.map((v, index)=>{
-                        if(index < 3){
                           return(
                               <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
                                     onClick={(e)=>{handleGroupClick(v.GID)}}>
@@ -265,49 +278,27 @@ const HomePage = ({sendData, mess}) =>{
                                           UID={UID} GID={v.GID} GName={v.GName} 
                                           deadline={v.deadline} subject={v.subject} place={v.place} />
                               </Menu.Item>)
-                        }
-                        if(voting.size > 3){
-                          <SubMenu key="recent>3" title="其他群組" >
-                          {voting.map((v, index)=>{
-                          if(index >= 3){
-                            return(
-                                <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
-                                          onClick={(e)=>{handleGroupClick(v.GID)}}>
-                                  <VotingGroups key={'v_'+index}
-                                            UID={UID} GID={v.GID} GName={v.GName} 
-                                            deadline={v.deadline} subject={v.subject} place={v.place}/>
-                                </Menu.Item>)
-                              }})}
-                          </SubMenu> }
-                      })}
+                        })}
+                      </>)}
                   </Menu>
           
           <div style={{fontSize:"2vw", marginLeft:"2vw", color: "#F0F0F0"}}>近期討論</div>
           <Menu style={{backgroundColor: "#E0E0E0"}} mode="inline" defaultOpenKeys={['recent3']}>
-          {recent.map((v, index)=>{
-              if(index < 3){
-                return(
-                    <Menu.Item key={`recent_${index}`} style ={{height:"auto"}}
-                          onClick={(e)=>{handleGroupClick(v.GID)}}>
-                      <RecentGroups key={'r_'+index}
-                                UID={UID} GID={v.GID} GName={v.GName} 
-                                time_result={v.time_result} subject={v.subject} place={v.place}/>
-                    </Menu.Item>)
-              }
-              if(recent.size > 3){
-              <SubMenu key="recent>3" title="其他群組">
-              {recent.map((r, index)=>{
-                if(index >= 3)
-                {return(
-                      <Menu.Item key={`recent_${index}`} style ={{height:"auto"}}
-                                 onClick={(e)=>{handleGroupClick(r.GID)}}>
-                        <RecentGroups key={'r_'+index}
-                                  UID={UID} GID={r.GID} GName={r.GName} 
-                                  time_result={r.time_result} subject={r.subject} place={r.place}/>
-                      </Menu.Item>)
-                    }})}
-              </SubMenu> }
-            })}
+                  {(recent.length < 1)?(<>
+                        <div style={{fontSize:"2vw", marginTop:"4vw", paddingTop:"2vw",height:"5vw", textAlign:"center"}}>
+                          目前沒有討論中的群組
+                      </div>
+                    </>):(<>
+                      
+                      {recent.map((v, index)=>{
+                        // if(index < 3){
+                          return(
+                              <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
+                                    onClick={(e)=>{handleGroupClick(v.GID)}}>
+                                <RecentGroups key={'v_'+index}
+                                          UID={UID} GID={v.GID} GName={v.GName} 
+                                          deadline={v.deadline} subject={v.subject} place={v.place} />
+                              </Menu.Item>)})}</>)}
         </Menu>
         </div>
         </>)}</>)}

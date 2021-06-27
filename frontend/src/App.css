@@ -119,6 +119,7 @@ input {
   margin: 5% 3%;
   background-color: #4F4F4F;
   border-radius: 7px;
+  overflow: "hidden";
 }
 
 .recentgroups_button {
