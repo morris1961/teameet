@@ -83,29 +83,43 @@ const Register = ({sendData, mess}) =>{
     <React.Fragment>
     <Layout style={{backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',  backgroundSize: "cover"}}>
     {isregistersuccess?(<>
-        <Header style={{backgroundColor:"white"}}>
+        {/* <Header style={{backgroundColor:"white"}}>
           <div style={{float:"left",marginLeft:"-2vw", fontSize:"3vw", color:"#000099"}}>
             TEAMEET
           </div>
           <span style = {{float:"left", fontSize:"2vw", marginTop:"0.3vw", marginLeft:"0.8vw"}}>
             註冊成功
           </span>
-        </Header>
-        <Content style={{height:"40vw", backgroundSize:'cover',
-                    backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)'}}>
+        </Header> */}
+        <Header style={{backgroundColor:"rgba(0, 0, 0, 0.3)", height: "100px"}} />
+
+        <Content style={{height:"40vw",
+                      backgroundSize:'cover',
+                      backgroundColor:"rgba(0, 0, 0, 0.3)",
+                      // display: "flex",
+                      // justifyContent: "center",
+                      textAlign: "center",
+                      }}>
         <div className="register_opacity">
-            <div className="registersuccess_txt">
-              Hi! {UName} 謝謝你決定加入 TEAMEET，
-            </div>
-            <div className="registersuccess_midtxt">
-              希望你可以在這裡有良好的體驗，
-            </div>
-            <div className="registersuccess_midtxt">
-              有什麼想說的也歡迎回饋給我們。
-            </div>
-            <div className="registersuccess_nametxt">
-            -- TEAMEET  團隊
-            </div>
+          <div className="text">
+            {/* <div className="registersuccess_txt">
+                Hi! {UName} 謝謝你決定加入 TEAMEET，
+              </div>
+              <div className="registersuccess_midtxt">
+                希望你可以在這裡有良好的體驗，
+              </div>
+              <div className="registersuccess_midtxt">
+                有什麼想說的也歡迎回饋給我們。
+              </div>
+              <div className="registersuccess_nametxt">
+              -- TEAMEET  團隊
+              </div> */}
+             Hi! {UName} 謝謝你決定加入 TEAMEET，<br />
+             希望你可以在這裡有良好的體驗， <br />
+             有什麼想說的也歡迎回饋給我們。 <br />
+             &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+              -- TEAMEET  團隊
+          </div>
             <div className="registersuccess_login">
               <Button
                   className="registersuccess_login-button"
