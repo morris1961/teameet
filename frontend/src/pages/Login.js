@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import '../style/Login.css'
 import {Button, Input, Layout, notification} from 'antd';
 import {useHistory} from "react-router-dom";
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 const Login = ({sendData, mess}) =>{
   const history = useHistory();
   const [UID, setUID] = useState("");
@@ -78,65 +78,60 @@ const Login = ({sendData, mess}) =>{
   return( 
     <React.Fragment>
     
-    <Layout>
-      <Header style={{backgroundColor:"white"}}>
-          <div style={{marginLeft:"-2vw", fontSize:"3vw", color:"#000099"}}
-               >
-            TEAMEET
-          </div>
-      </Header>
+    <Layout style={{backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',  backgroundSize: "cover"}}>
+      <Header style={{backgroundColor:"rgba(0, 0, 0, 0.3)", height: "100px"}} />
 
       <Content style={{height:"40vw",
                       backgroundSize:'cover',
-                      backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',
+                      backgroundColor:"rgba(0, 0, 0, 0.3)",
+                      display: "flex",
+                      justifyContent: "center",
                       }}>
       <div className="login_opacity">
-      <div className="login_account-welcome">
-              Welcome to TEAMEET!
-      </div>
-      <div className="login_account" >
-          <div className="login_account-title" > 帳號: </div>
+        <h1 className="login_account-welcome">
+          Let's TEAMEET together!
+        </h1>
+        <div className="login_account login_input">
+          <div className="login_title" > 帳號： </div>
           <div className="login_account-input" >
-          <Input 
-              className="login_searchbox"
-              placeholder="                                                @gmail.com"
-              onChange={(event)=>setEmail(()=>event.target.value)}
-              value={email}
-            />
+            <Input 
+                className="login_searchbox"
+                placeholder="                                      @gmail.com"
+                onChange={(event)=>setEmail(()=>event.target.value)}
+                value={email}
+              />
           </div>
-      </div>
-            
-      <div className="login_password" >
-        <div className="login_password-title" >密碼: </div>
-        <div className="login_password-input" >
-            <Input.Password 
-                  className="login_searchbox"
-                  onChange={(event)=>setPassword(()=>event.target.value)} 
-                  value={password} />
         </div>
-      </div>
+            
+        <div className="login_password login_input" >
+          <div className="login_title" >密碼： </div>
+          <div className="login_password-input" >
+              <Input.Password 
+                    className="login_searchbox"
+                    onChange={(event)=>setPassword(()=>event.target.value)} 
+                    value={password} />
+          </div>
+        </div>
     
-      <div className="login_login">
-        <Button
-            className="login_login-button"
-            onClick = {handlelogin}
-            loading={loading} 
-            >
-
-          登入
-        </Button>
-      </div>
+      <Button
+          className="login_login-button"
+          onClick = {handlelogin}
+          loading={loading} 
+          type='primary'
+          >
+        登入
+      </Button>
       <div className="login_bottom-register">
-        <Button
+        <a
             className= "login_bottom-register-button"
             onClick = {useCallback(()=>history.push('/register'), [history])}>
           還沒有帳號？點此註冊
-        </Button>
+        </a>
       </div>
       </div>
      
       </Content>
-
+      <Footer className="footer" style={{backgroundColor:"rgba(0, 0, 0, 0.7)", height: "10%"}}>Created by NTUIM | TEAMEET team @2021</Footer>
 
     </Layout>
 

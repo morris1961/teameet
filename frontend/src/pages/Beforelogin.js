@@ -19,7 +19,6 @@ const Login = () =>{
       <Content style={{height:"40vw",
                       backgroundSize:'cover',
                       backgroundColor:"rgba(0, 0, 0, 0.3)",
-                      // backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',
                       display: "flex",
                       justifyContent: "center",
                       paddingTop: "10%",
