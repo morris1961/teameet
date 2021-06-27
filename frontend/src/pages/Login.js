@@ -9,6 +9,7 @@ const Login = ({sendData, mess}) =>{
   const [UID, setUID] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const validemail= /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 
   useEffect(()=>{
@@ -71,6 +72,7 @@ const Login = ({sendData, mess}) =>{
       var data = {email:email, password:password};
       sendData('login', data)
       console.log("login.js in frontend send:", data)
+      setLoading(true);
     }
   }    
   
@@ -118,7 +120,10 @@ const Login = ({sendData, mess}) =>{
       <div className="login_login">
         <Button
             className="login_login-button"
-            onClick = {handlelogin}>
+            onClick = {handlelogin}
+            loading={loading} 
+            >
+
           登入
         </Button>
       </div>
