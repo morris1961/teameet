@@ -41,14 +41,10 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
 
     //按 logo 回首頁
     const backToIndex = ()=>{
-      // let data1 = location.state.data;
-      // var data = data1.postdata;
-      // var path = {
-      //   pathname:"/index",
-      //   state:{data},
-      // }
-      // console.log("pushback", data)
-      // history.push(path);
+      let data = {
+        
+      }
+      history.push({pathname:'/index', state:{data}});
       
     }
 

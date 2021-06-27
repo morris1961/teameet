@@ -28,6 +28,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('')
     const [modalVisible, setModalVisible] = useState(false)
+    const [loading, setLoading] = useState(false)
     const history = useHistory();
     const location = useLocation();
 
@@ -67,6 +68,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
         setActiveKey("ChatRoom")
       }
       else if(message.api === 'renewFile'){
+        setLoading(false)
         if(message.data.status === true){
           displayStatus({type: 'success', msg: '資料集連結已成功更新！'})
         }
@@ -75,6 +77,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
         }
       }
       else if(message.api === 'index'){
+        displayStatus({type:'success', msg:'退出群組成功，為您跳轉到主畫面'})
         var { email, password } =  location.state.data;
         var data = message.data;
         data.UID=UID;
@@ -151,6 +154,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
               <URLModal 
                 visible={modalVisible}
                 onCreate={({url})=>{
+                    setLoading(true)
                     setModalVisible(false) 
                     renewURL(url)
                 }}
@@ -190,7 +194,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
                   <p style={{marginBottom: "0px"}}>{location.state.data.code}</p>
                 </div>
                 <div className="site-layout-background" style={{ padding: 24, minHeight: 360}}>
-                  {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} message={message} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
+                  {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} message={message} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} message={message} />):(null))}
                 </div>
             </Content>
             <Footer className="footer">Created by NTUIM | TEAMEET team @2021</Footer>
