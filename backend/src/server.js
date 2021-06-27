@@ -100,6 +100,12 @@ wss.on('connection', async function connection(ws) {
       case "createGroup":
         createGroup(data).then(
           (ret) => {
+            if (ret.status) {
+              if (!onlineGroups[ret.GID]) {
+                onlineGroups[ret.GID] = new Set();
+              }
+              onlineGroups[ret.GID].add(ws);
+            };
             msg.data = ret;
             ws.sendEvent(msg);
           }
@@ -108,6 +114,12 @@ wss.on('connection', async function connection(ws) {
       case "joinGroup":
         joinGroup(data).then(
           (ret) => {
+            if (ret.status) {
+              if (!onlineGroups[ret.GID]) {
+                onlineGroups[ret.GID] = new Set();
+              }
+              onlineGroups[ret.GID].add(ws);
+            };
             msg.data = ret;
             ws.sendEvent(msg);
           }
