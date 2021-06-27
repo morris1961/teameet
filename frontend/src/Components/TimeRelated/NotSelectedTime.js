@@ -4,10 +4,12 @@ import moment from 'moment';
 import 'moment-timezone';
 
 
-const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStatus}) =>{
+const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStatus, message}) =>{
     const [show_options, setShowOptions] = useState([])
     const [time_result, setTimeResult] = useState('')
     const [max, setMax] = useState(0)
+    const [loading, setLoading] = useState(false)
+
 
     useEffect(()=>{
         if(time_options){
@@ -28,6 +30,7 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
     }, [time_options])
 
     const handleSubmit = () =>{
+        setLoading(true)
         if(time_result === ''){
             displayStatus({type: 'error', msg: '請選擇最終時間'})
         }
@@ -35,6 +38,20 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
         let data = {UID, DID, time_result}
         sendData("confirmTime", data)
     }
+
+    useEffect(()=>{
+        const { data } = message
+        if(message.api === 'confirmTime'){
+          setLoading(false)
+          if(message.status === true){
+            displayStatus({type: 'error', msg: '確認成功'})
+          }
+          else{
+            displayStatus({type: 'error', msg: '確認失敗'})
+          }
+        }
+        
+      }, [message])
 
     return(
         <>
@@ -74,7 +91,7 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
                             })}
                         </Radio.Group>
                         <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
-                            <Button type="primary" htmlType="submit" style={{marginTop: "10px"}} onClick={handleSubmit}>
+                            <Button type="primary" htmlType="submit" style={{marginTop: "10px"}} onClick={handleSubmit} loading={loading}>
                                 確認時間
                             </Button>
                         </div>

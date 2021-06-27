@@ -8,12 +8,17 @@ import PlaceModal from '../Modal/PlaceModal';
 
 
 
-const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSelect, displayStatus, place_result}) =>{
+const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSelect, displayStatus, place_result, message}) =>{
 
     const { UID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
     const [modalVisible, setModalVisible] = useState(false)
     const [options, setOptions] = useState([])
+    const [voteLoading, setVoteLoading] = useState(false)
+    const [addLoading, setAddLoading] = useState(false)
+
+    console.log(addLoading)
+    console.log(voteLoading)
     
     // 取 option key render
     useEffect(()=>{
@@ -23,6 +28,28 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSele
             setOptions(newOptions)
         }
     }, [place_options])
+
+    useEffect(()=>{
+        const { data } = message
+        if(message.api === 'addPlace'){
+            setAddLoading(false)
+            if(data.status === true){
+                displayStatus({type:'success', msg:'成功新增討論地點'})
+            }
+            else{
+                displayStatus({type:'error', msg:'新增討論地點失敗'})
+            }
+        }
+        else if(message.api === 'votePlace'){
+            setVoteLoading(false)
+            if(data.status === true){
+                displayStatus({type:'success', msg:'投票成功'})
+            }
+            else{
+                displayStatus({type:'error', msg:'投票失敗'})
+            }
+        }
+    }, [message])
 
 
     const addPlace = (place) =>{
@@ -49,21 +76,29 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSele
                 place_options={place_options} 
                 isAdmin={isAdmin} 
                 sendData={sendData}
-                displayStatus={displayStatus} />)):
+                displayStatus={displayStatus}
+                message={message} />)):
             voted?(<VotedPlace UID={UID} place_options={place_options} />):
             (<>
-            <Checkbox.Group style={{ width: '100%' }} onChange={(list)=>{setCheckList(list)}}>
+            <Checkbox.Group style={{ width: '100%' }} onChange={(list)=>{setCheckList(list)}} >
                 <Row>
+                    <Col span={2}></Col>
+                    <Col span={18}>
                     {options.map((option, index)=>{
                         return(
                         <>
-                        <Col span={8}>
-                            <Checkbox value={option} key={index}>{option}</Checkbox>
-                        </Col>
-                        <br />
+                            <Checkbox value={option} key={index}  className='content'>{option}</Checkbox>
+                        
+                        {index === options.length-1?(
+                            <>
+                                <br />
+                                <Button type="dashed" key="addPlace" onClick={()=>{setModalVisible(true)}} style={{marginTop: "10px"}} loading={addLoading}> 新增地點 </Button>
+                            </>
+                        ):null}
                         </>
                         )
                     })}
+                    </Col>
                 </Row>
             </Checkbox.Group>
             
@@ -77,11 +112,13 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSele
                     setModalVisible(false)
                 }}/>
 
-            <Button type="dashed" key="addPlace" onClick={()=>{setModalVisible(true)}}  style={{marginTop: "10px"}}> 新增地點 </Button>
+            
             <br />
-            <Button type="primary" onClick={()=>{handleSubmit()}} style={{marginTop: "10px"}}>
-                送出投票
-            </Button>
+            <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
+                <Button type="primary" onClick={()=>{handleSubmit()}} style={{marginTop: "10px"}} loading={voteLoading}>
+                    送出投票
+                </Button>
+            </div>
 
             </>)}
         </>

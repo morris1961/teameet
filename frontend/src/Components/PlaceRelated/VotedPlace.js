@@ -25,7 +25,7 @@ const VotedTime = ({place_options, UID}) =>{
                     <Divider style={{ borderColor: "#d8d8d8", color: "#D0D0D0"}} orientation="center" plain>
                         你已經投票囉！
                     </Divider>
-                    <h2>地點如下：</h2>
+                    <h3 className='content'>地點如下：</h3>
                     <div>
                         {show_options?(show_options.map((e, index)=>(<p className='content' key={index}>{e}</p>))):(null)}
                     </div>

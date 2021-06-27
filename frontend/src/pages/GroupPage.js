@@ -52,6 +52,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
       // 進討論頁面
       if(message.api === 'discussion'){
         // 跟討論有關 data (content, subject, DID) 從回傳 message 取，其他從 location.state.data
+        console.log("hello")
         let data = {
           UName:location.state.data.UName, 
           file:location.state.data.file, 
@@ -77,7 +78,6 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
         }
       }
       else if(message.api === 'index'){
-        displayStatus({type:'success', msg:'退出群組成功，為您跳轉到主畫面'})
         var { email, password } =  location.state.data;
         var data = message.data;
         data.UID=UID;
@@ -95,6 +95,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
         if(status){
           let data = {UID}
           sendData('index', data)
+          displayStatus({type:'success', msg:'退出群組成功'})
         }
         else{
           displayStatus({type:"error", msg:"退出群組失敗"})

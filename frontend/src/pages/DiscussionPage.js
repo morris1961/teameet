@@ -28,6 +28,8 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
         setCollapsed(collapsed);
     };
 
+    console.log("discussionPage")
+
     // 回上一頁
     const back = () =>{
       console.log("back")
@@ -37,15 +39,6 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
         GName: location.state.data.GName,
         code: location.state.data.code,}
       history.push({pathname:`/${UID}/${GID}`, state:{data}});
-    }
-
-    //按 logo 回首頁
-    const backToIndex = ()=>{
-      let data = {
-        
-      }
-      history.push({pathname:'/index', state:{data}});
-      
     }
 
     /// get data for DiscussionTime
@@ -81,7 +74,7 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
               {collapsed?null:(<img src={logo} width="90%" alt="logo"/>)}
             </div>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-              <Menu.Item key="User" icon={<UserOutlined style={{fontSize: "20px"}} />} title="User" className='user' style={{height: "60px"}} onClick={backToIndex()}>
+              <Menu.Item key="User" icon={<UserOutlined style={{fontSize: "20px"}} />} title="User" className='user' style={{height: "60px"}}>
                 {location.state.data.UName}
               </Menu.Item>
               <Menu.Item key="content" icon={<BookOutlined />} title="內容" onClick={(e)=>{setActiveKey(e.key)}}>
@@ -125,6 +118,7 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
                 isSelect={isSelectPlace} 
                 sendData={sendData} 
                 displayStatus={displayStatus}
+                message={message}
                  />))}
               </div>
             </Content>

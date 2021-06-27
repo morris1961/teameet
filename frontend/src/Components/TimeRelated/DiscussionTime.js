@@ -1,4 +1,4 @@
-import { Checkbox, Row, Col, Button } from 'antd';
+import { Checkbox, Row, Col, Button, message } from 'antd';
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import VotedTime from './VotedTime';
@@ -13,6 +13,7 @@ const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_res
     const { UID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
     const [options, setOptions] = useState([])
+    const [loading, setLoading] = useState(false)
     
     useEffect(()=>{
       if(time_options){
@@ -46,6 +47,20 @@ const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_res
       }
     }
 
+    useEffect(()=>{
+      if(message.api === 'voteTime'){
+        setLoading(false)
+        if(message.status === true){
+          displayStatus({type: 'error', msg: '投票成功'})
+        }
+        else{
+          displayStatus({type: 'error', msg: '投票失敗'})
+        }
+      }
+      
+    }, [message])
+
+
     return(
       <>
         {isDue?(isSelect?(<SelectedTime time_options={time_options} time_result={time_result}/>):(
@@ -55,26 +70,27 @@ const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_res
         isAdmin={isAdmin} 
         time_options={time_options} 
         sendData={sendData}
-        displayStatus={displayStatus} />)):(voted?
+        displayStatus={displayStatus}
+        message={message} />)):(voted?
         (<VotedTime time_options={time_options} UID={UID} />)
-        :(<Row>
+        :(
+        <>
+        <Row>
+          <Col span={2}></Col>
+          <Col span={18}>
           {options.map((option, index)=>{
             return(
-            <>
-              <Col key={index} span={2}></Col>
-              <Col key={index} span={22}>
-                <Checkbox key={index} style={{margin: "1%"}} onChange={(e)=>{handleCheck(e, option)}}>{moment(option).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')}</Checkbox>
-              </Col>
-              {index === options.length-1?(
-              <>
-                <Col span={2}></Col>
-                <Button type="primary" htmlType="submit" onClick={handleVote}>
-                  送出投票
-                </Button>
-              </>):null}
-            </>)
-          })}
-        </Row>))}
+              <Checkbox key={index} style={{margin: "1%"}} onChange={(e)=>{handleCheck(e, option)}} className='content'>{moment(option).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')}</Checkbox>
+              )})}
+          </Col>)
+          }
+        </Row>
+        <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
+          <Button type="primary" htmlType="submit" onClick={handleVote} loading={loading}>
+            送出投票
+          </Button>
+        </div>
+      </>))}
         
       </>
     )

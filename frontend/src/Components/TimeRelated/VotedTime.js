@@ -28,7 +28,7 @@ const VotedTime = ({time_options, UID}) =>{
                     <Divider style={{ borderColor: "#d8d8d8", color: "#D0D0D0"}} orientation="center" plain>
                         你已經投票囉！
                     </Divider>
-                    <h2>時間如下：</h2>
+                    <h3 className='content'>時間如下：</h3>
                     <div>
                         {show_options.map((e, index)=>(<p className='content' key={index}>{moment(e).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')}</p>))}
                     </div>
