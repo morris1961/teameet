@@ -19,7 +19,7 @@ const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const HomePage = ({sendData, mess}) =>{
+const HomePage = ({sendData, mess, displayStatus}) =>{
 
     const [collapsed, setCollapsed] = useState(false)
     const history = useHistory();
@@ -155,7 +155,13 @@ const HomePage = ({sendData, mess}) =>{
                 state:{data},
               }
               history.push(path);
-          }},[mess])
+          }
+          else if(mess.api === 'message'){
+            if(mess.data.status === true){
+              displayStatus({type:'success', msg: `您在 ${mess.data.GName} 有新訊息（${mess.data.sender} 說：${mess.data.body}）`})
+            }
+          }
+        },[mess])
 
     return(
         <Layout style={{ minHeight: '100vh' }}>
@@ -209,7 +215,7 @@ const HomePage = ({sendData, mess}) =>{
                   <div className="site-layout-background" style={{ padding: 24, minHeight: 360, display: "flex", justifyContent: "center", alignItems: "center"}}>
                     <div>
                     <div style={{display: "flex"}}>
-                      <h3 className='content'> 群組名稱：</h3>
+                      <h2 className='content'> 群組名稱：</h2>
                       <div>
                           <Input 
                           className="create_searchbox"
@@ -220,7 +226,7 @@ const HomePage = ({sendData, mess}) =>{
                       </div>
                     </div>
                     <div style={{display: "flex", marginTop: "5%"}}>
-                      <h3 className='content'> 資料集連結： </h3>
+                      <h2 className='content'> 資料集連結： </h2>
                       <div>
                           <Input 
                           className="create_searchbox"

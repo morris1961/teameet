@@ -22,7 +22,7 @@ const { SubMenu } = Menu;
 
 
 
-const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>{
+const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
 
     const { UID, GID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
@@ -95,6 +95,11 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
         }
         else{
           displayStatus({type:"error", msg:"退出群組失敗"})
+        }
+      }
+      else if(message.api === 'message'){
+        if(GID !== message.data.GID || activeKey !== 'ChatRoom'){
+          displayStatus({type:'success', msg: `您在 ${message.data.GName} 有新訊息（${message.data.sender} 說：${message.data.body}）`})
         }
       }
     }, [message])
@@ -185,7 +190,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>
                   <p style={{marginBottom: "0px"}}>{location.state.data.code}</p>
                 </div>
                 <div className="site-layout-background" style={{ padding: 24, minHeight: 360}}>
-                  {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} messages={messages} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
+                  {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} message={message} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
                 </div>
             </Content>
             <Footer className="footer">Created by NTUIM | TEAMEET team @2021</Footer>

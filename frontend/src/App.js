@@ -26,8 +26,6 @@ const App = () => {
     time_result,
     place_result,
     mess,
-    messages,
-
   }
     = useData()
 
@@ -59,7 +57,7 @@ const App = () => {
         <Route exact path="/" component={Beforelogin} />
         <Route exact path="/login" render={() => (<Login sendData={sendData} mess={mess} />)} />
         <Route exact path="/register" render={() => (<Register sendData={sendData} mess={mess} />)} />
-        <Route exact path="/index" render={() => (<HomePage sendData={sendData} mess={mess} />)} />
+        <Route exact path="/index" render={() => (<HomePage sendData={sendData} mess={mess} displayStatus={displayStatus} />)} />
         <Route exact path="/renewProfile" render={() => (<RenewProfile sendData={sendData} mess={mess} />)} />
         <Route exact path="/:UID/:GID"
           render={() =>
@@ -68,7 +66,6 @@ const App = () => {
             sendData={sendData}
             displayStatus={displayStatus}
             message={mess}
-            messages={messages}
           />)} />
 
         <Route exact path="/:UID/:GID/:DID"

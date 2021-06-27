@@ -69,6 +69,11 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
         if(message.api === 'time' || message.api === 'place'){
           setActiveKey(message.api)
         }
+        else if(message.api === 'message'){
+          if(message.data.status === true){
+            displayStatus({type:'success', msg: `您在${message.data.GName}有新訊息-${message.data.sender}說：${message.data.body}`})
+          }
+        }
     }, [message])
 
 

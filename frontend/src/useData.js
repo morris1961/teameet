@@ -18,7 +18,6 @@ const useData = () => {
     const [time_result, setTimeResult] = useState('')
     const [place_result, setPlaceResult] = useState('')
     const [mess, setMess] = useState("");
-    const [messages, setMessages] = useState([])
 
     var ping = null;
 
@@ -119,25 +118,6 @@ const useData = () => {
                 }
                 break
             }
-            case "chat": {
-                const { status } = data;
-                if (status === true) {
-                    setMessages(data.messages)
-                }
-                break
-            }
-            case "message": {
-                const { status } = data;
-                if (status === true) {
-                    const { sender, body, time } = data
-                    let newMessages = [...messages]
-                    newMessages.push({ sender, body, time })
-                    setMessages(newMessages)
-                }
-                break
-            }
-            default:
-                break
         }
     }
 
@@ -180,7 +160,6 @@ const useData = () => {
         time_result,
         place_result,
         mess,
-        messages,
         discussions,
         sendData,
     }
