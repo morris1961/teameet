@@ -2,7 +2,6 @@ import { Route, BrowserRouter, Switch } from "react-router-dom";
 import Beforelogin from "./pages/Beforelogin";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import RenewProfile from "./pages/RenewProfile";
 import HomePage from "./pages/HomePage"
 import GroupPage from "./pages/GroupPage"
 import DiscussionPage from "./pages/DiscussionPage"
@@ -58,7 +57,6 @@ const App = () => {
         <Route exact path="/login" render={() => (<Login sendData={sendData} mess={mess} />)} />
         <Route exact path="/register" render={() => (<Register sendData={sendData} mess={mess} />)} />
         <Route exact path="/index" render={() => (<HomePage sendData={sendData} mess={mess} displayStatus={displayStatus} />)} />
-        <Route exact path="/renewProfile" render={() => (<RenewProfile sendData={sendData} mess={mess} />)} />
         <Route exact path="/:UID/:GID"
           render={() =>
           (<GroupPage

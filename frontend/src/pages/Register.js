@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, notification, Input, Layout } from 'antd';
 import { useHistory } from "react-router-dom";
-import { If, Then, Else } from 'react-if-elseif-else-render';
 import 'antd/dist/antd.css';
 import '../style/Register.css'
 const { Header, Content } = Layout;

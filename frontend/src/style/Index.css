@@ -65,6 +65,16 @@
     font-size: large; 
     text-align: left;
 }
+.renew_searchbox{
+    width: 25vw;
+    outline: none;
+    padding: 14px 20px;
+    /* background: none; */
+    border: 2px solid gray;
+    border-radius:25px;
+    font-size: large; 
+    text-align: left;
+}
 .create_GName{
     /* border: solid; */
     margin-top: -25vw;

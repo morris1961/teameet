@@ -22,13 +22,12 @@ const { SubMenu } = Menu;
 
 
 
-const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
+const GroupPage = ({discussions, sendData, displayStatus, message, messages}) =>{
 
     const { UID, GID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('')
     const [modalVisible, setModalVisible] = useState(false)
-    const [loading, setLoading] = useState(false)
     const history = useHistory();
     const location = useLocation();
 
@@ -52,7 +51,6 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
       // 進討論頁面
       if(message.api === 'discussion'){
         // 跟討論有關 data (content, subject, DID) 從回傳 message 取，其他從 location.state.data
-        console.log("hello")
         let data = {
           UName:location.state.data.UName, 
           file:location.state.data.file, 
@@ -69,7 +67,6 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
         setActiveKey("ChatRoom")
       }
       else if(message.api === 'renewFile'){
-        setLoading(false)
         if(message.data.status === true){
           displayStatus({type: 'success', msg: '資料集連結已成功更新！'})
         }
@@ -95,15 +92,9 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
         if(status){
           let data = {UID}
           sendData('index', data)
-          displayStatus({type:'success', msg:'退出群組成功'})
         }
         else{
           displayStatus({type:"error", msg:"退出群組失敗"})
-        }
-      }
-      else if(message.api === 'message'){
-        if(GID !== message.data.GID || activeKey !== 'ChatRoom'){
-          displayStatus({type:'success', msg: `您在 ${message.data.GName} 有新訊息（${message.data.sender} 說：${message.data.body}）`})
         }
       }
     }, [message])
@@ -155,7 +146,6 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
               <URLModal 
                 visible={modalVisible}
                 onCreate={({url})=>{
-                    setLoading(true)
                     setModalVisible(false) 
                     renewURL(url)
                 }}
@@ -195,7 +185,7 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
                   <p style={{marginBottom: "0px"}}>{location.state.data.code}</p>
                 </div>
                 <div className="site-layout-background" style={{ padding: 24, minHeight: 360}}>
-                  {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} message={message} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} message={message} />):(null))}
+                  {activeKey === "ChatRoom"? (<ChatRoom UName={location.state.data.UName} displayStatus={displayStatus} messages={messages} sendData={sendData} UID={UID} GID={GID} />):(activeKey === "Discussion"?(<DiscussionSet UID={UID} GID={GID} sendData={sendData} displayStatus={displayStatus} />):(null))}
                 </div>
             </Content>
             <Footer className="footer">Created by NTUIM | TEAMEET team @2021</Footer>

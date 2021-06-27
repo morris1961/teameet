@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { Input, Radio, DatePicker, Button } from 'antd';
@@ -13,7 +13,7 @@ const formItemLayoutWithOutLabel = {
 };
 
 const { RangePicker } = DatePicker
-const DiscussionSet = ({UID, GID, sendData, displayStatus, message}) =>{
+const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
     const [subject, setSubject] = useState('')
     const [content, setContent] = useState('')
     const [timeStart, setTimeStart] = useState('')
@@ -21,7 +21,6 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus, message}) =>{
     const [timeSpan, setTimeSpan] = useState('60')
     const [deadline, setDeadline] = useState('')
     const [place, setPlace] = useState('')
-    const [loading, setLoading] = useState(false)
 
     const disabledDate = (current) => {
         // Can not select days before today 
@@ -30,7 +29,6 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus, message}) =>{
 
 
     const handleSubmit = () =>{
-        setLoading(true)
         console.log(UID, GID, subject, content, timeStart, timeEnd, timeSpan, deadline, place)
         if(UID === ''){
             throw new Error ("Missing UID")
@@ -59,20 +57,6 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus, message}) =>{
         let data = { UID, GID, subject, content, time_start: timeStart, time_end: timeEnd, time_span: timeSpan, deadline, place } 
         sendData("createDiscussion", data)
     }
-
-    useEffect(()=>{
-        if(message.api === 'createDiscussion'){
-            const { data } = message
-            if(data.status === true){
-                setLoading(false)
-                displayStatus({type:'success', msg:'成功創建討論，為您跳轉畫面'})
-            }
-            else{
-                setLoading(false)
-                displayStatus({type:'error', msg:'創建討論失敗'})
-            }
-        }
-    }, [message])
 
     const onChangeRangePicker = (value, dateString) =>{
         // unformatted (moment type): value
@@ -121,7 +105,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus, message}) =>{
                 </Form.Item>
             </Form>
             <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
-                <Button type="primary" htmlType="submit" onClick={handleSubmit} loading={loading}>
+                <Button type="primary" htmlType="submit" onClick={handleSubmit}>
                     創建討論
                 </Button>
             </div>

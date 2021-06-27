@@ -37,7 +37,7 @@ async function chat({ UID, GID }) {
     status = false;
     error_msg = "Something wrong...";;
   }
-  return { status, messages, error_msg, GID };
+  return { status, messages, error_msg };
 }
 
 export default chat;

@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import { Divider, Row, Col, Radio, Button, Tag } from 'antd';
 
 
-const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displayStatus, message}) =>{
+const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displayStatus}) =>{
     const [show_options, setShowOptions] = useState([])
     const [place_result, setPlaceResult] = useState('')
     const [max, setMax] = useState(0)
-    const [loading, setLoading] = useState(false)
 
     // 取 option key render，並計算最大票數
     useEffect(()=>{
@@ -28,7 +27,6 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
     }, [place_options])
 
     const handleSubmit = () =>{
-        setLoading(true)
         if(place_result === ''){
             displayStatus({type: 'error', msg: '請選擇最終地點'})
         }
@@ -36,19 +34,6 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
         let data = {UID, DID, place_result}
         sendData("confirmPlace", data)
     }
-
-    useEffect(()=>{
-        if(message.api === 'conformPlace'){
-          setLoading(false)
-          if(message.status === true){
-            displayStatus({type: 'error', msg: '確認成功'})
-          }
-          else{
-            displayStatus({type: 'error', msg: '確認失敗'})
-          }
-        }
-        
-      }, [message])
 
     return(
         <>
@@ -87,7 +72,7 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
                             })}
                         </Radio.Group>
                         <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
-                            <Button type="primary" htmlType="submit"  style={{marginTop: "10px"}} onClick={handleSubmit} loading={loading}>
+                            <Button type="primary" htmlType="submit"  style={{marginTop: "10px"}} onClick={handleSubmit}>
                                 確認地點
                             </Button>
                         </div>

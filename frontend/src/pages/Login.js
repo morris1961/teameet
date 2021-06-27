@@ -43,7 +43,6 @@ const Login = ({sendData, mess}) =>{
           state:{data},
         }
         history.push(path);
-      console.log()
     }
   },[mess]);
   
