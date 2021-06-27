@@ -1,20 +1,32 @@
 .beforelogin_account-welcome{
-    font-size: 4vw;
+    font-size: 5vw;
     text-align: center;
-    margin-top: 3vw;
-    /* background-color: cornsilk; */
+    text-shadow: 0.1em 0.1em 0.25em black;
+    color: #FCFCFC;
+    display: flex;
+    justify-content: center;
+    width: 70%;
 }
-.beforelogin_login{
+/* .beforelogin_login{
     width: 100%;
     margin-top: 7vw;
     text-align: center;
-}
-.beforelogin_login-button{
+} */
+.beforelogin_login-a{
     height: 3.3vw;
-    font-Size: 1.5vw;
+    font-Size: 2vw;
+    text-shadow: 0.05em 0.05em 0.25em black;
+    display: flex;
+    width: 30%;
 }
+
+.beforelogin_login-a:hover{
+    font-size: 2.2vw;
+    font-weight: bold;
+}
+
 .beforelogin_opacity{
-    background-color:rgba(255, 255, 255,0.6);
+    background-color:rgba(255, 255, 255,0.35);
     width:100%;
     margin:0px auto;
     height: 20vw;

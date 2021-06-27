@@ -18,8 +18,10 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
 
     // 滾輪自動滑到最新訊息
     useEffect(()=>{
-        if(messages.length !== 0){
-            endMsg.current.scrollIntoView({behavior: "smooth"})
+        if(messages){
+            if(messages.length !== 0){
+                endMsg.current.scrollIntoView({behavior: "smooth"})
+            }
         }
     }, [messages])
     
@@ -27,7 +29,7 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
     return(
         <>
             <div className="ChatRoom">
-                {messages === undefined ? null:(messages === []? (<p>loading...</p>): (messages.map(({sender, body, time}, index)=>{
+                {messages === undefined ? <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: "100%"}}>暫無聊天紀錄</p>:(messages === []? (<p>loading...</p>): (messages.map(({sender, body, time}, index)=>{
                     let renderDate = false
                     let date = moment(time).tz('Asia/Taipei').format('YYYY/MM/DD')
                     if(lastDate !== date){

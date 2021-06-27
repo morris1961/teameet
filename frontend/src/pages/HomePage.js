@@ -19,7 +19,7 @@ const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const HomePage = ({sendData, mess}) =>{
+const HomePage = ({sendData, mess, displayStatus}) =>{
 
     const [collapsed, setCollapsed] = useState(false)
     const history = useHistory();
@@ -36,26 +36,26 @@ const HomePage = ({sendData, mess}) =>{
 
     const [iscreateclicked, setIscreateclicked] = useState(false);
     const [isjoinclicked, setIsjoinclicked] = useState(false);
-    const [Isvotingnull, setIsvotingnull] = useState(true);
-    const [Isrecentnull, setIsrecentnull] = useState(true);
+    const [isrenewprofileclick, setIsrenewprofileclick] = useState(false);
     const [code, setCode]=useState("");
     const [GName, setGName]=useState("");
     const [file, setFile]=useState("");
-    if(recent.size > 0){
-      console.log("size")
-      setIsrecentnull(false)
+    const [newUName, setUName] = useState(UName);
+    const [newpassword, setPassword] = useState(password);
+    const [loading, setLoading] = useState(false);
+
+    const handlerenewprofile = () =>{
+        setIsrenewprofileclick(true);
     }
-    if(voting.size > 0){
-      setIsvotingnull(false)
-    }
-    const handleback = () =>{
-      setIscreateclicked(false);
-      setIsjoinclicked(false);
-    };
-    
+    const handlerenew = () =>{
+        var data = {UID:UID, UName:newUName, password:newpassword};
+        sendData('renewProfile', data);
+        setLoading(true);
+      }
     const handlecreategroup = () =>{
       setIscreateclicked(true);
       setIsjoinclicked(false);  
+      setIsrenewprofileclick(false);
     }
     const handlecreate = () =>{
       var data = {admin:UID, GName, file:file};
@@ -64,6 +64,7 @@ const HomePage = ({sendData, mess}) =>{
     const handlejoingroup = () =>{
       setIscreateclicked(false);
       setIsjoinclicked(true);
+      setIsrenewprofileclick(false);
     }
     const handlejoin = () =>{
       if(code === ""){
@@ -78,13 +79,6 @@ const HomePage = ({sendData, mess}) =>{
       sendData('joinGroup', data);
     }
   
-    const handlerenew = () => {
-      var data = {UID, UName, password, email};
-      var path_renew = {
-                    pathname:"/renewProfile",
-                    state:{data}};
-      history.push(path_renew)
-    }
     const [isgearclicked, setIsgearclicked] = useState(false);
     const handlegear = () =>{
       setIsgearclicked(!isgearclicked);
@@ -155,10 +149,47 @@ const HomePage = ({sendData, mess}) =>{
                 state:{data},
               }
               history.push(path);
-          }},[mess])
+          }else if(mess.api === 'message'){
+            if(mess.data.status === true){
+              displayStatus({type:'success', msg: `您在 ${mess.data.GName} 有新訊息（${mess.data.sender} 說：${mess.data.body}）`})
+            }
+          }else if(mess.api === "renewProfile"){
+            if(mess.data.status === true){
+              var data ={UID: UID}
+              sendData('index', data);
+              notification['success']({
+              message: '處理中',
+              description:
+              '正在更新您的個人資料',
+              duration:7,
+            });
+            
+          }else{
+            notification['error']({
+              message: '更新失敗',
+              description:
+              '伺服器出錯了, 麻煩你再嘗試一次',
+            });
+          }
+        }else if(mess.api === "index"){
+            setIsrenewprofileclick(false);
+            setLoading(false);
+            var data = mess.data;
+            data.UID=UID;
+            data.email=email;
+            data.password=password;
+            console.log("data in index push", data)
+              var path = {
+                pathname:"/index",
+                state:{data},
+              }
+              history.push(path);
+              
+            }
+        },[mess])
 
     return(
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout  style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo">
               {collapsed?null:(<img src={logo} width="90%" alt="logo"/>)}
@@ -169,7 +200,7 @@ const HomePage = ({sendData, mess}) =>{
                 <BsGear className="index_gear" onClick={handlegear} />
               </Menu.Item>
               {isgearclicked?(<>
-                <Menu.Item key="RenewProfile" icon={<FormOutlined />} title="RenewProdile" onClick={handlerenew}>
+                <Menu.Item key="RenewProfile" icon={<FormOutlined />} title="RenewProdile" onClick={handlerenewprofile}>
                     更新個人資料
                 </Menu.Item>
                 <Menu.Item key="logout" icon={<LogoutOutlined />} title="Logout" onClick={()=>{history.push('/')}}>
@@ -201,15 +232,56 @@ const HomePage = ({sendData, mess}) =>{
           </Sider>
 
           <Layout className="site-layout">
-            <Content style={{ margin: '0 16px' }}>
-            {iscreateclicked?(<>
+            <Content  style={{ margin: '0 16px' }}>
+            {isrenewprofileclick?(<>
+              <div className="title">
+                    <p style={{fontSize: "25px", marginBottom: "0px"}}>更新個人資料</p> 
+              </div>
+              <div className="site-layout-background" style={{ padding: 24, minHeight: 360, display: "flex", justifyContent: "center", alignItems: "center"}}>
+                    <div>
+                    <div style={{display: "flex"}}>
+                      <h3 className='content'> 帳號：{email}</h3>
+                    </div>
+                    <div style={{display: "flex", marginTop: "5%"}}>
+                      <h3 className='content'> 暱稱： </h3>
+                      <div>
+                          <Input 
+                          className="create_searchbox"
+                          placeholder={UName}
+                          onChange={(event)=>setUName(()=>event.target.value)}
+                          />
+                      </div>
+                    </div>
+                    <div style={{display: "flex", marginTop: "5%"}}>
+                      <h3 className='content'> 密碼： </h3>
+                      <div>
+                          <Input 
+                          className="create_searchbox"
+                          placeholder={newpassword}
+                          onChange={(event)=>setPassword(()=>event.target.value)}
+                         />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  </div>
+                  <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
+                    <Button
+                        type='primary'
+                        onClick = {handlerenew}
+                        loading = {loading}>
+                      確認
+                    </Button>
+                  </div>            
+            
+            </>):(<>{iscreateclicked?(<>
                   <div className="title">
                     <p style={{fontSize: "25px", marginBottom: "0px"}}>創建群組</p> 
                   </div>
                   <div className="site-layout-background" style={{ padding: 24, minHeight: 360, display: "flex", justifyContent: "center", alignItems: "center"}}>
                     <div>
                     <div style={{display: "flex"}}>
-                      <h3 className='content'> 群組名稱：</h3>
+                      <h2 className='content'> 群組名稱：</h2>
                       <div>
                           <Input 
                           className="create_searchbox"
@@ -220,7 +292,7 @@ const HomePage = ({sendData, mess}) =>{
                       </div>
                     </div>
                     <div style={{display: "flex", marginTop: "5%"}}>
-                      <h3 className='content'> 資料集連結： </h3>
+                      <h2 className='content'> 資料集連結： </h2>
                       <div>
                           <Input 
                           className="create_searchbox"
@@ -261,15 +333,14 @@ const HomePage = ({sendData, mess}) =>{
                     加入
                   </Button>
                 </div></>):(<>
-                <div className="homePageContent">
+                <div data-aos='zoom-out-down' data-aos-duration='600' className="homePageContent">
                   <div style={{fontSize:"2vw", marginLeft:"2vw", color: "#F0F0F0"}}>投票中</div>  
                   <Menu style={{backgroundColor: "#E0E0E0"}} mode="inline" defaultOpenKeys={['recent3']}>
                       {(voting.length < 1)?(<>
-                        <div style={{fontSize:"2vw", marginTop:"4vw", paddingTop:"2vw",height:"5vw", textAlign:"center"}}>
-                          目前沒有投票中的群組
+                        <div style={{fontSize:"1.5vw", marginTop:"4vw", paddingTop:"2vw",height:"5vw", textAlign:"center", color: '#6C6C6C'}}>
+                          目前沒有投票中的討論
                       </div>
                     </>):(<>
-                      
                       {voting.map((v, index)=>{
                           return(
                               <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
@@ -301,7 +372,7 @@ const HomePage = ({sendData, mess}) =>{
                               </Menu.Item>)})}</>)}
         </Menu>
         </div>
-        </>)}</>)}
+        </>)}</>)}</>)}
       </Content>
             
       <Footer className="footer">Created by NTUIM | TEAMEET team @2021</Footer>

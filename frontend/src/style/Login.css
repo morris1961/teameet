@@ -1,21 +1,40 @@
 .login_account-welcome{
-    font-size: 2vw;
+    font-size: 4vw;
     text-align: center;
-    margin-top: 3vw;
+    text-shadow: 0.1em 0.1em 0.25em black;
+    color: #FCFCFC;
+    display: flex;
+    justify-content: center;
 }
+
+.login_opacity{
+    text-align: center;
+    background-color:rgba(255, 255, 255,0.6);
+    width:100%;
+    margin:40px auto;
+    height: 30vw;
+    border-color: rgba(255, 255, 255,0.6);
+}
+
+.login_input {
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}
+
+.login_title {
+    margin-right: 5px;
+    font-size: 2vw;
+    text-shadow: 0.3em 0.3em 1em black;
+    color: #272727;
+}
+
+/*
 
 .login_account{
     margin-top: 3vw;
     height: 5vw;
     width: 100%;
-}
-.login_opacity{
-    background-color:rgba(255, 255, 255,0.6);
-    width:100%;
-    margin:40px auto;
-    height: 30vw;
-    border: solid;
-    border-color: rgba(255, 255, 255,0.6);
 }
 
 .login_account-title{
@@ -24,16 +43,16 @@
     float: left;
     text-align: left;
     font-size: 2vw;
-    /* border: solid; */
+    border: solid;
 }
 .login_account-input{
-    /* border:solid; */
+    border:solid;
     width: 40vw;
     height: 4.2vw;
     margin-left: 0.5vw;
     float: left;
     text-align: left;
-}
+} 
 
 .login_password{
    width: 100%;
@@ -52,10 +71,11 @@
     margin-left: 0.5vw;
     float: left;
 }
+*/
 .login_searchbox{
     width: 25vw;
     outline: none;
-    padding: 14px 20px;
+    /* padding: 14px 20px; */
     border: 2px solid gray;
     border-radius:25px;
     font-size: large; 
@@ -67,18 +87,15 @@
     color: black;
     margin-top: 1vw;
 }
-.login_login{
-    width: 100%;
-    margin-top: 7vw;
-    text-align: center;
-}
+
 .login_login-button{
+    margin-top: 1%;
     height: 3.3vw;
     font-Size: 1.5vw;
 }
 .login_bottom-register{
     width: 100%;
-    margin-top: 3vw;
+    margin-top: 1%;
     text-align: center;
 }
 .login_bottom-register-button{
@@ -86,6 +103,11 @@
     border: none;
     text-align: center;
     font-size: 1.2vw;
-    color: blue;
+    color: 	#2894FF;
     background-color: transparent;
+} 
+
+.login_bottom-register-button:hover{
+    font-weight: bold;
+    color: #0080FF;
 }

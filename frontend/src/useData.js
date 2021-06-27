@@ -119,23 +119,6 @@ const useData = () => {
                 }
                 break
             }
-            case "chat": {
-                const { status } = data;
-                if (status === true) {
-                    setMessages(data.messages)
-                }
-                break
-            }
-            case "message": {
-                const { status } = data;
-                if (status === true) {
-                    const { sender, body, time } = data
-                    let newMessages = [...messages]
-                    newMessages.push({ sender, body, time })
-                    setMessages(newMessages)
-                }
-                break
-            }
             default:
                 break
         }

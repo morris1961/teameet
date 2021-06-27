@@ -15,7 +15,7 @@ const PlaceModal = ({visible, onCreate, onCancel}) =>{
                 form.resetFields(); // 清空格子
                 onCreate(values); 
             }).catch((error) => {
-                window.alert('Validate Failed:', error);
+                console.log('Validate Failed:', error);
             });
         }}>
             <Form
