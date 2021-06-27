@@ -32,7 +32,8 @@
 .register_title {
     margin-right: 5px;
     font-size: 1.5vw;
-    text-shadow: 0.3em 0.3em 1em black;
+    text-shadow: 0.3em 0.3em 1.3em black;
+    color: #272727;
 }
 
 /* .register_account{

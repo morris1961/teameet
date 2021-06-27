@@ -87,7 +87,7 @@ const Login = ({sendData, mess}) =>{
                       display: "flex",
                       justifyContent: "center",
                       }}>
-      <div className="login_opacity">
+      <div data-aos='zoom-in' className="login_opacity">
         <h1 className="login_account-welcome">
           Let's TEAMEET together!
         </h1>

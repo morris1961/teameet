@@ -189,7 +189,7 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
         },[mess])
 
     return(
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout  style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <div className="logo">
               {collapsed?null:(<img src={logo} width="90%" alt="logo"/>)}
@@ -232,7 +232,7 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
           </Sider>
 
           <Layout className="site-layout">
-            <Content style={{ margin: '0 16px' }}>
+            <Content  style={{ margin: '0 16px' }}>
             {isrenewprofileclick?(<>
               <div className="title">
                     <p style={{fontSize: "25px", marginBottom: "0px"}}>更新個人資料</p> 
@@ -333,15 +333,14 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
                     加入
                   </Button>
                 </div></>):(<>
-                <div className="homePageContent">
+                <div data-aos='zoom-out-down' data-aos-duration='600' className="homePageContent">
                   <div style={{fontSize:"2vw", marginLeft:"2vw", color: "#F0F0F0"}}>投票中</div>  
                   <Menu style={{backgroundColor: "#E0E0E0"}} mode="inline" defaultOpenKeys={['recent3']}>
                       {(voting.length < 1)?(<>
-                        <div style={{fontSize:"2vw", marginTop:"4vw", paddingTop:"2vw",height:"5vw", textAlign:"center"}}>
-                          目前沒有投票中的群組
+                        <div style={{fontSize:"1.5vw", marginTop:"4vw", paddingTop:"2vw",height:"5vw", textAlign:"center", color: '#6C6C6C'}}>
+                          目前沒有投票中的討論
                       </div>
                     </>):(<>
-                      
                       {voting.map((v, index)=>{
                           return(
                               <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}

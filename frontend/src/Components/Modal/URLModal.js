@@ -16,7 +16,7 @@ const ChatModal = ({visible, onCreate, onCancel}) =>{
                 form.resetFields(); 
                 onCreate(values); 
             }).catch((error) => {
-                window.alert('Validate Failed:', error);
+                console.log('Validate Failed:', error)
             });
         }}>
             <Form

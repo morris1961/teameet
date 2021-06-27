@@ -12,10 +12,8 @@ const Login = () =>{
     <React.Fragment>
     
     <Layout style={{backgroundImage:'url(https://cdn.pixabay.com/photo/2015/01/08/18/27/startup-593341__340.jpg)', backgroundSize: "cover"}}>
-      <Header style={{backgroundColor:"rgba(0, 0, 0, 0.3)", height: "100px"}} >
-          {/* <img src={logo} style={{height:"100%"}}  alt="logo"/> */}
-      </Header>
-
+      <Header style={{backgroundColor:"rgba(0, 0, 0, 0.3)", height: "100px"}} />
+      
       <Content style={{height:"40vw",
                       backgroundSize:'cover',
                       backgroundColor:"rgba(0, 0, 0, 0.3)",
@@ -23,11 +21,12 @@ const Login = () =>{
                       justifyContent: "center",
                       paddingTop: "10%",
                     }}>
-        <div className="beforelogin_opacity" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine" className="beforelogin_opacity" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
           <h1 className="beforelogin_account-welcome">
               Welcome to TEAMEET!
           </h1>
           <a
+              data-aos='zoom-in'
               className="beforelogin_login-a"
               style={{color: "#FCFCFC"}}
               onClick = {()=>{history.push("/login")}}>

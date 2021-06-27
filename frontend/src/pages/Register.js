@@ -11,7 +11,7 @@ const Register = ({sendData, mess}) =>{
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pass2, setPass2] = useState("");
-  const [isregistersuccess,setIsregistersuccess] = useState(false);
+  const [isregistersuccess,setIsregistersuccess] = useState(true);
   const validemail= /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
 
   useEffect(()=>{
@@ -100,7 +100,11 @@ const Register = ({sendData, mess}) =>{
                       // justifyContent: "center",
                       textAlign: "center",
                       }}>
-        <div className="register_opacity">
+        <div 
+        data-aos="flip-left"
+        data-aos-easing="ease-out-cubic"
+        data-aos-duration="1200"
+        className="register_opacity">
           <div className="text">
             {/* <div className="registersuccess_txt">
                 Hi! {UName} 謝謝你決定加入 TEAMEET，
@@ -139,7 +143,7 @@ const Register = ({sendData, mess}) =>{
                       display: "flex",
                       justifyContent: "center",
                       }}>
-            <div className="register_opacity">
+            <div data-aos='zoom-in' className="register_opacity">
                 <h1 className="register">
                   註冊帳號
                 </h1>
