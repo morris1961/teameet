@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect, useRef } from 'react'
 import 'antd/dist/antd.css';
 import '../style/Login.css'
 import {Button, Input, Layout, notification} from 'antd';
@@ -11,7 +11,7 @@ const Login = ({sendData, mess}) =>{
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const validemail= /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
-
+  const passwordRef = useRef(null);
   useEffect(()=>{
     console.log(mess)
     if(mess.api === "login"){
@@ -20,6 +20,7 @@ const Login = ({sendData, mess}) =>{
         sendData('index', data);
         setUID(mess.data.UID)
       }else if(mess.data.status === false){
+        setLoading(false);
         notification['error']({
           message: '錯誤',
           description:
@@ -27,6 +28,7 @@ const Login = ({sendData, mess}) =>{
           duration: 3,
         });
       }else{
+        setLoading(false);
         notification['error']({
           message: '錯誤',
           description:
@@ -34,6 +36,7 @@ const Login = ({sendData, mess}) =>{
           });
       }
     }else if(mess.api === "index"){
+      setLoading(false);
       var data = mess.data;
       data.UID=UID;
       data.email=email;
@@ -97,7 +100,8 @@ const Login = ({sendData, mess}) =>{
           <div className="login_account-input" >
             <Input 
                 className="login_searchbox"
-                placeholder="                                      @gmail.com"
+                placeholder="                                                   @gmail.com"
+                onKeyDown={(e)=>{if(e.key === 'Enter'){passwordRef.current.focus()}}}
                 onChange={(event)=>setEmail(()=>event.target.value)}
                 value={email}
               />
@@ -110,7 +114,10 @@ const Login = ({sendData, mess}) =>{
               <Input.Password 
                     className="login_searchbox"
                     onChange={(event)=>setPassword(()=>event.target.value)} 
-                    value={password} />
+                    onPressEnter={handlelogin}
+                    value={password}
+                    ref={passwordRef}
+                     />
           </div>
         </div>
     

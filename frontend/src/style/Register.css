@@ -82,13 +82,7 @@
     width: 100%;
 }
 
-.register_pass-title{
-    height: 4.2vw;
-    margin-left: 27.4vw;
-    float: left;
-    text-align: left;
-    font-size: 2vw;
-}
+
 .register_pass-input{
     width: 40vw;
     height: 4.2vw;
@@ -97,6 +91,13 @@
     text-align: left;
     background-color: transparent;
 } */
+.register_pass-title{
+    height: 4.2vw;
+    margin-left: -6vw;
+    float: left;
+    text-align: left;
+    font-size: 1.5vw;
+}
 .register_check{
     margin-top: 0.2vw;
     height: 5vw;

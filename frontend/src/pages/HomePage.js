@@ -47,11 +47,20 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
     const handlerenewprofile = () =>{
         setIsrenewprofileclick(true);
     }
+    const handlelogout = () =>{
+      var data = {UID};
+      sendData('logout', data);
+    }
     const handlerenew = () =>{
         var data = {UID:UID, UName:newUName, password:newpassword};
         sendData('renewProfile', data);
         setLoading(true);
       }
+    const handleback = () =>{
+      setIscreateclicked(false);
+      setIsjoinclicked(false);  
+      setIsrenewprofileclick(false);
+    }
     const handlecreategroup = () =>{
       setIscreateclicked(true);
       setIsjoinclicked(false);  
@@ -189,7 +198,23 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
               }
               history.push(path);
               
-            }
+        }else if(mess.api === "logout"){
+          if(mess.data.status === true){
+            notification['success']({
+              message: '登出成功',
+              description:
+              '登出成功，byebye～',
+            });
+            history.push('/')
+          }else{
+            notification['error']({
+              message: '登出失敗',
+              description:
+              '伺服器出錯了, 麻煩你稍後再嘗試一次',
+            });
+
+          }
+        }
         },[mess])
 
     return(
@@ -201,7 +226,7 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
             <Menu theme="dark" mode="inline">
               <Menu.Item key="User" icon={<UserOutlined  style={{fontSize: "20px"}}/>} title="User" className='user'>
                 <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%"}}>
-                  <div onClick={handlegear}>{UName}</div>
+                  <div onClick={handleback}>{UName}</div>
                   <BsGear onClick={handlegear} />
                 </div>
               </Menu.Item>
@@ -209,7 +234,7 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
                 <Menu.Item key="RenewProfile" icon={<FormOutlined />} title="RenewProdile" onClick={handlerenewprofile}>
                     更新個人資料
                 </Menu.Item>
-                <Menu.Item key="logout" icon={<LogoutOutlined />} title="Logout" onClick={()=>{history.push('/')}}>
+                <Menu.Item key="logout" icon={<LogoutOutlined />} title="Logout" onClick={handlelogout}>
                     登出
                 </Menu.Item>
                 <Menu.Item key="Back" icon={<RollbackOutlined />} title="返回" onClick={handlegear}>
@@ -366,12 +391,10 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
                           目前沒有討論中的群組
                       </div>
                     </>):(<>
-                      
                       {recent.map((v, index)=>{
-                        // if(index < 3){
                           return(
                               <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
-                                    onClick={(e)=>{handleGroupClick(v.GID)}}>
+                                    onClick={handleGroupClick(v.GID)}>
                                 <RecentGroups key={'v_'+index}
                                           UID={UID} GID={v.GID} GName={v.GName} 
                                           deadline={v.deadline} subject={v.subject} place={v.place} />

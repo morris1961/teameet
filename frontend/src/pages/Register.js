@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Button, notification, Input, Layout } from 'antd';
 import { useHistory } from "react-router-dom";
 import 'antd/dist/antd.css';
@@ -13,7 +13,9 @@ const Register = ({sendData, mess}) =>{
   const [pass2, setPass2] = useState("");
   const [isregistersuccess,setIsregistersuccess] = useState(false);
   const validemail= /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
-
+  const nameRef = useRef(null);
+  const passRef = useRef(null);
+  const pass2Ref = useRef(null);
   useEffect(()=>{
     if(mess.api === "register"){
       if(mess.data.status === true){
@@ -152,8 +154,9 @@ const Register = ({sendData, mess}) =>{
                     <div className="register_account-input">
                     <Input 
                     className="register_searchbox"
-                    placeholder="                                                 @gmail.com"
+                    placeholder="                                                             @gmail.com"
                     onChange={(event)=>setEmail(()=>event.target.value)}
+                    onKeyDown={(e)=>{if(e.key === 'Enter'){nameRef.current.focus()}}}
                     value={email}/>
                     </div>
                 </div>
@@ -164,6 +167,8 @@ const Register = ({sendData, mess}) =>{
                     <Input 
                     className="register_searchbox"
                     onChange={(event)=>setUName(()=>event.target.value)}
+                    onKeyDown={(e)=>{if(e.key === 'Enter'){passRef.current.focus()}}}
+                    ref={nameRef}
                     value={UName}/>
                     </div>
                 </div>
@@ -174,6 +179,8 @@ const Register = ({sendData, mess}) =>{
                         <Input.Password 
                         className="register_searchbox"
                         onChange={(event)=>setPassword(()=>event.target.value)} 
+                        onKeyDown={(e)=>{if(e.key === 'Enter'){pass2Ref.current.focus()}}}
+                        ref={passRef}
                         value={password} />
                     </div>
                 </div>
@@ -184,6 +191,8 @@ const Register = ({sendData, mess}) =>{
                     <Input.Password 
                         className="register_searchbox"
                         onChange={(event)=>setPass2(()=>event.target.value)} 
+                        onPressEnter={handleregister}
+                        ref={pass2Ref}
                         value={pass2} />
                     </div>
                 </div>
