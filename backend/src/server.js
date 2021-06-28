@@ -12,6 +12,7 @@ mongo.connect();
 // import functions
 import register from './functions/register.js';
 import login from './functions/login.js';
+import logout from './functions/logout.js';
 import createGroup from './functions/createGroup.js';
 import joinGroup from './functions/joinGroup.js';
 import index from './functions/index.js';
@@ -88,6 +89,19 @@ wss.on('connection', async function connection(ws) {
             ws.sendEvent(msg);
           }
         );
+        break;
+      case "logout":
+        logout(data).then(
+          (ret) => {
+            if (ret.status)
+              ws.groups.forEach((e) => {
+                onlineGroups[e].delete(ws);
+              });
+              ws.groups = [];
+            msg.data = ret;
+            ws.sendEvent(msg);
+          }
+        )
         break;
       case "index":
         index(data).then(
@@ -255,7 +269,7 @@ wss.on('connection', async function connection(ws) {
     ws.onclose = (() => {
       ws.groups.forEach((e) => {
         onlineGroups[e].delete(ws);
-      })
+      });
     });
 
   });
