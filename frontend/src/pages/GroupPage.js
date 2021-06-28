@@ -6,7 +6,7 @@ import logo from '../image/logo.png';
 ///// react-router-dom /////
 import { useParams, useHistory, useLocation } from "react-router-dom";
 ///// antd /////
-import { Layout, Menu, Breadcrumb, Row, Col, Popconfirm } from 'antd';
+import { Layout, Menu, Popconfirm } from 'antd';
 import {
   FileOutlined,
   BarsOutlined,

@@ -31,12 +31,8 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
     // 回上一頁
     const back = () =>{
       console.log("back")
-      let data = {
-        UName:location.state.data.UName, 
-        file: location.state.data.file, 
-        GName: location.state.data.GName,
-        code: location.state.data.code,}
-      history.push({pathname:`/${UID}/${GID}`, state:{data}});
+      let data = {UID, GID}
+      sendData("group", data)
     }
 
     /// get data for DiscussionTime
@@ -60,6 +56,14 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
           if(message.data.status === true){
             displayStatus({type:'success', msg: `您在${message.data.GName}有新訊息-${message.data.sender}說：${message.data.body}`})
           }
+        }
+        else if(message.api === 'group'){
+          let data = {
+            UName:location.state.data.UName, 
+            file: location.state.data.file, 
+            GName: location.state.data.GName,
+            code: location.state.data.code,}
+          history.push({pathname:`/${UID}/${GID}`, state:{data}});
         }
     }, [message])
 
