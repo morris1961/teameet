@@ -19,7 +19,7 @@ const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 
-const HomePage = ({sendData, mess, displayStatus}) =>{
+const HomePage = ({sendData, mess}) =>{
 
     const [collapsed, setCollapsed] = useState(false)
     const history = useHistory();
@@ -33,7 +33,7 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
         setCollapsed(collapsed);
     };
 
-
+    
     const [iscreateclicked, setIscreateclicked] = useState(false);
     const [isjoinclicked, setIsjoinclicked] = useState(false);
     const [isrenewprofileclick, setIsrenewprofileclick] = useState(false);
@@ -93,9 +93,9 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
       setIsgearclicked(!isgearclicked);
     };
 
-    const handleGroupClick = (GID) =>{
+    const handleGroupClick = (gid) =>{
       let data = {UID, GID}
-      setGID(GID);
+      setGID(gid);
       sendData("group", data)
     }
 
@@ -393,8 +393,8 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
                     </>):(<>
                       {recent.map((v, index)=>{
                           return(
-                              <Menu.Item key={`voting_${index}`} style ={{height:"auto"}}
-                                    onClick={handleGroupClick(v.GID)}>
+                              <Menu.Item key={`recent_${index}`} style ={{height:"auto"}}
+                                    onClick={()=>{handleGroupClick(v.GID)}}>
                                 <RecentGroups key={'v_'+index}
                                           UID={UID} GID={v.GID} GName={v.GName} 
                                           deadline={v.deadline} subject={v.subject} place={v.place} />

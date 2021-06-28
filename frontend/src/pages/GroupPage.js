@@ -31,6 +31,7 @@ const GroupPage = ({discussions, sendData, message}) =>{
     const history = useHistory();
     const location = useLocation();
 
+
     // sider 隱藏
     const onCollapse = collapsed => {
         setCollapsed(collapsed);
