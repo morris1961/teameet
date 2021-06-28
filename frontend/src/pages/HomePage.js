@@ -195,9 +195,11 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
               {collapsed?null:(<img src={logo} width="90%" alt="logo"/>)}
             </div>
             <Menu theme="dark" mode="inline">
-              <Menu.Item key="User" icon={<UserOutlined  style={{fontSize: "20px"}}/>} title="User" className="user" >
-                <div onClick={handlegear}>{UName}</div>
-                <BsGear className="index_gear" onClick={handlegear} />
+              <Menu.Item key="User" icon={<UserOutlined  style={{fontSize: "20px"}}/>} title="User" className='user'>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%"}}>
+                  <div onClick={handlegear}>{UName}</div>
+                  <BsGear onClick={handlegear} />
+                </div>
               </Menu.Item>
               {isgearclicked?(<>
                 <Menu.Item key="RenewProfile" icon={<FormOutlined />} title="RenewProdile" onClick={handlerenewprofile}>
@@ -240,10 +242,10 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360, display: "flex", justifyContent: "center", alignItems: "center"}}>
                     <div>
                     <div style={{display: "flex"}}>
-                      <h3 className='content'> 帳號：{email}</h3>
+                      <h2 className='content'> 帳號：{email}</h2>
                     </div>
                     <div style={{display: "flex", marginTop: "5%"}}>
-                      <h3 className='content'> 暱稱： </h3>
+                      <h2 className='content'> 暱稱： </h2>
                       <div>
                           <Input 
                           className="create_searchbox"
@@ -253,7 +255,7 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
                       </div>
                     </div>
                     <div style={{display: "flex", marginTop: "5%"}}>
-                      <h3 className='content'> 密碼： </h3>
+                      <h2 className='content'> 密碼： </h2>
                       <div>
                           <Input 
                           className="create_searchbox"

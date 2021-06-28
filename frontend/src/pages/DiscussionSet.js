@@ -78,6 +78,8 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus, message}) =>{
             if(data.status === true){
                 setLoading(false)
                 displayStatus({type:'success', msg:'成功創建討論，為您跳轉畫面'})
+                let d = {UID, DID: data.DID}
+                sendData("discussion", d)
             }
             else{
                 setLoading(false)
