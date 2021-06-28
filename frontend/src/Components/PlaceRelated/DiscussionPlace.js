@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Button, Checkbox, Row, Col,  } from 'antd';
+import { Button, Checkbox, Row, Col, notification } from 'antd';
 import { useParams } from 'react-router';
 import VotedPlace from './VotedPlace';
 import SelectedPlace from './SelectedPlace';
@@ -8,7 +8,7 @@ import PlaceModal from '../Modal/PlaceModal';
 
 
 
-const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSelect, displayStatus, place_result, message}) =>{
+const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSelect, place_result, message}) =>{
 
     const { UID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
@@ -35,7 +35,11 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSele
 
     const handleSubmit = () =>{
         if(checkList.length === 0){
-            displayStatus({type: 'error', msg: '請選擇要投票的地方'})
+            notification['error']({
+                message: '錯誤',
+                description:
+                '請選擇要投票的地方',
+              });
             return 
         }
         setVoteLoading(true)
@@ -48,19 +52,35 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSele
         if(message.api === 'addPlace'){
             setAddLoading(false)
             if(data.status === true){
-                displayStatus({type:'success', msg:'成功新增討論地點'})
+                notification['success']({
+                    message: '成功',
+                    description:
+                    '成功新增討論地點',
+                  });
             }
             else{
-                displayStatus({type:'error', msg:'新增討論地點失敗'})
+                notification['error']({
+                    message: '錯誤',
+                    description:
+                    '新增討論地點失敗',
+                  });
             }
         }
         else if(message.api === 'votePlace'){
             setVoteLoading(false)
             if(data.status === true){
-                displayStatus({type:'success', msg:'投票成功'})
+                notification['success']({
+                    message: '成功',
+                    description:
+                    '投票成功',
+                  });
             }
             else{
-                displayStatus({type:'error', msg:'投票失敗'})
+                notification['error']({
+                    message: '錯誤',
+                    description:
+                    '投票失敗',
+                  });
             }
         }
     }, [message])
@@ -73,8 +93,7 @@ const DiscussionPlace = ({isDue, isAdmin, voted, place_options, sendData, isSele
                 DID={DID} 
                 place_options={place_options} 
                 isAdmin={isAdmin} 
-                sendData={sendData}
-                displayStatus={displayStatus} 
+                sendData={sendData} 
                 message={message} />)):
             voted?(<VotedPlace UID={UID} place_options={place_options} />):
             (<>

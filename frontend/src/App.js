@@ -33,26 +33,6 @@ const App = () => {
   }
     = useData()
 
-  const displayStatus = (payload) => {
-    if (payload) {
-      const { type, msg } = payload
-      const content = {
-        content: msg,
-        duration: 1.5,
-      }
-      switch (type) {
-        case "success":
-          message.success(content)
-          break
-        case "error":
-          message.error(content)
-          break
-        default:
-          break
-      }
-    }
-  }
-
   useEffect(()=>{
     AOS.init({
       // Global settings:
@@ -86,13 +66,12 @@ const App = () => {
         <Route exact path="/" component={Beforelogin} />
         <Route exact path="/login" render={() => (<Login sendData={sendData} mess={mess} />)} />
         <Route exact path="/register" render={() => (<Register sendData={sendData} mess={mess} />)} />
-        <Route exact path="/index" render={() => (<HomePage sendData={sendData} mess={mess} displayStatus={displayStatus} />)} />
+        <Route exact path="/index" render={() => (<HomePage sendData={sendData} mess={mess} />)} />
         <Route exact path="/:UID/:GID"
           render={() =>
           (<GroupPage
             discussions={discussions}
             sendData={sendData}
-            displayStatus={displayStatus}
             message={mess}
           />)} />
 
@@ -109,7 +88,6 @@ const App = () => {
             isSelectPlace={isSelectPlace}
             time_result={time_result}
             place_result={place_result}
-            displayStatus={displayStatus}
             message={mess}
           />)} />
       </Switch>

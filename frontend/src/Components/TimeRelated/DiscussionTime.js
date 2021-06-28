@@ -1,4 +1,4 @@
-import { Checkbox, Row, Col, Button } from 'antd';
+import { Checkbox, Row, Col, Button, notification } from 'antd';
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router';
 import VotedTime from './VotedTime';
@@ -8,7 +8,7 @@ import moment from 'moment';
 import 'moment-timezone';
 
 
-const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_result, sendData, displayStatus, message}) =>{
+const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_result, sendData, message}) =>{
 
     const { UID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
@@ -44,7 +44,11 @@ const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_res
         sendData("voteTime", data)
       }
       else{
-        displayStatus({type: "error", msg: '請選擇要投票的時間'})
+        notification['error']({
+          message: '錯誤',
+          description:
+          '請選擇要投票的時間',
+        });
       }
     }
 
@@ -52,10 +56,18 @@ const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_res
       if(message.api === 'voteTime'){
         setLoading(false)
         if(message.data.status === true){
-          displayStatus({type: 'success', msg: '投票成功'})
+          notification['success']({
+            message: '成功',
+            description:
+            '投票成功',
+          });
         }
         else{
-          displayStatus({type: 'error', msg: '投票失敗'})
+          notification['error']({
+            message: '錯誤',
+            description:
+            '投票失敗',
+          });
         }
       }
       
@@ -70,7 +82,6 @@ const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_res
         isAdmin={isAdmin} 
         time_options={time_options} 
         sendData={sendData}
-        displayStatus={displayStatus}
         message={message} />)):(voted?
         (<VotedTime time_options={time_options} UID={UID} />)
         :(

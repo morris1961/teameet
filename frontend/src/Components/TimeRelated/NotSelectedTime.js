@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Divider, Row, Col, Radio, Button, Tag } from 'antd';
+import { Divider, Row, Col, Radio, Button, Tag, notification } from 'antd';
 import moment from 'moment';
 import 'moment-timezone';
 
 
-const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStatus, message}) =>{
+const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, message}) =>{
     const [show_options, setShowOptions] = useState([])
     const [time_result, setTimeResult] = useState('')
     const [max, setMax] = useState(0)
@@ -32,7 +32,11 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
     const handleSubmit = () =>{
         setLoading(true)
         if(time_result === ''){
-            displayStatus({type: 'error', msg: '請選擇最終時間'})
+            notification['error']({
+                message: '錯誤',
+                description:
+                '請選擇最終時間',
+              });
         }
 
         let data = {UID, DID, time_result}
@@ -43,10 +47,18 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
         if(message.api === 'confirmTime'){
           setLoading(false)
           if(message.status === true){
-            displayStatus({type: 'error', msg: '確認成功'})
+            notification['success']({
+                message: '成功',
+                description:
+                '確認成功',
+              });
           }
           else{
-            displayStatus({type: 'error', msg: '確認失敗'})
+            notification['error']({
+                message: '錯誤',
+                description:
+                '確認失敗',
+              });
           }
         }
         

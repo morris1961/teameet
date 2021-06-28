@@ -151,7 +151,11 @@ const HomePage = ({sendData, mess, displayStatus}) =>{
               history.push(path);
           }else if(mess.api === 'message'){
             if(mess.data.status === true){
-              displayStatus({type:'success', msg: `您在 ${mess.data.GName} 有新訊息（${mess.data.sender} 說：${mess.data.body}）`})
+              notification['info']({
+                message: '通知',
+                description:
+                `您在 ${mess.data.GName} 有新訊息（${mess.data.sender} 說：${mess.data.body}）`,
+              });
             }
           }else if(mess.api === "renewProfile"){
             if(mess.data.status === true){

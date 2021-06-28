@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Input, Radio, DatePicker, Button } from 'antd';
+import { Input, Radio, DatePicker, Button, notification } from 'antd';
 import moment from 'moment';
 import 'moment-timezone';
 
@@ -13,7 +13,7 @@ const formItemLayoutWithOutLabel = {
 };
 
 const { RangePicker } = DatePicker
-const DiscussionSet = ({UID, GID, sendData, displayStatus, message}) =>{
+const DiscussionSet = ({UID, GID, sendData, message}) =>{
     const [subject, setSubject] = useState('')
     const [content, setContent] = useState('')
     const [timeStart, setTimeStart] = useState('')
@@ -40,22 +40,46 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus, message}) =>{
             throw new Error ("Missing GID")
         }
         if(subject === ''){
-            displayStatus({type:'error', msg:'請輸入討論主題'})
+            notification['error']({
+                message: '錯誤',
+                description:
+                '請輸入討論主題',
+              });
         }
         if(content === ''){
-            displayStatus({type:'error', msg:'請輸入討論內容'})
+            notification['error']({
+                message: '錯誤',
+                description:
+                '請輸入討論內容',
+              });
         }
         if(timeStart === '' || timeEnd === ''){
-            displayStatus({type:'error', msg:'請選擇討論時間範圍'})
+            notification['error']({
+                message: '錯誤',
+                description:
+                '請選擇討論時間範圍',
+              });
         }
         if(timeSpan === ''){
-            displayStatus({type:'error', msg:'請輸入討論時間間隔'})
+            notification['error']({
+                message: '錯誤',
+                description:
+                '請輸入討論時間間隔',
+              });
         }
         if(deadline === ''){
-            displayStatus({type:'error', msg:'請輸入投票截止日期'})
+            notification['error']({
+                message: '錯誤',
+                description:
+                '請輸入投票截止日期',
+              });
         }
         if(deadline === ''){
-            displayStatus({type:'error', msg:'請輸入地點'})
+            notification['error']({
+                message: '錯誤',
+                description:
+                '請輸入地點',
+              });
         }
         let data = { UID, GID, subject, content, time_start: timeStart, time_end: timeEnd, time_span: timeSpan, deadline, place } 
         sendData("createDiscussion", data)
@@ -77,13 +101,21 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus, message}) =>{
             const { data } = message
             if(data.status === true){
                 setLoading(false)
-                displayStatus({type:'success', msg:'成功創建討論，為您跳轉畫面'})
+                notification['success']({
+                    message: '成功',
+                    description:
+                    '成功創建討論，為您跳轉畫面',
+                  });
                 let d = {UID, DID: data.DID}
                 sendData("discussion", d)
             }
             else{
                 setLoading(false)
-                displayStatus({type:'error', msg:'創建討論失敗'})
+                notification['error']({
+                    message: '錯誤',
+                    description:
+                    '創建討論失敗',
+                  });
             }
         }
     }, [message])

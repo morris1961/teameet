@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Divider, Row, Col, Radio, Button, Tag } from 'antd';
+import { Divider, Row, Col, Radio, Button, Tag, notification } from 'antd';
 
 
-const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displayStatus, message}) =>{
+const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, message}) =>{
     const [show_options, setShowOptions] = useState([])
     const [place_result, setPlaceResult] = useState('')
     const [max, setMax] = useState(0)
@@ -30,7 +30,11 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
     const handleSubmit = () =>{
         setLoading(true)
         if(place_result === ''){
-            displayStatus({type: 'error', msg: '請選擇最終地點'})
+            notification['error']({
+                message: '錯誤',
+                description:
+                '請選擇最終地點',
+              });
         }
 
         let data = {UID, DID, place_result}
@@ -41,10 +45,18 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, displaySt
         if(message.api === 'conformPlace'){
           setLoading(false)
           if(message.status === true){
-            displayStatus({type: 'error', msg: '確認成功'})
+            notification['success']({
+                message: '成功',
+                description:
+                '確認成功',
+              });
           }
           else{
-            displayStatus({type: 'error', msg: '確認失敗'})
+            notification['error']({
+                message: '錯誤',
+                description:
+                '確認失敗',
+              });
           }
         }
         

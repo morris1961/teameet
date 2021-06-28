@@ -1,12 +1,12 @@
 import "../App.css";
 import { useEffect, useState, useRef } from "react"
-import { Divider, Input } from "antd"
+import { Divider, Input, notification } from "antd"
 import moment from 'moment';
 import 'moment-timezone';
 
 
 
-const ChatRoom = ({UName, displayStatus, message, sendData, UID, GID}) =>{
+const ChatRoom = ({UName, message, sendData, UID, GID}) =>{
     const [messageInput, setMessageInput] = useState("") 
     const endMsg = useRef(null)  // 最新訊息的 ref
     const [messages, setMessages] = useState([])
@@ -93,10 +93,11 @@ const ChatRoom = ({UName, displayStatus, message, sendData, UID, GID}) =>{
             style={{maxWidth: "500px", margin: "2% 0", color: "#E0E0E0", borderRadius: "2px"}}
             onSearch={(msg)=>{
                 if(!msg){
-                    displayStatus({
-                        type: "error",
-                        msg: "Please enter message."
-                    })
+                    notification['error']({
+                        message: '錯誤',
+                        description:
+                        '請輸入文字',
+                      });
                     return
                 } 
                 handleMessage(msg)

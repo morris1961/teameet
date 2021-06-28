@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, notification } from 'antd';
 import DiscussionContent from '../Components/DiscussionContent'
 import DiscussionTime from '../Components/TimeRelated/DiscussionTime'
 import DiscussionPlace from '../Components/PlaceRelated/DiscussionPlace'
@@ -17,7 +17,7 @@ import { useParams, useHistory, useLocation } from "react-router-dom";
 const { Content, Footer, Sider } = Layout;
 
 
-const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  place_options, time_voted, place_voted, time_result, place_result, displayStatus, sendData, message}) =>{
+const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  place_options, time_voted, place_voted, time_result, place_result, sendData, message}) =>{
     const { UID, GID, DID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('content')
@@ -54,7 +54,11 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
         }
         else if(message.api === 'message'){
           if(message.data.status === true){
-            displayStatus({type:'success', msg: `您在${message.data.GName}有新訊息-${message.data.sender}說：${message.data.body}`})
+            notification['success']({
+              message: '成功',
+              description:
+              `您在${message.data.GName}有新訊息-${message.data.sender}說：${message.data.body}`,
+            });
           }
         }
         else if(message.api === 'group'){
@@ -109,7 +113,6 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
                 time_result={time_result}
                 isSelect={isSelectTime} 
                 sendData={sendData} 
-                displayStatus={displayStatus}
                 message={message}
                 />):(
                 <DiscussionPlace 
@@ -120,7 +123,6 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
                 place_result={place_result}
                 isSelect={isSelectPlace} 
                 sendData={sendData} 
-                displayStatus={displayStatus}
                 message={message}
                  />))}
               </div>
