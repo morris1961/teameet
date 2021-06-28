@@ -364,7 +364,7 @@ const HomePage = ({sendData, mess}) =>{
                     加入
                   </Button>
                 </div></>):(<>
-                <div data-aos='zoom-out-down' data-aos-duration='600' className="homePageContent">
+                <div className="homePageContent">
                   <div style={{fontSize:"2vw", marginLeft:"2vw", color: "#F0F0F0"}}>投票中</div>  
                   <Menu style={{backgroundColor: "#E0E0E0"}} mode="inline" defaultOpenKeys={['recent3']}>
                       {(voting.length < 1)?(<>
