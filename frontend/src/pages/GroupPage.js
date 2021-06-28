@@ -28,7 +28,6 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
     const [collapsed, setCollapsed] = useState(false)
     const [activeKey, setActiveKey] = useState('')
     const [modalVisible, setModalVisible] = useState(false)
-    const [loading, setLoading] = useState(false)
     const history = useHistory();
     const location = useLocation();
 
@@ -68,7 +67,6 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
         setActiveKey("ChatRoom")
       }
       else if(message.api === 'renewFile'){
-        setLoading(false)
         if(message.data.status === true){
           displayStatus({type: 'success', msg: '資料集連結已成功更新！'})
         }
@@ -158,7 +156,6 @@ const GroupPage = ({discussions, sendData, displayStatus, message}) =>{
               <URLModal 
                 visible={modalVisible}
                 onCreate={({url})=>{
-                    setLoading(true)
                     setModalVisible(false) 
                     renewURL(url)
                 }}

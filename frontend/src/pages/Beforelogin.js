@@ -4,7 +4,6 @@ import 'antd/dist/antd.css';
 import '../style/Beforelogin.css'
 import {Button, Layout} from 'antd';
 import {useHistory} from "react-router-dom";
-import logo from '../image/logo.png';
 const { Header, Content, Footer } = Layout;
 const Login = () =>{
   const history = useHistory();

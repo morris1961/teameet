@@ -40,7 +40,6 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, displayStat
     }
 
     useEffect(()=>{
-        const { data } = message
         if(message.api === 'confirmTime'){
           setLoading(false)
           if(message.status === true){

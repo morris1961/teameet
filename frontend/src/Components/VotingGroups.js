@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../style/RecentGroups.css';
 import moment from 'moment';
 import 'moment-timezone';
