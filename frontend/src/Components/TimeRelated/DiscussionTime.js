@@ -8,11 +8,12 @@ import moment from 'moment';
 import 'moment-timezone';
 
 
-const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_result, sendData, displayStatus}) =>{
+const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_result, sendData, displayStatus, message}) =>{
 
     const { UID, DID } = useParams()
     const [checkList, setCheckList] = useState([])
     const [options, setOptions] = useState([])
+    const [loading, setLoading] = useState(false)
     
     useEffect(()=>{
       if(time_options){
@@ -38,6 +39,7 @@ const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_res
 
     const handleVote = () =>{
       if(checkList !== []){
+        setLoading(true)
         let data = {UID, DID, times:checkList}
         sendData("voteTime", data)
       }
@@ -45,6 +47,19 @@ const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_res
         displayStatus({type: "error", msg: '請選擇要投票的時間'})
       }
     }
+
+    useEffect(()=>{
+      if(message.api === 'voteTime'){
+        setLoading(false)
+        if(message.data.status === true){
+          displayStatus({type: 'success', msg: '投票成功'})
+        }
+        else{
+          displayStatus({type: 'error', msg: '投票失敗'})
+        }
+      }
+      
+    }, [message])
 
     return(
       <>
@@ -55,27 +70,32 @@ const DiscussionTime = ({voted, isDue, isAdmin, isSelect, time_options, time_res
         isAdmin={isAdmin} 
         time_options={time_options} 
         sendData={sendData}
-        displayStatus={displayStatus} />)):(voted?
+        displayStatus={displayStatus}
+        message={message} />)):(voted?
         (<VotedTime time_options={time_options} UID={UID} />)
-        :(<Row>
-          {options.map((option, index)=>{
-            return(
-            <>
-              <Col key={index} span={2}></Col>
-              <Col key={index} span={22}>
-                <Checkbox key={index} style={{margin: "1%"}} onChange={(e)=>{handleCheck(e, option)}}>{moment(option).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')}</Checkbox>
-              </Col>
-              {index === options.length-1?(
-              <>
-                <Col span={2}></Col>
-                <Button type="primary" htmlType="submit" onClick={handleVote}>
-                  送出投票
-                </Button>
-              </>):null}
-            </>)
-          })}
-        </Row>))}
-        
+        :(
+          <>
+          <Row>
+            <Col span={2}></Col>
+            <Col span={18}>
+            {options.map((option, index)=>{
+              return(
+              <Checkbox 
+              key={index} 
+              style={{margin: "1%"}} 
+              onChange={(e)=>{handleCheck(e, option)}} 
+              className='content'>
+                {moment(option).tz('Asia/Taipei').format('YYYY-MM-DD HH:mm')}
+              </Checkbox>
+              )})}
+          </Col>
+        </Row>
+        <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
+          <Button type="primary" htmlType="submit" onClick={handleVote} loading={loading}>
+            送出投票
+          </Button>
+        </div>
+        </>))}
       </>
     )
 }

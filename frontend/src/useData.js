@@ -18,7 +18,6 @@ const useData = () => {
     const [time_result, setTimeResult] = useState('')
     const [place_result, setPlaceResult] = useState('')
     const [mess, setMess] = useState("");
-    const [messages, setMessages] = useState([])
 
     var ping = null;
 
@@ -163,7 +162,6 @@ const useData = () => {
         time_result,
         place_result,
         mess,
-        messages,
         discussions,
         sendData,
     }

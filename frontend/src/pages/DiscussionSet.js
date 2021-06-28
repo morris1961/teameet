@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
 import { Input, Radio, DatePicker, Button } from 'antd';
@@ -13,7 +13,7 @@ const formItemLayoutWithOutLabel = {
 };
 
 const { RangePicker } = DatePicker
-const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
+const DiscussionSet = ({UID, GID, sendData, displayStatus, message}) =>{
     const [subject, setSubject] = useState('')
     const [content, setContent] = useState('')
     const [timeStart, setTimeStart] = useState('')
@@ -21,6 +21,8 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
     const [timeSpan, setTimeSpan] = useState('60')
     const [deadline, setDeadline] = useState('')
     const [place, setPlace] = useState('')
+    const [loading, setLoading] = useState(false)
+
 
     const disabledDate = (current) => {
         // Can not select days before today 
@@ -29,6 +31,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
 
 
     const handleSubmit = () =>{
+        setLoading(true)
         console.log(UID, GID, subject, content, timeStart, timeEnd, timeSpan, deadline, place)
         if(UID === ''){
             throw new Error ("Missing UID")
@@ -69,6 +72,19 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
         setDeadline( moment.tz(dateString, 'Asia/Taipei').format())
     }
 
+    useEffect(()=>{
+        if(message.api === 'createDiscussion'){
+            const { data } = message
+            if(data.status === true){
+                setLoading(false)
+                displayStatus({type:'success', msg:'成功創建討論，為您跳轉畫面'})
+            }
+            else{
+                setLoading(false)
+                displayStatus({type:'error', msg:'創建討論失敗'})
+            }
+        }
+    }, [message])
 
 
     return(
@@ -105,7 +121,7 @@ const DiscussionSet = ({UID, GID, sendData, displayStatus}) =>{
                 </Form.Item>
             </Form>
             <div style={{display: "flex", justifyContent: "flex-end", marginRight: "5%"}}>
-                <Button type="primary" htmlType="submit" onClick={handleSubmit}>
+                <Button type="primary" htmlType="submit" onClick={handleSubmit} loading={loading}>
                     創建討論
                 </Button>
             </div>

@@ -6,9 +6,10 @@ import 'moment-timezone';
 
 
 
-const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
+const ChatRoom = ({UName, displayStatus, message, sendData, UID, GID}) =>{
     const [messageInput, setMessageInput] = useState("") 
     const endMsg = useRef(null)  // 最新訊息的 ref
+    const [messages, setMessages] = useState([])
 
     // send new message
     const handleMessage = (msg) =>{
@@ -24,6 +25,27 @@ const ChatRoom = ({UName, displayStatus, messages, sendData, UID, GID}) =>{
             }
         }
     }, [messages])
+
+    useEffect(()=>{
+        const { data } = message
+        if(message.api === 'chat'){
+            const { status } = data;
+            if (status === true) {
+                setMessages(data.messages)
+            }
+        }
+        else if(message.api === 'message'){
+            const { status } = data;
+            if (status === true) {
+                const { sender, body, time } = data
+                if(GID === data.GID){
+                    let newMessages = [...messages]
+                    newMessages.push({ sender, body, time })
+                    setMessages(newMessages)
+                }
+            }
+        }
+    }, [message])
     
     let lastDate = ''
     return(
