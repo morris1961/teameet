@@ -143,21 +143,32 @@ const HomePage = ({sendData, mess}) =>{
             sendData("group", data);
           }
         }else if(mess.api === 'group'){
-            var data = mess.data;
-            data.UName = UName
-            console.log(UID)
-            data.UID = UID
-            data.password=password
-            data.email=email
-            data.group=group
-            data.voting=voting 
-            data.recent=recent
-            console.log("data in homepage push to group", data)
-              var path = {
-                pathname:`/${UID}/${GID}`,
-                state:{data},
-              }
+            if(mess.data.status === true){
+              var data = mess.data;
+              data.UName = UName
+              console.log(UID)
+              data.UID = UID
+              data.password=password
+              data.email=email
+              data.group=group
+              data.voting=voting 
+              data.recent=recent
+              console.log("data in homepage push to group", data)
+                var path = {
+                  pathname:`/${UID}/${GID}`,
+                  state:{data},
+                }
               history.push(path);
+            }
+            else{
+              notification['error']({
+                message: '錯誤',
+                description:
+                '請稍後再重新點選一次, 並請你確認你的網路連接正常',
+              });
+
+            }
+            
           }else if(mess.api === 'message'){
             if(mess.data.status === true){
               notification['info']({

@@ -46,12 +46,14 @@ const ChatRoom = ({UName, message, sendData, UID, GID}) =>{
             }
         }
     }, [message])
+
+    console.log(messages)
     
     let lastDate = ''
     return(
         <>
             <div className="ChatRoom">
-                {messages === undefined ? <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: "100%"}}>暫無聊天紀錄</p>:(messages === []? (<p>loading...</p>): (messages.map(({sender, body, time}, index)=>{
+                {messages === undefined ? <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: "100%"}}>暫無聊天紀錄</p>:(messages.length === 0? ( <p style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: "100%"}}>暫無聊天紀錄</p>): (messages.map(({sender, body, time}, index)=>{
                     let renderDate = false
                     let date = moment(time).tz('Asia/Taipei').format('YYYY/MM/DD')
                     if(lastDate !== date){

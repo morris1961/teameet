@@ -126,7 +126,7 @@ const GroupPage = ({discussions, sendData, message}) =>{
       }
     }, [message])
 
-    
+    console.log(location.state.data.GName)
     
 
 

@@ -200,8 +200,15 @@ const Register = ({sendData, mess}) =>{
                 <Button 
                     className="register_button-button"
                     onClick = {handleregister}
-                    type = 'primary'>
+                    type = 'primary'
+                    style={{marginRight: "1%"}}>
                     註冊
+                </Button>
+                <Button 
+                    className="register_button-button"
+                    onClick = {()=>{history.push("/login")}}
+                    type = 'primary'>
+                    返回
                 </Button>
             </div>
           </Content></>)}
