@@ -8,6 +8,7 @@ const client = new WebSocket(HOST)
 
 const useData = () => {
     const [discussions, setDiscussions] = useState([])
+    const [file, setFile] = useState('')
     const [time_options, setTimeOptions] = useState({})
     const [place_options, setPlaceOptions] = useState({})
     const [isDue, setIsDue] = useState(false)
@@ -47,6 +48,7 @@ const useData = () => {
                 const { status } = data;
                 if (status === true) {
                     setDiscussions(data.discussions)
+                    setFile(data.file)
                 }
                 break
             }
@@ -118,6 +120,12 @@ const useData = () => {
                 }
                 break
             }
+            case "renewFile": {
+                const { status } = data;
+                if (status === true) {
+                    setFile(data.file)
+                }
+            }
             default:
                 break
         }
@@ -163,6 +171,7 @@ const useData = () => {
         place_result,
         mess,
         discussions,
+        file,
         sendData,
     }
 }

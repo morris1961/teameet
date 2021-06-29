@@ -37,16 +37,20 @@ const NotSelectedTime = ({UID, DID, time_options, isAdmin, sendData, message}) =
                 description:
                 '請選擇最終時間',
               });
+            setLoading(false)
+            
         }
-
-        let data = {UID, DID, time_result}
-        sendData("confirmTime", data)
+        else{
+            let data = {UID, DID, time_result}
+            sendData("confirmTime", data)
+        }
+        
     }
 
     useEffect(()=>{
         if(message.api === 'confirmTime'){
           setLoading(false)
-          if(message.status === true){
+          if(message.data.status === true){
             notification['success']({
                 message: '成功',
                 description:

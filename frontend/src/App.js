@@ -20,6 +20,7 @@ const App = () => {
   const {
     sendData,
     discussions,
+    file,
     time_options,
     isDue,
     time_voted,
@@ -70,6 +71,7 @@ const App = () => {
         <Route exact path="/:UID/:GID"
           render={() =>
           (<GroupPage
+            file={file}
             discussions={discussions}
             sendData={sendData}
             message={mess}

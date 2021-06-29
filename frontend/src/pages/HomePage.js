@@ -94,7 +94,7 @@ const HomePage = ({sendData, mess}) =>{
     };
 
     const handleGroupClick = (gid) =>{
-      let data = {UID, GID}
+      let data = {UID, GID: gid}
       setGID(gid);
       sendData("group", data)
     }
@@ -399,7 +399,7 @@ const HomePage = ({sendData, mess}) =>{
           <Menu style={{backgroundColor: "#E0E0E0"}} mode="inline" defaultOpenKeys={['recent3']}>
                   {(recent.length < 1)?(<>
                         <div style={{fontSize:"1.5vw", marginTop:"4vw", paddingTop:"2vw",height:"5vw", textAlign:"center", color: '#6C6C6C'}}>
-                          目前沒有討論中的群組
+                          目前沒有即將到來的討論
                       </div>
                     </>):(<>
                       {recent.map((v, index)=>{

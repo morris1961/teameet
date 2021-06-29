@@ -12,12 +12,15 @@ const Register = ({sendData, mess}) =>{
   const [password, setPassword] = useState("");
   const [pass2, setPass2] = useState("");
   const [isregistersuccess,setIsregistersuccess] = useState(false);
+  const [goToSuccess, setGoToSuccess] = useState(false);
+  const [loading, setLoading] = useState(false)
   const validemail= /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
   const nameRef = useRef(null);
   const passRef = useRef(null);
   const pass2Ref = useRef(null);
   useEffect(()=>{
-    if(mess.api === "register"){
+    if(mess.api === "register" && goToSuccess === true){
+      setLoading(false)
       if(mess.data.status === true){
         setIsregistersuccess(true);
       }else if(mess.data.status === false){
@@ -75,12 +78,18 @@ const Register = ({sendData, mess}) =>{
             description:
               '帳號須為合理mail'});
         }else{
-          var data = {email:email, UName: UName, password:password};
-          sendData('register', data);
-          console.log("register.js in frontend send:", data);
+          setLoading(true)
+          setGoToSuccess(true);
           }
-
       };
+
+      useEffect(()=>{
+        var data = {email:email, UName: UName, password:password};
+        sendData('register', data);
+        console.log("register.js in frontend send:", data);
+      }, [goToSuccess])
+
+
   return( 
     <React.Fragment>
     <Layout style={{backgroundImage:'url(https://cdn.pixabay.com/photo/2017/03/28/12/11/chairs-2181960_960_720.jpg)',  backgroundSize: "cover"}}>
@@ -201,7 +210,7 @@ const Register = ({sendData, mess}) =>{
                     className="register_button-button"
                     onClick = {handleregister}
                     type = 'primary'
-                    style={{marginRight: "1%"}}>
+                    style={{marginRight: "1%"}} loading={loading}>
                     註冊
                 </Button>
                 <Button 

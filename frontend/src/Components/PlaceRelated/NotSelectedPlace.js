@@ -35,16 +35,19 @@ const NotSelectedPlace = ({UID, DID, place_options, isAdmin, sendData, message})
                 description:
                 '請選擇最終地點',
               });
+            setLoading(false)
         }
-
-        let data = {UID, DID, place_result}
-        sendData("confirmPlace", data)
+        else{
+            let data = {UID, DID, place_result}
+            sendData("confirmPlace", data)
+        }
+        
     }
 
     useEffect(()=>{
-        if(message.api === 'conformPlace'){
+        if(message.api === 'confirmPlace'){
           setLoading(false)
-          if(message.status === true){
+          if(message.data.status === true){
             notification['success']({
                 message: '成功',
                 description:

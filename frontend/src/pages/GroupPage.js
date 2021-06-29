@@ -22,7 +22,7 @@ const { SubMenu } = Menu;
 
 
 
-const GroupPage = ({discussions, sendData, message}) =>{
+const GroupPage = ({discussions, file, sendData, message}) =>{
 
     const { UID, GID } = useParams();
     const [collapsed, setCollapsed] = useState(false)
@@ -54,8 +54,9 @@ const GroupPage = ({discussions, sendData, message}) =>{
         // 跟討論有關 data (content, subject, DID) 從回傳 message 取，其他從 location.state.data
         let data = {
           UName:location.state.data.UName, 
-          file:location.state.data.file, 
           GName: location.state.data.GName, 
+          email: location.state.data.email,
+          password: location.state.data.password,
           code: location.state.data.code,
           subject: message.data.subject, 
           content: message.data.content,
@@ -126,7 +127,6 @@ const GroupPage = ({discussions, sendData, message}) =>{
       }
     }, [message])
 
-    console.log(location.state.data.GName)
     
 
 
@@ -169,14 +169,14 @@ const GroupPage = ({discussions, sendData, message}) =>{
                 <Menu.Item 
                 key="gotoURL" 
                 onClick={()=>{
-                  {location.state.data.file.length === 0?
+                  {file.length === 0?
                     (
                       notification['error']({
                         message: '失敗',
                         description:
                         '群組尚無資料集連結，可按更新連結新增',
                       }))
-                    :(window.open(location.state.data.file))}}}>前往連結</Menu.Item>
+                    :(window.open(file))}}}>前往連結</Menu.Item>
                 <Menu.Item key="renewURL" onClick={()=>{setModalVisible(true)}}>更新連結</Menu.Item>
               </SubMenu>
 

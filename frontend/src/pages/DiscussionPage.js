@@ -64,9 +64,10 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
         else if(message.api === 'group'){
           let data = {
             UName:location.state.data.UName, 
-            file: location.state.data.file, 
             GName: location.state.data.GName,
-            code: location.state.data.code,}
+            code: location.state.data.code,
+            email: location.state.data.email,
+            password: location.state.data.password,}
           history.push({pathname:`/${UID}/${GID}`, state:{data}});
         }
     }, [message])
