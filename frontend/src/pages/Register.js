@@ -84,9 +84,11 @@ const Register = ({sendData, mess}) =>{
       };
 
       useEffect(()=>{
-        var data = {email:email, UName: UName, password:password};
-        sendData('register', data);
-        console.log("register.js in frontend send:", data);
+        if(goToSuccess){
+          var data = {email:email, UName: UName, password:password};
+          sendData('register', data);
+          console.log("register.js in frontend send:", data);
+        }
       }, [goToSuccess])
 
 
