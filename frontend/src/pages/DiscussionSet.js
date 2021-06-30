@@ -32,7 +32,7 @@ const DiscussionSet = ({UID, GID, sendData, message}) =>{
 
     const handleSubmit = () =>{
         setLoading(true)
-        console.log(UID, GID, subject, content, timeStart, timeEnd, timeSpan, deadline, place)
+        // console.log(UID, GID, subject, content, timeStart, timeEnd, timeSpan, deadline, place)
         if(UID === ''){
             throw new Error ("Missing UID")
         }

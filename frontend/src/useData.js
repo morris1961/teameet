@@ -42,7 +42,7 @@ const useData = () => {
         const message = JSON.parse(byteString.data);
         setMess(message)
         const { api, data } = message
-        console.log(message)
+        // console.log(message)
         switch (api) {
             case "group": {
                 const { status } = data;

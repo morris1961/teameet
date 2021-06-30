@@ -30,7 +30,7 @@ const DiscussionPage = ({isDue, isSelectTime, isSelectPlace, time_options,  plac
 
     // 回上一頁
     const back = () =>{
-      console.log("back")
+      // console.log("back")
       let data = {UID, GID}
       sendData("group", data)
     }

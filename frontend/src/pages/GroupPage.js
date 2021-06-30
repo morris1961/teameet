@@ -62,7 +62,7 @@ const GroupPage = ({discussions, file, sendData, message}) =>{
           content: message.data.content,
           isAdmin: message.data.isAdmin,
         }
-        console.log(UID)
+        // console.log(UID)
         history.push({pathname:`/${UID}/${GID}/${message.data.DID}`, state:{data}});
       }
       else if(message.api === 'chat'){
@@ -90,7 +90,7 @@ const GroupPage = ({discussions, file, sendData, message}) =>{
         data.UID=UID;
         data.email=email;
         data.password=password;
-        console.log("data in index push", data)
+        // console.log("data in index push", data)
           var path = {
             pathname:"/index",
             state:{data},

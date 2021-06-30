@@ -40,7 +40,7 @@ const Login = ({sendData, mess}) =>{
       data.UID=UID;
       data.email=email;
       data.password=password;
-      console.log("data in index push", data)
+      // console.log("data in index push", data)
         var path = {
           pathname:"/index",
           state:{data},
@@ -73,7 +73,7 @@ const Login = ({sendData, mess}) =>{
     }else{
       var data = {email:email, password:password};
       sendData('login', data)
-      console.log("login.js in frontend send:", data)
+      // console.log("login.js in frontend send:", data)
       setLoading(true);
     }
   }    

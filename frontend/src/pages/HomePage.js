@@ -29,7 +29,7 @@ const HomePage = ({sendData, mess}) =>{
     
     const [GID, setGID] = useState("");
     const onCollapse = collapsed => {
-        console.log(collapsed);
+        // console.log(collapsed);
         setCollapsed(collapsed);
     };
 
@@ -146,14 +146,14 @@ const HomePage = ({sendData, mess}) =>{
             if(mess.data.status === true){
               var data = mess.data;
               data.UName = UName
-              console.log(UID)
+              // console.log(UID)
               data.UID = UID
               data.password=password
               data.email=email
               data.group=group
               data.voting=voting 
               data.recent=recent
-              console.log("data in homepage push to group", data)
+              // console.log("data in homepage push to group", data)
                 var path = {
                   pathname:`/${UID}/${GID}`,
                   state:{data},
@@ -202,7 +202,7 @@ const HomePage = ({sendData, mess}) =>{
             data.UID=UID;
             data.email=email;
             data.password=password;
-            console.log("data in index push", data)
+            // console.log("data in index push", data)
               var path = {
                 pathname:"/index",
                 state:{data},

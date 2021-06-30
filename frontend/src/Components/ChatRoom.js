@@ -47,7 +47,7 @@ const ChatRoom = ({UName, message, sendData, UID, GID}) =>{
         }
     }, [message])
 
-    console.log(messages)
+    // console.log(messages)
     
     let lastDate = ''
     return(

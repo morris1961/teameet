@@ -22,7 +22,7 @@ async function leaveGroup({ UID, GID }) {
     }
 
     const discussions = group.discussions;
-    console.log(discussions);
+    // console.log(discussions);
     var newDiscussions = [];
     for (let i = 0; i < discussions.length; i++) {
       const discussion = discussions[i];
@@ -33,7 +33,7 @@ async function leaveGroup({ UID, GID }) {
         newDiscussions.push(discussion);
       }
     }
-    console.log(newDiscussions);
+    // console.log(newDiscussions);
     await group.updateOne({ $set: { discussions: newDiscussions } });
 
     var oldGroups = user.groups;
