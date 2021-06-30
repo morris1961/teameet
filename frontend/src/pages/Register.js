@@ -80,11 +80,11 @@ const Register = ({sendData, mess}) =>{
         }else{
           setLoading(true)
           setGoToSuccess(true);
-          }
+        }
       };
 
       useEffect(()=>{
-        if(goToSuccess === 'true'){
+        if(goToSuccess === true){
           var data = {email:email, UName: UName, password:password};
           sendData('register', data);
           console.log("register.js in frontend send:", data);

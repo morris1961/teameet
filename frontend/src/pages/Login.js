@@ -13,7 +13,6 @@ const Login = ({sendData, mess}) =>{
   const validemail= /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
   const passwordRef = useRef(null);
   useEffect(()=>{
-    console.log(mess)
     if(mess.api === "login"){
       if(mess.data.status === true){
         var data ={UID: mess.data.UID}
