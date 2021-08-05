@@ -13,14 +13,14 @@
     - 資料庫：Mongoose
     - 第三方套件：ant-design, AOS, moment
 
-- 如何在 localhost 安裝與測試之詳細步驟
-    0. git clone
-    1. node 以及 npm 版本可以參考 package.json 裡面的 engines。
-    2. 先分別執行 cd frontend && npm install 以及 cd backend && npm install
-    3. 在 backend 底下新增 .env，以下簡單說明，也可以參考 .env.default
+- 如何在 localhost 安裝與測試之詳細步驟：
+    1. git clone
+    2. node 以及 npm 版本可以參考 package.json 裡面的 engines。
+    3. 先分別執行 cd frontend && npm install 以及 cd backend && npm install
+    4. 在 backend 底下新增 .env，以下簡單說明，也可以參考 .env.default
         1. MONGO_URL=${你的 mongodb 的 url}
-    4. 安裝完畢後 npm start 可以開啟前端，npm run server 可以開啟後端
-    5. 我們在不同頁面的功能如下：
+    5. 安裝完畢後 npm start 可以開啟前端，npm run server 可以開啟後端
+    6. 我們在不同頁面的功能如下：
         1. /login：可以進行使用者登入
         2. /register：可以進行使用者註冊
         3. /index：登入後的主頁，可以看到近期討論以及將要討論的相關細節。左邊的 navigator 有以下功能：
