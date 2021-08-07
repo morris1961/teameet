@@ -3,6 +3,8 @@ import 'antd/dist/antd.css';
 import '../style/Login.css'
 import {Button, Input, Layout, notification} from 'antd';
 import {useHistory} from "react-router-dom";
+import CryptoJS from 'crypto-js';
+
 const { Header, Content, Footer } = Layout;
 const Login = ({sendData, mess}) =>{
   const history = useHistory();
@@ -71,7 +73,7 @@ const Login = ({sendData, mess}) =>{
           '帳號須為合理mail',
       });
     }else{
-      var data = {email:email, password:password};
+      var data = {email:email, password:CryptoJS.SHA1(password).toString()};
       sendData('login', data)
       // console.log("login.js in frontend send:", data)
       setLoading(true);

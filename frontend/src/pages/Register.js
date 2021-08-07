@@ -1,4 +1,4 @@
-
+import CryptoJS from 'crypto-js';
 import React, { useEffect, useState, useRef } from 'react'
 import { Button, notification, Input, Layout } from 'antd';
 import { useHistory } from "react-router-dom";
@@ -85,7 +85,7 @@ const Register = ({sendData, mess}) =>{
 
       useEffect(()=>{
         if(goToSuccess === true){
-          var data = {email:email, UName: UName, password:password};
+          var data = {email:email, UName: UName, password:CryptoJS.SHA1(password).toString()};
           sendData('register', data);
           // console.log("register.js in frontend send:", data);
         }
